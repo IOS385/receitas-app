@@ -1,0 +1,19 @@
+[
+  {"id": 1, "nome": "Pao frances, banana e leite com achocolatado", "tipo": "cafe",
+   "receitas": [9, 10, 11]},
+  {"id": 2, "nome": "Pao de forma com ovo mexido e suco de laranja", "tipo": "cafe",
+   "receitas": [15, 16]},
+  {"id": 3, "nome": "Cuscuz com ovo cozido e leite com achocolatado", "tipo": "cafe",
+   "receitas": [21, 10]},
+  {"id": 4, "nome": "Tapioca com queijo, mamao e suco de uva", "tipo": "cafe",
+   "receitas": [6, 7, 8]},
+
+  {"id": 5, "nome": "Bife acebolado com arroz, feijao, cenoura e salada", "tipo": "refeicao",
+   "receitas": [1, 2, 12, 13, 14]},
+  {"id": 6, "nome": "Carne moida com arroz, feijao preto, abobrinha e salada", "tipo": "refeicao",
+   "receitas": [1, 18, 17, 19, 20]},
+  {"id": 7, "nome": "Frango grelhado com arroz, feijao, chuchu e rucula", "tipo": "refeicao",
+   "receitas": [1, 2, 22, 23, 24]},
+  {"id": 8, "nome": "Picadinho de carne com arroz, feijao, batata-doce e salada", "tipo": "refeicao",
+   "receitas": [1, 2, 3, 4, 5]}
+]

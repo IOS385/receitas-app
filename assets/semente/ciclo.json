@@ -1,0 +1,10 @@
+[
+  {"posicao": 1, "tipo": "cafe", "combo": 1},
+  {"posicao": 1, "tipo": "refeicao", "combo": 5},
+  {"posicao": 2, "tipo": "cafe", "combo": 2},
+  {"posicao": 2, "tipo": "refeicao", "combo": 6},
+  {"posicao": 3, "tipo": "cafe", "combo": 3},
+  {"posicao": 3, "tipo": "refeicao", "combo": 7},
+  {"posicao": 4, "tipo": "cafe", "combo": 4},
+  {"posicao": 4, "tipo": "refeicao", "combo": 8}
+]
