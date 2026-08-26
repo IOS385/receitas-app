@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esmalte — sistema e telas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@500;700;800;900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   0. CHROME DA PÁGINA — neutro, não faz parte do app
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#0c1015;color:#dfe4ea;font-family:"Manrope",system-ui,sans-serif;line-height:1.55}
+.wrap{max-width:1420px;margin:0 auto;padding:36px 22px 110px}
+
+.phead{border-bottom:1px solid #1f2830;padding-bottom:24px;margin-bottom:18px}
+.kick{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#77838e;margin:0 0 9px;font-weight:700}
+.phead h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(27px,4.2vw,42px);
+  line-height:1.05;margin:0 0 11px;color:#fff;letter-spacing:-.022em}
+.phead p{margin:0 0 6px;max-width:72ch;color:#95a1ad;font-size:14.5px}
+.phead em{color:#cfd8e1;font-style:normal;font-weight:600}
+
+.bar{position:sticky;top:0;z-index:60;background:rgba(12,16,21,.94);backdrop-filter:blur(9px);
+  border-bottom:1px solid #1f2830;margin:0 -22px 30px;padding:11px 22px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.bar-lbl{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:#77838e;font-weight:700}
+.segs{display:flex;gap:4px;flex-wrap:wrap}
+.seg{border:1px solid #2a343d;background:#151c23;color:#b9c3cd;border-radius:7px;padding:6px 12px;
+  font-size:12.5px;cursor:pointer;font-family:inherit;transition:background .12s,color .12s,border-color .12s}
+.seg:hover{background:#1b232b;color:#e3e9ef}
+.seg[aria-pressed="true"]{background:#e8eef4;color:#0c1015;border-color:#e8eef4;font-weight:700}
+.seg:focus-visible{outline:2px solid #6aa6ff;outline-offset:2px}
+
+h2.sc{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:21px;color:#fff;
+  margin:44px 0 5px;letter-spacing:-.014em}
+.scn{color:#8b97a3;font-size:13.8px;margin:0 0 20px;max-width:74ch}
+.scn em{color:#cbd5df;font-style:normal;font-weight:600}
+
+/* ------- painéis de documentação ------- */
+.docs{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.card{background:#12181e;border:1px solid #1f2830;border-radius:13px;padding:18px}
+.card h3{margin:0 0 4px;font-size:13.5px;color:#fff;font-weight:700}
+.card .cn{margin:0 0 14px;font-size:12.3px;color:#828e9a;line-height:1.5}
+
+.tok{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #1b2229}
+.tok:last-child{border-bottom:0}
+.tok i{width:26px;height:26px;border-radius:6px;flex:0 0 auto;border:1px solid rgba(255,255,255,.11)}
+.tok b{font-size:12.3px;color:#e2e8ee;font-weight:600;flex:0 0 74px}
+.tok code{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#7e8b97;flex:0 0 66px}
+.tok span{font-size:11.3px;color:#828e9a;line-height:1.4}
+
+.ty{padding:9px 0;border-bottom:1px solid #1b2229}
+.ty:last-child{border-bottom:0}
+.ty .tn{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:#75818d;margin-bottom:3px}
+.sig{font-size:12.6px;color:#93a0ac;line-height:1.58;margin:0 0 12px}
+.sig:last-child{margin-bottom:0}
+.sig b{color:#e2e8ee;font-weight:700}
+
+/* ------- palco dos celulares ------- */
+.stage{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.slot{text-align:center}
+.slot > h4{margin:0 0 11px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#77838e;font-weight:700}
+
+/* ==========================================================================
+   1. TOKENS — ESMALTE
+   ========================================================================== */
+.esm{
+  --marinho:#14263F; --anil:#2C4A73; --aro:#0A1017;
+  --esmalte:#FFFFFF; --louca:#E9EDF0; --agua:#F3F7F9;
+  --brasa:#C7412B;
+  --ink:#0E1519; --ink2:#3E4A55; --ink3:#7C8B98;
+  --line:#D5DEE4; --rim:#14263F;
+  --bg:var(--louca); --surface:var(--esmalte); --surface2:var(--agua);
+  --accent:var(--marinho); --accent2:var(--brasa);
+  --r:12px; --r-sm:7px;
+  --fd:"Darker Grotesque",sans-serif;
+  --fb:"Manrope",sans-serif;
+  --fm:"IBM Plex Mono",monospace;
+}
+.esm[data-mode="escuro"]{
+  --esmalte:#16232F; --louca:#0E1720; --agua:#1D2C3A;
+  --ink:#EAF0F4; --ink2:#AAB9C6; --ink3:#74889A;
+  --line:#25374A; --rim:#3C5F87;
+  --accent:#7FA8D8; --accent2:#E4694E;
+}
+
+/* ==========================================================================
+   2. MOLDURA + ESTRUTURA
+   ========================================================================== */
+.phone{width:344px;max-width:100%;border-radius:27px;overflow:hidden;
+  border:1px solid #2c363f;box-shadow:0 20px 46px rgba(0,0,0,.46)}
+.scr{height:684px;display:flex;flex-direction:column;position:relative;overflow:hidden;
+  background:var(--bg);color:var(--ink);font-family:var(--fb)}
+.view{flex:1;overflow-y:auto;overflow-x:hidden}
+.view::-webkit-scrollbar{width:0}
+.pane{display:none}
+.pane.on{display:block}
+
+/* --- o RESPINGO: campo marinho salpicado (elemento-assinatura) --- */
+.speck{background:var(--marinho);color:#fff;position:relative;overflow:hidden}
+.speck::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.80) .9px, transparent 1.1px),
+    radial-gradient(rgba(255,255,255,.44) .7px, transparent .9px),
+    radial-gradient(rgba(255,255,255,.26) 1.3px, transparent 1.5px);
+  background-size:37px 37px, 53px 53px, 71px 71px;
+  background-position:0 0, 13px 21px, 29px 9px}
+.speck > *{position:relative;z-index:1}
+[data-mode="escuro"] .speck{background:#0B1927}
+
+/* --- barra superior --- */
+.top{flex:0 0 auto;padding:13px 16px 15px;border-bottom:2px solid var(--aro)}
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.top-m{font-size:10px;letter-spacing:.17em;text-transform:uppercase;font-weight:800;opacity:.72}
+.iconbtn{background:none;border:0;color:inherit;font:inherit;cursor:pointer;opacity:.72;font-size:15px;
+  padding:2px 4px;line-height:1;border-radius:5px}
+.iconbtn:hover{opacity:1}
+.iconbtn:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.back{background:none;border:0;color:inherit;font:inherit;cursor:pointer;font-size:12.5px;font-weight:600;
+  opacity:.85;padding:0;border-radius:4px}
+.back:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+
+.dhead{display:flex;align-items:flex-end;gap:13px;margin-top:11px}
+.dnum{font-family:var(--fd);font-weight:800;font-size:66px;line-height:.76;letter-spacing:-.045em}
+.dmeta{padding-bottom:5px;min-width:0}
+.dwd{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;opacity:.66}
+.dcyc{font-family:var(--fm);font-size:10.5px;opacity:.72;margin-top:3px}
+.dtot{margin-left:auto;text-align:right;padding-bottom:5px}
+.dtot b{display:block;font-family:var(--fd);font-weight:800;font-size:27px;line-height:.9;letter-spacing:-.035em}
+.dtot span{font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;opacity:.62;font-weight:700}
+
+/* --- cartão esmaltado: aro marinho na borda de cima --- */
+.meals{padding:13px 13px 12px}
+.meal{background:var(--surface);border-radius:var(--r);border:1px solid var(--line);
+  border-top:2.5px solid var(--rim);padding:13px 14px 12px;margin-bottom:10px;text-align:left;
+  width:100%;font:inherit;color:inherit;cursor:pointer;display:block}
+.meal:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.meal.mirror{border-top-color:var(--line);background:var(--surface2);opacity:.85}
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:9px;margin-bottom:7px}
+.mslot{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--accent)}
+.mport{font-family:var(--fm);font-size:10px;font-weight:500;color:var(--ink2);
+  background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:2.5px 9px;white-space:nowrap}
+.mirror .mport{background:var(--surface)}
+.mtitle{font-family:var(--fd);font-weight:800;font-size:23px;line-height:.98;letter-spacing:-.03em;margin:0 0 9px}
+.mirror .mtitle{color:var(--ink3)}
+.cl div{display:flex;justify-content:space-between;gap:11px;font-size:12.3px;color:var(--ink2);
+  line-height:1.5;padding:4px 0;border-bottom:1px solid var(--line)}
+.cl div:last-child{border-bottom:0}
+.cl span{font-family:var(--fm);font-size:10px;color:var(--ink3);white-space:nowrap;align-self:center}
+.mirrornote{font-size:12.3px;color:var(--ink3);font-style:italic}
+.mfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:11px;
+  padding-top:10px;border-top:1px solid var(--line)}
+.kcal{font-family:var(--fm);font-size:10px;color:var(--ink3)}
+.kcal b{color:var(--ink);font-weight:600}
+.swap{background:none;border:0;font:inherit;cursor:pointer;font-size:10.5px;font-weight:800;
+  color:var(--accent2);letter-spacing:.03em;text-transform:uppercase;padding:2px 0}
+.swap:focus-visible{outline:2px solid var(--accent2);outline-offset:2px;border-radius:3px}
+
+/* --- navegação --- */
+.nav{flex:0 0 auto;display:flex;background:var(--surface);border-top:1px solid var(--line)}
+.nav button{flex:1;background:none;border:0;font:inherit;cursor:pointer;padding:9px 2px 11px;
+  font-size:8.5px;color:var(--ink3);font-weight:600;letter-spacing:.03em;transition:color .12s}
+.nav button i{display:block;font-size:15px;line-height:1.3;font-style:normal;margin-bottom:1px}
+.nav button[aria-current="page"]{color:var(--accent);font-weight:800}
+.nav button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+
+/* ==========================================================================
+   3. TELA: MÊS
+   ========================================================================== */
+.pt{padding:13px 16px 14px;border-bottom:2px solid var(--aro)}
+.pt h2{font-family:var(--fd);font-weight:800;font-size:33px;line-height:.92;letter-spacing:-.038em;margin:9px 0 0}
+.cal{padding:13px 13px 4px}
+.cal-wd{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
+.cal-wd span{text-align:center;font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);font-weight:800}
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-g button{aspect-ratio:1;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+  font:inherit;font-size:12px;font-weight:600;cursor:pointer;color:var(--ink2);position:relative;padding:0}
+.cal-g button.empty{background:none;border-color:transparent;cursor:default}
+.cal-g button.sel{background:var(--marinho);border-color:var(--marinho);color:#fff;font-weight:800}
+.cal-g button.hoje::after{content:"";position:absolute;left:50%;bottom:4px;transform:translateX(-50%);
+  width:4px;height:4px;border-radius:50%;background:var(--brasa)}
+.cal-g button.edit::before{content:"";position:absolute;right:4px;top:4px;width:5px;height:5px;
+  border-radius:50%;background:var(--brasa)}
+.cal-g button:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+.calleg{display:flex;gap:14px;padding:11px 15px 3px;font-size:10px;color:var(--ink3);font-weight:500}
+.calleg span{display:flex;align-items:center;gap:5px}
+.calleg i{width:6px;height:6px;border-radius:50%;background:var(--brasa);display:block}
+.daycard{margin:9px 13px 14px;background:var(--surface);border:1px solid var(--line);
+  border-top:2.5px solid var(--rim);border-radius:var(--r);padding:13px 14px}
+.daycard h4{margin:0 0 2px;font-family:var(--fd);font-weight:800;font-size:21px;letter-spacing:-.03em;line-height:1}
+.daycard .sub{font-family:var(--fm);font-size:10px;color:var(--ink3);margin-bottom:10px}
+.dl{display:flex;justify-content:space-between;gap:10px;font-size:12.3px;color:var(--ink2);
+  padding:6px 0;border-bottom:1px solid var(--line)}
+.dl:last-of-type{border-bottom:0}
+.dl span{font-family:var(--fm);font-size:10px;color:var(--ink3);align-self:center;white-space:nowrap}
+.totrow{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;padding-top:10px;
+  border-top:2px solid var(--rim);font-family:var(--fm);font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3)}
+.totrow b{font-family:var(--fd);font-size:25px;color:var(--ink);font-weight:800;
+  letter-spacing:-.035em;text-transform:none}
+
+/* ==========================================================================
+   4. TELA: MERCADO
+   ========================================================================== */
+.mk{padding:12px 13px 8px}
+.range{display:flex;gap:5px;margin-bottom:11px;flex-wrap:wrap}
+.range button{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:5px 12px;
+  font:inherit;font-size:11px;font-weight:600;color:var(--ink2);cursor:pointer}
+.range button[aria-pressed="true"]{background:var(--marinho);border-color:var(--marinho);color:#fff;font-weight:700}
+.range button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.prog{display:flex;align-items:center;gap:9px;font-family:var(--fm);font-size:10px;color:var(--ink3)}
+.prog .track{flex:1;height:5px;border-radius:99px;background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.prog .fill{height:100%;background:var(--marinho);transition:width .2s ease}
+.mksec{padding:0 13px}
+.mksec h5{margin:15px 0 6px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);font-weight:800;display:flex;justify-content:space-between;align-items:baseline}
+.mksec h5 em{font-style:normal;font-family:var(--fm);font-size:9px;color:var(--ink3);
+  letter-spacing:0;text-transform:none;font-weight:400}
+.it{display:flex;align-items:center;gap:10px;width:100%;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:9px 11px;margin-bottom:5px;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+.it .box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--ink3);flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;line-height:1}
+.it .nm{flex:1;font-size:12.3px;font-weight:500;min-width:0}
+.it .qt{font-family:var(--fm);font-size:10.5px;color:var(--ink3);white-space:nowrap}
+.it[aria-pressed="true"]{opacity:.42}
+.it[aria-pressed="true"] .nm{text-decoration:line-through}
+.it[aria-pressed="true"] .box{background:var(--marinho);border-color:var(--marinho)}
+.it:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+
+/* ==========================================================================
+   5. TELA: RECEITAS
+   ========================================================================== */
+.search{margin:12px 13px 0;background:var(--surface);border:1px solid var(--line);border-radius:99px;
+  padding:9px 15px;font-size:12px;color:var(--ink3);font-weight:500}
+.filters{display:flex;gap:5px;overflow-x:auto;padding:10px 13px 5px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4.5px 11px;
+  font:inherit;font-size:10.5px;font-weight:600;color:var(--ink2);cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.filters button[aria-pressed="true"]{background:var(--marinho);border-color:var(--marinho);color:#fff;font-weight:700}
+.filters button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.rcl{padding:7px 13px 12px}
+.rc{display:flex;align-items:center;gap:11px;width:100%;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:10px 12px;margin-bottom:6px;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+.rc .b{flex:1;min-width:0}
+.rc .t{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.028em;line-height:1.06;
+  margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc .s{font-family:var(--fm);font-size:9.5px;color:var(--ink3)}
+.rc .k{font-family:var(--fm);font-size:10px;color:var(--ink3);white-space:nowrap}
+.rc:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+.fab{position:absolute;right:15px;bottom:64px;width:48px;height:48px;border-radius:50%;border:0;
+  color:#fff;font-size:23px;line-height:1;cursor:pointer;box-shadow:0 6px 18px rgba(10,16,23,.34);z-index:5}
+.fab:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
+
+/* ==========================================================================
+   6. TELA: RECEITA (detalhe)
+   ========================================================================== */
+.hero{padding:13px 16px 16px;border-bottom:2px solid var(--aro)}
+.hero h3{font-family:var(--fd);font-weight:800;font-size:31px;line-height:.94;letter-spacing:-.04em;margin:11px 0 8px}
+.hero .facts{display:flex;gap:6px;flex-wrap:wrap}
+.hero .facts span{font-family:var(--fm);font-size:9.5px;background:rgba(255,255,255,.16);
+  border-radius:99px;padding:2.5px 9px}
+.nutri{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:13px 13px 3px}
+.nu{background:var(--surface);border:1px solid var(--line);border-top:2.5px solid var(--rim);
+  border-radius:var(--r-sm);padding:9px 4px;text-align:center}
+.nu b{display:block;font-family:var(--fd);font-weight:800;font-size:22px;letter-spacing:-.045em;line-height:.95}
+.nu span{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+.calcnote{font-family:var(--fm);font-size:9px;color:var(--ink3);text-align:center;padding:8px 13px 0}
+.blk{padding:15px 15px 0}
+.blk h6{margin:0 0 9px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+  font-weight:800;display:flex;justify-content:space-between;align-items:baseline}
+.blk h6 em{font-style:normal;font-family:var(--fm);font-size:9px;color:var(--ink3);
+  letter-spacing:0;text-transform:none;font-weight:400}
+.ing{display:flex;justify-content:space-between;gap:11px;font-size:12.3px;color:var(--ink2);
+  padding:6px 0;border-bottom:1px solid var(--line)}
+.ing span{font-family:var(--fm);font-size:10.5px;color:var(--ink3);white-space:nowrap;align-self:center}
+.stp{display:flex;gap:11px;font-size:12.3px;color:var(--ink2);line-height:1.55;margin-bottom:11px}
+.stp b{font-family:var(--fd);font-weight:800;font-size:19px;color:var(--rim);flex:0 0 17px;
+  line-height:1.05;letter-spacing:-.04em}
+.rfoot{padding:8px 15px 18px;display:flex;gap:8px}
+.btn{flex:1;background:var(--marinho);color:#fff;border:0;border-radius:var(--r-sm);padding:12px;
+  font:inherit;font-size:12px;font-weight:800;cursor:pointer;letter-spacing:.02em}
+.btn.ghost{background:none;color:var(--accent);border:1.5px solid var(--line);flex:0 0 auto;padding:12px 16px}
+.btn:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+
+/* ==========================================================================
+   7. TELA: EDITAR RECEITA
+   ========================================================================== */
+.form{padding:13px 14px 16px}
+.fl{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:800;
+  margin:15px 0 7px;display:block}
+.fl:first-child{margin-top:0}
+.fi{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:10px 12px;font-family:var(--fb);font-size:13px;color:var(--ink);font-weight:600}
+.fi.big{font-family:var(--fd);font-weight:800;font-size:22px;letter-spacing:-.03em;padding:9px 12px}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chips button{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:5px 12px;
+  font:inherit;font-size:10.5px;font-weight:600;color:var(--ink2);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--marinho);border-color:var(--marinho);color:#fff;font-weight:700}
+.chips button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.step{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-sm);padding:6px 9px}
+.step b{font-family:var(--fd);font-weight:800;font-size:20px;letter-spacing:-.03em}
+.step .pm{display:flex;gap:5px}
+.step .pm button{width:25px;height:25px;border-radius:6px;border:1px solid var(--line);background:var(--surface2);
+  color:var(--ink2);font:inherit;font-size:14px;line-height:1;cursor:pointer;padding:0}
+.step .pm button:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+.row-ed{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:8px 10px;margin-bottom:5px}
+.row-ed .g{flex:1;font-size:12.3px;font-weight:500;min-width:0}
+.row-ed .q{font-family:var(--fm);font-size:10.5px;color:var(--ink3);white-space:nowrap}
+.row-ed .x{background:none;border:0;color:var(--ink3);cursor:pointer;font-size:14px;line-height:1;padding:0 2px}
+.row-ed .x:focus-visible{outline:2px solid var(--accent2);outline-offset:2px;border-radius:4px}
+.add{width:100%;background:none;border:1.5px dashed var(--line);border-radius:var(--r-sm);padding:9px;
+  font:inherit;font-size:11.5px;font-weight:700;color:var(--accent);cursor:pointer;margin-top:3px}
+.add:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.stp-ed{display:flex;gap:9px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:9px 10px;margin-bottom:5px}
+.stp-ed b{font-family:var(--fd);font-weight:800;font-size:18px;color:var(--rim);flex:0 0 14px;line-height:1.15}
+.stp-ed span{font-size:12px;color:var(--ink2);line-height:1.5}
+.calcbox{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 12px;margin-top:7px}
+.calcbox .cb-t{font-family:var(--fm);font-size:9px;color:var(--ink3);margin-bottom:8px;line-height:1.5}
+.calcbox .cb-g{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;text-align:center}
+.calcbox .cb-g b{display:block;font-family:var(--fd);font-weight:800;font-size:19px;letter-spacing:-.04em;line-height:1}
+.calcbox .cb-g span{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+
+/* ==========================================================================
+   8. TELA: AJUSTES
+   ========================================================================== */
+.set{padding:12px 14px 18px}
+.setgrp{margin-bottom:19px}
+.setgrp > h6{margin:0 0 8px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);font-weight:800}
+.sr{display:flex;align-items:center;justify-content:space-between;gap:11px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 12px;margin-bottom:5px}
+.sr .l{min-width:0}
+.sr .l b{display:block;font-size:12.5px;font-weight:700;line-height:1.3}
+.sr .l span{font-size:10.5px;color:var(--ink3);line-height:1.4}
+.sr .v{font-family:var(--fm);font-size:11px;color:var(--accent);font-weight:600;white-space:nowrap}
+.ptab{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+.ptab .h,.ptab .r{display:grid;grid-template-columns:1fr 54px 54px;align-items:center;gap:6px;padding:8px 11px}
+.ptab .h{background:var(--surface2);border-bottom:1px solid var(--line)}
+.ptab .h span{font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);font-weight:800;text-align:center}
+.ptab .h span:first-child{text-align:left}
+.ptab .r{border-bottom:1px solid var(--line)}
+.ptab .r:last-child{border-bottom:0}
+.ptab .r b{font-size:11.8px;font-weight:600}
+.ptab .r i{font-family:var(--fd);font-weight:800;font-size:20px;text-align:center;font-style:normal;letter-spacing:-.03em}
+.ptab .r i.wk{color:var(--brasa)}
+
+/* ==========================================================================
+   9. FOLHA DE SUBSTITUIÇÃO
+   ========================================================================== */
+.veil{position:absolute;inset:0;background:rgba(8,12,17,.48);z-index:20;opacity:0;pointer-events:none;transition:opacity .18s}
+.veil.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:21;background:var(--bg);border-radius:18px 18px 0 0;
+  border-top:2.5px solid var(--rim);padding:9px 15px 18px;transform:translateY(102%);
+  transition:transform .24s cubic-bezier(.32,.72,0,1);max-height:84%;overflow-y:auto}
+.sheet.on{transform:translateY(0)}
+.grab{width:36px;height:4px;border-radius:99px;background:var(--line);margin:0 auto 13px}
+.sheet h4{margin:0 0 2px;font-family:var(--fd);font-weight:800;font-size:24px;letter-spacing:-.035em;line-height:1}
+.sheet .shs{font-family:var(--fm);font-size:10px;color:var(--ink3);margin-bottom:15px}
+.shl{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:800;margin:15px 0 8px}
+.opt{display:flex;align-items:center;gap:10px;width:100%;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:10px 12px;margin-bottom:5px;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+.opt .b{flex:1;min-width:0}
+.opt .t{font-size:12.5px;font-weight:700;line-height:1.25;margin-bottom:1px}
+.opt .s{font-family:var(--fm);font-size:9.5px;color:var(--ink3)}
+.opt .k{font-family:var(--fm);font-size:9.5px;color:var(--ink3);white-space:nowrap}
+.opt:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+.toast{position:absolute;left:14px;right:14px;bottom:62px;z-index:30;background:var(--marinho);color:#fff;
+  border-radius:var(--r-sm);padding:10px 13px;font-size:11.5px;font-weight:700;opacity:0;
+  transform:translateY(8px);transition:opacity .18s,transform .18s;pointer-events:none}
+.toast.on{opacity:1;transform:translateY(0)}
+
+.foot{margin-top:52px;border-top:1px solid #1f2830;padding-top:24px;color:#8b97a4;font-size:14px;
+  max-width:78ch;line-height:1.65}
+.foot b{color:#fff;font-weight:700}
+.foot code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#171e25;padding:2px 6px;
+  border-radius:4px;color:#c3ccd5}
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="phead">
+    <p class="kick">Rodada 3 · direção 05 escolhida</p>
+    <h1>Esmalte, levada a sério</h1>
+    <p>A panela de ágata: branco esmaltado, marinho salpicado, aro escuro onde o esmalte termina. Agora com <em>sistema de tokens</em>, escala tipográfica e <em>oito telas</em> — entram Editar receita e Ajustes, que faltavam.</p>
+    <p>Os dois celulares navegam juntos. Toque em qualquer coisa: refeição abre receita, Substituir abre a folha, item do mercado risca, dia do calendário recalcula porções.</p>
+  </header>
+
+  <div class="bar">
+    <span class="bar-lbl">Tela</span>
+    <div class="segs" id="segs">
+      <button class="seg" data-go="hoje" aria-pressed="true">Hoje</button>
+      <button class="seg" data-go="mes" aria-pressed="false">Mês</button>
+      <button class="seg" data-go="mercado" aria-pressed="false">Mercado</button>
+      <button class="seg" data-go="receitas" aria-pressed="false">Receitas</button>
+      <button class="seg" data-go="detalhe" aria-pressed="false">Receita</button>
+      <button class="seg" data-go="editar" aria-pressed="false">Editar</button>
+      <button class="seg" data-go="ajustes" aria-pressed="false">Ajustes</button>
+      <button class="seg" data-go="sheet" aria-pressed="false">Substituir</button>
+    </div>
+  </div>
+
+  <div class="stage" id="stage"></div>
+
+  <h2 class="sc">O sistema</h2>
+  <p class="scn">Nada aqui é escolha solta: cada token existe porque um pedaço da panela existe. É o que vai virar <em>ThemeData</em> no Flutter, um para cada modo.</p>
+
+  <div class="docs">
+    <div class="card">
+      <h3>Cores</h3>
+      <p class="cn">Seis, e só. O marinho manda, o branco recebe, a brasa aparece uma vez por tela.</p>
+      <div class="tok"><i style="background:#14263F"></i><b>marinho</b><code>#14263F</code><span>campo salpicado, dia escolhido, ações</span></div>
+      <div class="tok"><i style="background:#2C4A73"></i><b>anil</b><code>#2C4A73</code><span>segundo plano do marinho, aro no escuro</span></div>
+      <div class="tok"><i style="background:#0A1017"></i><b>aro</b><code>#0A1017</code><span>a régua escura onde o esmalte acaba</span></div>
+      <div class="tok"><i style="background:#FFFFFF"></i><b>esmalte</b><code>#FFFFFF</code><span>cartão, superfície de conteúdo</span></div>
+      <div class="tok"><i style="background:#E9EDF0"></i><b>louça</b><code>#E9EDF0</code><span>fundo do app, atrás dos cartões</span></div>
+      <div class="tok"><i style="background:#C7412B"></i><b>brasa</b><code>#C7412B</code><span>só substituir, hoje e alerta. Nada mais.</span></div>
+    </div>
+
+    <div class="card">
+      <h3>Tipografia</h3>
+      <p class="cn">Duas famílias e uma monoespaçada. A Darker Grotesque só em corpo grande — abaixo de 17 px ela some.</p>
+      <div class="ty"><div class="tn">Darker Grotesque 800 · 66/48 · −.045em</div>
+        <div style="font-family:'Darker Grotesque';font-weight:800;font-size:44px;line-height:.8;letter-spacing:-.045em;color:#fff">04</div></div>
+      <div class="ty"><div class="tn">Darker Grotesque 800 · 23/22 · −.03em</div>
+        <div style="font-family:'Darker Grotesque';font-weight:800;font-size:23px;letter-spacing:-.03em;color:#e9eef3">Picadinho de carne com legumes</div></div>
+      <div class="ty"><div class="tn">Manrope 500 · 12,3/18</div>
+        <div style="font-family:Manrope;font-weight:500;font-size:12.3px;color:#b3bfc9">Batata-doce cozida e amassada</div></div>
+      <div class="ty"><div class="tn">Manrope 800 · 9,5 · .16em · caixa alta</div>
+        <div style="font-family:Manrope;font-weight:800;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#8FB0E0">Café da manhã</div></div>
+      <div class="ty"><div class="tn">IBM Plex Mono 400 · 10,5 — toda medida</div>
+        <div style="font-family:'IBM Plex Mono';font-size:11px;color:#9aa7b3">150 g · 438 kcal · 1,4 kg</div></div>
+    </div>
+
+    <div class="card">
+      <h3>As três assinaturas</h3>
+      <p class="cn">Onde a direção gasta ousadia — e onde não gasta.</p>
+      <p class="sig"><b>O respingo.</b> Três camadas de pontos em tamanhos e passos diferentes (37, 53 e 71 px) pra não repetir visivelmente. Vive só no campo marinho: topo, dia escolhido, botão de nova receita. Nunca atrás de texto corrido.</p>
+      <p class="sig"><b>O aro.</b> Cada cartão tem 2,5 px de marinho na borda de cima — é a faixa escura onde o esmalte termina e o aço aparece. Refeição espelhada perde o aro e vira cinza: dá pra ver o que é original e o que é repetição sem ler uma palavra.</p>
+      <p class="sig"><b>A brasa.</b> Um único quente na paleta, racionado: substituir, o ponto de hoje no calendário, o dia editado. Se aparecer numa quarta coisa, perdeu a força.</p>
+    </div>
+
+    <div class="card">
+      <h3>Decisões que a tela resolve</h3>
+      <p class="cn">Três pontos do design que carregam regra de negócio.</p>
+      <p class="sig"><b>Quantidade aparece no Hoje.</b> Cada componente mostra a medida já escalada pela porção do horário. Ela decide se tem ingrediente sem abrir a receita — e o número muda sozinho entre o almoço de 1 e o jantar de 2.</p>
+      <p class="sig"><b>Nutrição é calculada, não digitada.</b> Na tela de editar, o painel de macros é cinza e travado, com a nota <em>"calculado da tabela TACO"</em>. Ela nunca vai digitar caloria errada, e trocar um ingrediente recalcula na hora.</p>
+      <p class="sig"><b>O calendário marca o que ela mudou.</b> Ponto de brasa no canto do dia = refeição substituída ali. O ciclo de 33 dias continua intacto por baixo.</p>
+    </div>
+  </div>
+
+  <p class="foot">
+    <b>Se estiver de pé:</b> eu fecho o documento de design, escrevo a spec e passo pro plano de implementação. <br>
+    <b>Se algo incomodar:</b> aponte — <code>o respingo está forte demais</code>, <code>quero sem modo escuro</code>, <code>a fonte do título não convence</code>, <code>tira a quantidade do Hoje</code>. Ajusto antes de escrever a spec.
+  </p>
+
+</div>
+
+<script>
+/* =========================================================================
+   DADOS
+   ========================================================================= */
+const REFS = [
+  { slot:'Café da manhã', porc:1, titulo:'Tapioca com queijo', kcal:438, prot:14,
+    comps:[{n:'Tapioca com queijo coalho',q:'1 un'},{n:'Mamão',q:'150 g'},{n:'Suco de uva',q:'200 ml'}] },
+  { slot:'Almoço', porc:1, titulo:'Picadinho de carne com legumes', kcal:712, prot:38,
+    comps:[{n:'Arroz branco',q:'120 g'},{n:'Feijão carioca',q:'90 g'},{n:'Picadinho de carne',q:'150 g'},
+           {n:'Batata-doce amassada',q:'110 g'},{n:'Alface e pepino',q:'80 g'}] },
+  { slot:'Café da tarde', porc:2, titulo:'Tapioca com queijo', kcal:876, prot:28, espelho:'o café da manhã',
+    comps:[{n:'Tapioca com queijo coalho',q:'2 un'},{n:'Mamão',q:'300 g'},{n:'Suco de uva',q:'400 ml'}] },
+  { slot:'Jantar', porc:2, titulo:'Picadinho de carne com legumes', kcal:1424, prot:76, espelho:'o almoço',
+    comps:[{n:'Arroz branco',q:'240 g'},{n:'Feijão carioca',q:'180 g'},{n:'Picadinho de carne',q:'300 g'},
+           {n:'Batata-doce amassada',q:'220 g'},{n:'Alface e pepino',q:'160 g'}] }
+];
+
+const MERCADO = [
+  { sec:'Hortifrúti', itens:[{n:'Batata-doce',q:'1,4 kg'},{n:'Cenoura',q:'900 g'},{n:'Alface americana',q:'3 pés'},
+    {n:'Pepino',q:'6 un'},{n:'Mamão formosa',q:'2,1 kg'},{n:'Cebola',q:'1,2 kg'}] },
+  { sec:'Açougue', itens:[{n:'Patinho em cubos',q:'1,05 kg'},{n:'Carne moída (acém)',q:'800 g'},{n:'Filé de frango',q:'1,2 kg'}] },
+  { sec:'Mercearia', itens:[{n:'Arroz branco',q:'2 kg'},{n:'Feijão carioca',q:'1 kg'},{n:'Goma de tapioca',q:'500 g'},
+    {n:'Azeite',q:'500 ml'},{n:'Suco de uva integral',q:'3 L'}] },
+  { sec:'Laticínios', itens:[{n:'Queijo coalho',q:'600 g'},{n:'Manteiga',q:'200 g'},{n:'Leite integral',q:'4 L'}] },
+  { sec:'Padaria', itens:[{n:'Pão francês',q:'14 un'},{n:'Pão de forma',q:'1 pacote'}] }
+];
+
+const CATALOGO = [
+  {n:'Picadinho de carne com legumes', c:'Proteína · 35 min · rende 1', k:'312 kcal'},
+  {n:'Arroz branco',                   c:'Base · 20 min · rende 4',     k:'128 kcal'},
+  {n:'Feijão carioca',                 c:'Leguminosa · 40 min · rende 6', k:'76 kcal'},
+  {n:'Batata-doce cozida e amassada',  c:'Legume · 25 min · rende 2',   k:'94 kcal'},
+  {n:'Alface americana e pepino',      c:'Salada · 8 min · rende 1',    k:'42 kcal'},
+  {n:'Tapioca com queijo coalho',      c:'Base · 10 min · rende 1',     k:'268 kcal'},
+  {n:'Frango grelhado simples',        c:'Proteína · 22 min · rende 2', k:'187 kcal'}
+];
+
+const INGR = [
+  {n:'Patinho em cubos',q:'150 g'},{n:'Cenoura em cubos',q:'60 g'},{n:'Batata em cubos',q:'70 g'},
+  {n:'Cebola picada',q:'40 g'},{n:'Alho',q:'1 dente'},{n:'Azeite',q:'1 col. sopa'},
+  {n:'Extrato de tomate',q:'15 g'},{n:'Sal',q:'a gosto'}
+];
+
+const PREP = [
+  'Tempere a carne com sal e alho e deixe descansar 10 minutos.',
+  'Aqueça o azeite e sele a carne em fogo alto até dourar por fora.',
+  'Junte a cebola, refogue até ficar transparente e acrescente o extrato.',
+  'Adicione cenoura, batata e água até cobrir. Tampe.',
+  'Cozinhe 20 minutos em fogo baixo, até os legumes ficarem macios.'
+];
+
+const TROCAS = [
+  {n:'Frango grelhado com brócolis', s:'dia 6', k:'648 kcal'},
+  {n:'Strogonoff de carne',          s:'dia 13', k:'812 kcal'},
+  {n:'Fricassê de frango',           s:'dia 18', k:'734 kcal'},
+  {n:'Quibe assado com legumes',     s:'dia 11', k:'690 kcal'}
+];
+
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+/* =========================================================================
+   TELAS
+   ========================================================================= */
+function paneHoje(){
+  const meals = REFS.map((r,i) => {
+    const mir = r.espelho ? ' mirror' : '';
+    const body = r.espelho
+      ? '<div class="mirrornote">repete ' + r.espelho + ', em dobro</div>'
+      : '<div class="cl">' + r.comps.map(c =>
+          '<div><b>' + esc(c.n) + '</b><span>' + esc(c.q) + '</span></div>').join('') + '</div>';
+    const foot = r.espelho ? '' :
+      '<div class="mfoot"><span class="kcal"><b>' + r.kcal + '</b> kcal · ' + r.prot + ' g prot</span>' +
+      '<button class="swap" data-act="sheet">Substituir</button></div>';
+    return '<button class="meal' + mir + '" data-act="detalhe" data-i="' + i + '">' +
+      '<span class="mrow"><span class="mslot">' + esc(r.slot) + '</span>' +
+      '<span class="mport">' + r.porc + (r.porc > 1 ? ' porções' : ' porção') + '</span></span>' +
+      '<span class="mtitle" style="display:block">' + esc(r.titulo) + '</span>' + body + foot + '</button>';
+  }).join('');
+
+  return '<div class="pane on" data-pane="hoje">' +
+    '<div class="top speck"><div class="top-row"><span class="top-m">Setembro 2026</span>' +
+    '<button class="iconbtn" data-act="ir" data-go="ajustes" aria-label="Ajustes">⋯</button></div>' +
+    '<div class="dhead"><span class="dnum">04</span>' +
+    '<span class="dmeta"><span class="dwd">quarta</span><div class="dcyc">dia 4 de 33</div></span>' +
+    '<span class="dtot"><b>1 902</b><span>kcal no dia</span></span></div></div>' +
+    '<div class="meals">' + meals + '</div></div>';
+}
+
+function paneMes(){
+  const first = new Date(2026,8,1).getDay(), dias = 30, sel = 4, hoje = 12;
+  const editados = [7,19,23];
+  let cells = '';
+  for (let i = 0; i < first; i++) cells += '<button class="empty" tabindex="-1" aria-hidden="true"></button>';
+  for (let d = 1; d <= dias; d++){
+    let cls = [];
+    if (d === sel) cls.push('sel');
+    if (d === hoje) cls.push('hoje');
+    if (editados.includes(d)) cls.push('edit');
+    cells += '<button class="' + cls.join(' ') + '" data-act="pickday" data-d="' + d + '">' + d + '</button>';
+  }
+  return '<div class="pane" data-pane="mes">' +
+    '<div class="pt speck"><div class="top-row"><span class="top-m">‹ Setembro 2026 ›</span>' +
+    '<button class="iconbtn" data-act="ir" data-go="ajustes" aria-label="Ajustes">⋯</button></div>' +
+    '<h2>O mês</h2></div>' +
+    '<div class="cal"><div class="cal-wd"><span>D</span><span>S</span><span>T</span><span>Q</span>' +
+    '<span>Q</span><span>S</span><span>S</span></div><div class="cal-g">' + cells + '</div></div>' +
+    '<div class="calleg"><span><i></i>dia que você trocou</span><span>3 neste mês</span></div>' +
+    '<div class="daycard"><h4 data-daytitle>Quarta, 4 de setembro</h4>' +
+    '<div class="sub" data-daysub>dia 4 de 33 · 1 porção no café e no almoço</div>' +
+    REFS.map(r => '<div class="dl"><b>' + esc(r.slot) + '</b><span>' + r.kcal + ' kcal</span></div>').join('') +
+    '<div class="totrow"><span>total do dia</span><b>1 902</b></div></div></div>';
+}
+
+function paneMercado(){
+  const total = MERCADO.reduce((a,s) => a + s.itens.length, 0);
+  return '<div class="pane" data-pane="mercado">' +
+    '<div class="pt speck"><div class="top-row"><span class="top-m">Lista de mercado</span>' +
+    '<button class="iconbtn" aria-label="Compartilhar">⤴</button></div><h2>1 – 7 de setembro</h2></div>' +
+    '<div class="mk"><div class="range"><button aria-pressed="true">Esta semana</button>' +
+    '<button aria-pressed="false">Este mês</button><button aria-pressed="false">Escolher…</button></div>' +
+    '<div class="prog"><span data-count>0 de ' + total + '</span>' +
+    '<span class="track"><span class="fill" style="width:0%"></span></span></div></div>' +
+    MERCADO.map(s => '<div class="mksec"><h5>' + esc(s.sec) + '<em>' + s.itens.length + ' itens</em></h5>' +
+      s.itens.map(i => '<button class="it" data-act="tick" aria-pressed="false">' +
+        '<span class="box">✓</span><span class="nm">' + esc(i.n) + '</span>' +
+        '<span class="qt">' + esc(i.q) + '</span></button>').join('') + '</div>').join('') +
+    '<div style="height:16px"></div></div>';
+}
+
+function paneReceitas(){
+  const cats = ['Todas','Base','Proteína','Leguminosa','Legume','Salada','Molho'];
+  return '<div class="pane" data-pane="receitas">' +
+    '<div class="pt speck"><div class="top-row"><span class="top-m">Catálogo</span>' +
+    '<button class="iconbtn" data-act="ir" data-go="ajustes" aria-label="Ajustes">⋯</button></div>' +
+    '<h2>182 receitas</h2></div>' +
+    '<div class="search">Buscar receita ou ingrediente</div>' +
+    '<div class="filters">' + cats.map((c,i) =>
+      '<button aria-pressed="' + (i === 0) + '">' + c + '</button>').join('') + '</div>' +
+    '<div class="rcl">' + CATALOGO.map(r =>
+      '<button class="rc" data-act="detalhe"><span class="b"><span class="t">' + esc(r.n) + '</span>' +
+      '<span class="s">' + esc(r.c) + '</span></span><span class="k">' + esc(r.k) + '</span></button>').join('') +
+    '</div><button class="fab speck" data-act="ir" data-go="editar" aria-label="Nova receita">+</button></div>';
+}
+
+function paneDetalhe(){
+  return '<div class="pane" data-pane="detalhe">' +
+    '<div class="hero speck"><div class="top-row">' +
+    '<button class="back" data-act="voltar">‹ Hoje</button>' +
+    '<button class="iconbtn" data-act="ir" data-go="editar" aria-label="Editar">✎</button></div>' +
+    '<h3>Picadinho de carne com legumes</h3>' +
+    '<div class="facts"><span>35 min</span><span>rende 1</span><span>Proteína</span></div></div>' +
+    '<div class="nutri">' +
+    '<div class="nu"><b>312</b><span>kcal</span></div><div class="nu"><b>28</b><span>prot g</span></div>' +
+    '<div class="nu"><b>14</b><span>carb g</span></div><div class="nu"><b>16</b><span>gord g</span></div></div>' +
+    '<div class="calcnote">calculado dos ingredientes · tabela TACO</div>' +
+    '<div class="blk"><h6>Ingredientes<em>para 1 porção</em></h6>' +
+    INGR.map(i => '<div class="ing"><b>' + esc(i.n) + '</b><span>' + esc(i.q) + '</span></div>').join('') + '</div>' +
+    '<div class="blk"><h6>Modo de preparo<em>5 passos</em></h6>' +
+    PREP.map((p,i) => '<div class="stp"><b>' + (i+1) + '</b><span>' + esc(p) + '</span></div>').join('') + '</div>' +
+    '<div class="rfoot"><button class="btn" data-act="sheet">Substituir no dia 4</button>' +
+    '<button class="btn ghost" data-act="ir" data-go="editar">Editar</button></div></div>';
+}
+
+function paneEditar(){
+  const cats = ['Base','Proteína','Leguminosa','Legume','Salada','Molho'];
+  return '<div class="pane" data-pane="editar">' +
+    '<div class="pt speck"><div class="top-row">' +
+    '<button class="back" data-act="voltar">‹ Cancelar</button>' +
+    '<button class="iconbtn" aria-label="Excluir">🗑</button></div><h2>Editar receita</h2></div>' +
+    '<div class="form">' +
+    '<span class="fl">Nome</span><div class="fi big">Picadinho de carne com legumes</div>' +
+    '<span class="fl">Categoria</span><div class="chips">' +
+    cats.map((c,i) => '<button aria-pressed="' + (i === 1) + '">' + c + '</button>').join('') + '</div>' +
+    '<div class="duo"><div><span class="fl">Rende</span><div class="step"><b>1 porção</b>' +
+    '<span class="pm"><button aria-label="Menos">−</button><button aria-label="Mais">+</button></span></div></div>' +
+    '<div><span class="fl">Tempo</span><div class="step"><b>35 min</b>' +
+    '<span class="pm"><button aria-label="Menos">−</button><button aria-label="Mais">+</button></span></div></div></div>' +
+    '<span class="fl">Ingredientes</span>' +
+    INGR.slice(0,5).map(i => '<div class="row-ed"><span class="g">' + esc(i.n) + '</span>' +
+      '<span class="q">' + esc(i.q) + '</span><button class="x" aria-label="Remover">×</button></div>').join('') +
+    '<button class="add">+ Adicionar ingrediente</button>' +
+    '<span class="fl">Modo de preparo</span>' +
+    PREP.slice(0,3).map((p,i) => '<div class="stp-ed"><b>' + (i+1) + '</b><span>' + esc(p) + '</span></div>').join('') +
+    '<button class="add">+ Adicionar passo</button>' +
+    '<span class="fl">Valor nutricional</span>' +
+    '<div class="calcbox"><div class="cb-t">Calculado dos ingredientes pela tabela TACO. Muda sozinho quando você edita a lista acima — não dá pra digitar à mão.</div>' +
+    '<div class="cb-g"><div><b>312</b><span>kcal</span></div><div><b>28</b><span>prot g</span></div>' +
+    '<div><b>14</b><span>carb g</span></div><div><b>16</b><span>gord g</span></div></div></div>' +
+    '<div style="height:14px"></div><button class="btn" style="width:100%" data-act="voltar">Salvar receita</button>' +
+    '</div></div>';
+}
+
+function paneAjustes(){
+  const linhas = [
+    ['Café da manhã','1','2'], ['Almoço','1','2'], ['Café da tarde','2','2'], ['Jantar','2','2']
+  ];
+  return '<div class="pane" data-pane="ajustes">' +
+    '<div class="pt speck"><div class="top-row"><button class="back" data-act="voltar">‹ Hoje</button></div>' +
+    '<h2>Ajustes</h2></div><div class="set">' +
+
+    '<div class="setgrp"><h6>O ciclo</h6>' +
+    '<div class="sr"><span class="l"><b>Começou em</b><span>o dia 1 das 33 receitas caiu aqui</span></span>' +
+    '<span class="v">1 set 2026</span></div>' +
+    '<div class="sr"><span class="l"><b>Tamanho do ciclo</b><span>volta pro dia 1 depois disso</span></span>' +
+    '<span class="v">33 dias</span></div></div>' +
+
+    '<div class="setgrp"><h6>Porções</h6>' +
+    '<div class="ptab"><div class="h"><span>Refeição</span><span>Seg–sex</span><span>Sáb–dom</span></div>' +
+    linhas.map(l => '<div class="r"><b>' + l[0] + '</b><i>' + l[1] + '</i><i class="wk">' + l[2] + '</i></div>').join('') +
+    '</div></div>' +
+
+    '<div class="setgrp"><h6>Seus dados</h6>' +
+    '<div class="sr"><span class="l"><b>Exportar backup</b><span>um arquivo .json com tudo</span></span><span class="v">→</span></div>' +
+    '<div class="sr"><span class="l"><b>Importar backup</b><span>substitui o que está no aparelho</span></span><span class="v">→</span></div>' +
+    '<div class="sr"><span class="l"><b>Aparência</b><span>claro, escuro ou seguir o sistema</span></span><span class="v">Sistema</span></div></div>' +
+
+    '<div class="setgrp"><h6>Sobre</h6>' +
+    '<div class="sr"><span class="l"><b>No aparelho</b><span>182 receitas · 66 refeições · 214 alimentos</span></span>' +
+    '<span class="v">2,4 MB</span></div>' +
+    '<div class="sr"><span class="l"><b>Funciona sem internet</b><span>nada sai do telefone</span></span><span class="v">✓</span></div></div>' +
+    '</div></div>';
+}
+
+function sheet(){
+  return '<div class="veil" data-act="fechar"></div><div class="sheet">' +
+    '<div class="grab"></div><h4>Substituir o almoço</h4>' +
+    '<div class="shs">quarta, 4 de setembro · 1 porção · só neste dia</div>' +
+    '<div class="shl">Trocar a refeição inteira</div>' +
+    TROCAS.map(o => '<button class="opt" data-act="escolher"><span class="b">' +
+      '<span class="t">' + esc(o.n) + '</span><span class="s">' + esc(o.s) + '</span></span>' +
+      '<span class="k">' + esc(o.k) + '</span></button>').join('') +
+    '<div class="shl">Ou trocar só um componente</div>' +
+    REFS[1].comps.map(c => '<button class="opt" data-act="escolher"><span class="b">' +
+      '<span class="t">' + esc(c.n) + '</span><span class="s">toca pra ver as opções</span></span>' +
+      '<span class="k">' + esc(c.q) + '</span></button>').join('') +
+    '</div><div class="toast">Almoço substituído só nesta quarta</div>';
+}
+
+/* =========================================================================
+   MONTAGEM
+   ========================================================================= */
+const panes = () => paneHoje() + paneMes() + paneMercado() + paneReceitas() +
+                    paneDetalhe() + paneEditar() + paneAjustes();
+
+function phone(modo){
+  return '<div class="slot"><h4>' + (modo === 'claro' ? 'Claro' : 'Escuro') + '</h4>' +
+    '<div class="phone"><div class="scr esm" data-mode="' + modo + '" data-screen="hoje">' +
+    '<div class="view">' + panes() + '</div>' +
+    '<nav class="nav">' +
+      '<button data-act="ir" data-go="hoje" aria-current="page"><i>◉</i>Hoje</button>' +
+      '<button data-act="ir" data-go="mes"><i>▦</i>Mês</button>' +
+      '<button data-act="ir" data-go="mercado"><i>✓</i>Mercado</button>' +
+      '<button data-act="ir" data-go="receitas"><i>≡</i>Receitas</button>' +
+    '</nav>' + sheet() + '</div></div></div>';
+}
+
+document.getElementById('stage').innerHTML = phone('claro') + phone('escuro');
+
+/* --------------------------- NAVEGAÇÃO --------------------------- */
+const DS = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+const todas = () => document.querySelectorAll('.scr');
+
+function irPara(scr, alvo){
+  if (alvo === 'sheet'){ abrir(scr); return; }
+  fechar(scr);
+  scr.dataset.screen = alvo;
+  scr.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.dataset.pane === alvo));
+  scr.querySelectorAll('.nav button').forEach(b => {
+    if (b.dataset.go === alvo) b.setAttribute('aria-current','page');
+    else b.removeAttribute('aria-current');
+  });
+  const v = scr.querySelector('.view'); if (v) v.scrollTop = 0;
+}
+function abrir(scr){
+  if (!['detalhe','hoje'].includes(scr.dataset.screen)) irPara(scr,'hoje');
+  scr.querySelector('.veil').classList.add('on');
+  scr.querySelector('.sheet').classList.add('on');
+}
+function fechar(scr){
+  scr.querySelector('.veil').classList.remove('on');
+  scr.querySelector('.sheet').classList.remove('on');
+}
+function toast(scr){
+  const t = scr.querySelector('.toast');
+  t.classList.add('on'); clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('on'), 2000);
+}
+/* espelha a ação nos dois aparelhos, pra comparação lado a lado */
+function ambos(fn){ todas().forEach(fn); }
+
+document.addEventListener('click', e => {
+  const seg = e.target.closest('.seg');
+  if (seg){
+    document.querySelectorAll('#segs .seg').forEach(s => s.setAttribute('aria-pressed', String(s === seg)));
+    ambos(scr => irPara(scr, seg.dataset.go));
+    return;
+  }
+  const scr = e.target.closest('.scr');
+  if (!scr) return;
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  const act = el.dataset.act;
+
+  if (act === 'ir')           ambos(s => irPara(s, el.dataset.go));
+  else if (act === 'detalhe') ambos(s => irPara(s, 'detalhe'));
+  else if (act === 'voltar')  ambos(s => irPara(s, 'hoje'));
+  else if (act === 'sheet')   { e.stopPropagation(); ambos(abrir); }
+  else if (act === 'fechar')  ambos(fechar);
+  else if (act === 'escolher'){ ambos(s => { fechar(s); toast(s); }); }
+
+  else if (act === 'tick'){
+    const idx = [...scr.querySelectorAll('.it')].indexOf(el);
+    ambos(s => {
+      const alvo = s.querySelectorAll('.it')[idx];
+      alvo.setAttribute('aria-pressed', String(alvo.getAttribute('aria-pressed') !== 'true'));
+      const itens = s.querySelectorAll('.it');
+      const feitos = s.querySelectorAll('.it[aria-pressed="true"]').length;
+      s.querySelector('[data-count]').textContent = feitos + ' de ' + itens.length;
+      s.querySelector('.fill').style.width = (feitos / itens.length * 100) + '%';
+    });
+  }
+
+  else if (act === 'pickday'){
+    const d = +el.dataset.d;
+    const wd = DS[new Date(2026,8,d).getDay()];
+    const fds = (wd === 'Sábado' || wd === 'Domingo');
+    ambos(s => {
+      s.querySelectorAll('.cal-g button').forEach(b => b.classList.remove('sel'));
+      const alvo = [...s.querySelectorAll('.cal-g button:not(.empty)')][d-1];
+      if (alvo) alvo.classList.add('sel');
+      s.querySelector('[data-daytitle]').textContent = wd + ', ' + d + ' de setembro';
+      s.querySelector('[data-daysub]').textContent = 'dia ' + (((d-1) % 33) + 1) + ' de 33 · ' +
+        (fds ? '2 porções o dia todo' : '1 porção no café e no almoço');
+    });
+  }
+});
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('.range button, .filters button, .chips button');
+  if (!b) return;
+  b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+});
+</script>
+</body>
+</html>

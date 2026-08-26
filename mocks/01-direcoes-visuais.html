@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direções visuais — App de Refeições</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@600&family=Instrument+Serif&family=Instrument+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#101418;color:#dfe4ea;font-family:"IBM Plex Sans",system-ui,sans-serif;line-height:1.55}
+.wrap{max-width:1240px;margin:0 auto;padding:40px 24px 96px}
+
+/* ---------- chrome da página (neutro, não é nenhuma das direções) ---------- */
+.page-head{border-bottom:1px solid #263039;padding-bottom:28px;margin-bottom:44px}
+.kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#7f8b98;margin:0 0 10px;font-weight:600}
+.page-head h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(28px,4.4vw,44px);line-height:1.05;margin:0 0 12px;color:#fff;letter-spacing:-.02em}
+.page-head p{margin:0;max-width:62ch;color:#9aa6b2;font-size:15px}
+.page-head em{color:#cfd8e1;font-style:normal;font-weight:500}
+
+h2.sec{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:22px;color:#fff;margin:0 0 6px;letter-spacing:-.01em}
+.sec-note{color:#8b97a4;font-size:14px;margin:0 0 24px;max-width:70ch}
+.sec-note em{color:#cfd8e1;font-style:normal;font-weight:500}
+
+/* ---------- mapa de UX ---------- */
+.ux{background:#161c22;border:1px solid #263039;border-radius:14px;padding:26px;margin-bottom:56px}
+.tabs{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px}
+.tab{border:1px solid #2f3a45;border-radius:999px;padding:7px 15px;font-size:13px;color:#c3ccd5;background:#1b232a}
+.tab b{color:#fff;font-weight:600}
+.ux-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:18px}
+.ux-card{background:#111820;border:1px solid #24303a;border-radius:11px;padding:16px}
+.ux-card h3{margin:0 0 8px;font-size:14px;color:#fff;font-weight:600}
+.ux-card p{margin:0;font-size:13.5px;color:#93a0ac}
+.ux-card em{color:#c9d3dd;font-style:normal;font-weight:500}
+.ux-card code{font-family:"JetBrains Mono",monospace;font-size:12px;background:#1b232a;padding:1px 5px;border-radius:4px;color:#c3ccd5}
+
+/* ---------- grade de direções ---------- */
+.dirs{display:grid;grid-template-columns:repeat(auto-fit,minmax(348px,1fr));gap:30px;align-items:start}
+.dir{background:#161c22;border:1px solid #263039;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.dir-head{padding:22px 22px 18px;border-bottom:1px solid #232d36}
+.dir-num{font-family:"JetBrains Mono",monospace;font-size:11px;color:#6f7c89;letter-spacing:.12em}
+.dir-head h3{margin:6px 0 8px;font-family:"Bricolage Grotesque",sans-serif;font-size:25px;font-weight:800;color:#fff;letter-spacing:-.015em}
+.dir-head .thesis{margin:0;font-size:13.5px;color:#95a1ad;line-height:1.5}
+.dir-head .thesis em{color:#cfd8e1;font-style:normal;font-weight:500}
+.dir-body{padding:20px 22px 26px}
+.lbl{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#6f7c89;font-weight:600;margin:0 0 10px}
+.swatches{display:flex;gap:6px;margin:0 0 8px}
+.sw{flex:1;height:46px;border-radius:6px;border:1px solid rgba(255,255,255,.09)}
+.sw-names{display:flex;gap:6px;margin:0 0 22px}
+.sw-names span{flex:1;font-family:"JetBrains Mono",monospace;font-size:8.5px;color:#7c8894;text-align:center;line-height:1.35}
+.typespec{border:1px solid #232d36;border-radius:10px;padding:15px 16px;margin-bottom:22px;background:#111820}
+.typespec .tsn{font-family:"JetBrains Mono",monospace;font-size:10px;color:#6f7c89;margin-bottom:4px}
+.risk{font-size:12.5px;color:#8b97a4;border-left:2px solid #3a4753;padding-left:12px;margin:18px 0 0;line-height:1.55}
+.risk b{color:#c3ccd5;font-weight:600}
+.risk em{color:#c3ccd5;font-style:normal;font-weight:500}
+
+/* ---------- moldura do celular ---------- */
+.phone{width:308px;max-width:100%;margin:0 auto 4px;border-radius:26px;overflow:hidden;border:1px solid #313d49;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.screen{height:566px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.scroll{flex:1;overflow:hidden}
+.navbar{display:flex;border-top:1px solid rgba(0,0,0,.08);flex:0 0 auto}
+.navbar div{flex:1;text-align:center;padding:9px 2px 11px;font-size:9px;letter-spacing:.03em}
+.navbar .ico{display:block;font-size:14px;line-height:1.3;margin-bottom:1px}
+
+/* ================= DIREÇÃO 1 — CADERNO ================= */
+.d1 .screen{background:#FBFAF7;color:#22262E;font-family:"IBM Plex Sans",sans-serif;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 27px,#D9E2F0 27px 28px);
+  background-position:0 92px}
+.d1 .appbar{background:#FBFAF7;padding:13px 16px 9px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #E4E9F2}
+.d1 .appbar .m{font-family:"Newsreader",serif;font-size:16px;font-weight:600;color:#1D3F94}
+.d1 .appbar .dots{color:#93A2BE;font-size:15px}
+.d1 .datehead{padding:12px 16px 10px;display:flex;align-items:baseline;gap:11px;position:relative}
+.d1 .dnum{font-family:"Newsreader",serif;font-size:46px;font-weight:600;line-height:.86;color:#1D3F94}
+.d1 .dwd{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7E8CA8;font-weight:600}
+.d1 .cyc{font-family:"Caveat",cursive;font-size:17px;color:#C43D3D;transform:rotate(-3.5deg);margin-left:auto;padding-right:4px}
+.d1 .tab-idx{position:absolute;right:0;top:6px;background:#E8B93B;width:5px;height:52px;border-radius:3px 0 0 3px}
+.d1 .meal{padding:11px 16px 13px;border-top:1px solid #E4E9F2}
+.d1 .mhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.d1 .mname{font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;color:#1D3F94;font-weight:600}
+.d1 .port{font-family:"Caveat",cursive;font-size:15px;color:#C43D3D}
+.d1 .mtitle{font-family:"Newsreader",serif;font-size:17px;font-weight:600;margin:0 0 6px;line-height:1.24}
+.d1 .comp{font-size:12px;color:#4C5464;line-height:1.62;padding-left:11px;position:relative}
+.d1 .comp::before{content:"·";position:absolute;left:2px;color:#9BA9C4;font-weight:700}
+.d1 .mfoot{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.d1 .kcal{font-family:"JetBrains Mono",monospace;font-size:10px;color:#7E8CA8}
+.d1 .swap{font-family:"Caveat",cursive;font-size:16px;color:#C43D3D;border-bottom:1.5px solid #E9A9A9}
+.d1 .navbar{background:#F3F1EC;border-top-color:#DFE0DC}
+.d1 .navbar div{color:#8A93A6}
+.d1 .navbar .on{color:#1D3F94;font-weight:600}
+
+/* ================= DIREÇÃO 2 — AZULEJO ================= */
+.d2 .screen{background:#EDF0F4;color:#16202E;font-family:"Instrument Sans",sans-serif}
+.d2 .appbar{background:#1B4FA0;padding:13px 16px 15px;color:#fff;position:relative;overflow:hidden}
+.d2 .appbar::after{content:"";position:absolute;inset:0;opacity:.17;
+  background-image:linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
+  background-size:19px 19px;background-position:0 0,9.5px 9.5px}
+.d2 .abrow{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.d2 .abrow .m{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.82;font-weight:600}
+.d2 .dnum{font-family:"Instrument Serif",serif;font-size:40px;line-height:1;margin-top:7px;position:relative;z-index:1}
+.d2 .dsub{font-size:11.5px;opacity:.78;position:relative;z-index:1;margin-top:3px}
+.d2 .body2{padding:13px 12px 6px}
+.d2 .card{background:#fff;border-radius:3px;padding:13px 14px;margin-bottom:9px;border-left:3px solid #1B4FA0}
+.d2 .mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.d2 .mname{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#5B7BB5;font-weight:700}
+.d2 .port{font-size:9.5px;background:#EDF2FA;color:#1B4FA0;border-radius:2px;padding:2.5px 7px;font-weight:600;letter-spacing:.02em}
+.d2 .mtitle{font-family:"Instrument Serif",serif;font-size:19px;margin:0 0 7px;line-height:1.18}
+.d2 .comps{font-size:11.5px;color:#5A6675;line-height:1.6}
+.d2 .mfoot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:9px;border-top:1px solid #EAEEF4}
+.d2 .kcal{font-family:"JetBrains Mono",monospace;font-size:10px;color:#8592A3}
+.d2 .swap{font-size:10.5px;color:#C96F45;font-weight:600;letter-spacing:.02em}
+.d2 .mirror{border-left-color:#B6C6E0}
+.d2 .navbar{background:#fff;border-top-color:#DDE3EB}
+.d2 .navbar div{color:#93A0B2}
+.d2 .navbar .on{color:#1B4FA0;font-weight:700}
+
+/* ================= DIREÇÃO 3 — MARMITA ================= */
+.d3 .screen{background:#F1F3EF;color:#1E2422;font-family:"Figtree",sans-serif}
+.d3 .appbar{background:#F1F3EF;padding:14px 15px 4px;display:flex;justify-content:space-between;align-items:center}
+.d3 .appbar .m{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em}
+.d3 .appbar .dots{color:#98A29B;font-size:15px}
+.d3 .datehead{padding:5px 15px 13px;display:flex;align-items:flex-end;gap:10px}
+.d3 .dnum{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:47px;line-height:.84;letter-spacing:-.045em}
+.d3 .dmeta{padding-bottom:4px}
+.d3 .dwd{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#7C8880;font-weight:600}
+.d3 .cyc{font-size:11px;color:#98A29B}
+.d3 .body3{padding:0 12px 8px}
+.d3 .card{background:#fff;border-radius:13px;padding:12px 13px;margin-bottom:9px;box-shadow:0 1px 2px rgba(30,36,34,.06)}
+.d3 .mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.d3 .mname{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#7C8880;font-weight:700}
+.d3 .port{font-size:9.5px;font-weight:700;color:#1E2422;background:#EDEFEA;border-radius:999px;padding:2.5px 8px}
+.d3 .bar{display:flex;gap:2.5px;height:5px;border-radius:99px;overflow:hidden;margin-bottom:10px}
+.d3 .bar i{flex:1;border-radius:99px}
+.d3 .chips{display:flex;flex-wrap:wrap;gap:5px}
+.d3 .chip{font-size:10.5px;font-weight:500;padding:3.5px 9px;border-radius:999px;line-height:1.35}
+.d3 .mfoot{display:flex;justify-content:space-between;align-items:center;margin-top:11px}
+.d3 .kcal{font-size:10.5px;color:#7C8880;font-weight:600}
+.d3 .kcal b{color:#1E2422;font-weight:700}
+.d3 .swap{font-size:10.5px;font-weight:700;color:#B8503F}
+.d3 .mirror{background:#FAFBF9;box-shadow:none;border:1px dashed #DEE2DA}
+.d3 .navbar{background:#fff;border-top-color:#E2E5DF}
+.d3 .navbar div{color:#98A29B}
+.d3 .navbar .on{color:#2E7D5B;font-weight:700}
+
+/* categorias (direção 3) */
+.c-base{background:#D99A2B}.c-prot{background:#B8503F}.c-legu{background:#7A4B33}
+.c-vege{background:#2E7D5B}.c-sala{background:#76A82F}.c-outr{background:#3E6DB5}
+.ch-base{background:#FBF0DA;color:#8A6014}.ch-prot{background:#F8E4E0;color:#8C3729}
+.ch-legu{background:#EFE6E0;color:#5C3826}.ch-vege{background:#DEEFE7;color:#1F5C42}
+.ch-sala{background:#E9F3D9;color:#4A6E1D}.ch-outr{background:#E2EAF7;color:#2C4F84}
+
+.legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.legend span{font-size:10.5px;color:#93a0ac;display:flex;align-items:center;gap:5px}
+.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+
+.foot{margin-top:56px;border-top:1px solid #263039;padding-top:26px;color:#8b97a4;font-size:14px;max-width:76ch;line-height:1.65}
+.foot b{color:#fff;font-weight:600}
+.foot code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#1b232a;padding:2px 6px;border-radius:4px;color:#c3ccd5}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-head">
+    <p class="kicker">Rodada 1 · escolha de direção</p>
+    <h1>Três jeitos de olhar para o mesmo dia</h1>
+    <p>A mesma tela — quarta, dia 4 do ciclo — desenhada três vezes, com o conteúdo real do plano dela. Compare o que a tela <em>parece dizer</em>, não só a cor: cada direção organiza a informação de um jeito diferente.</p>
+  </header>
+
+  <h2 class="sec">Visão de UI/UX</h2>
+  <p class="sec-note">Quatro destinos, nada escondido em menu. O app abre sempre no dia de hoje — quase todo uso é responder <em>“o que eu faço agora”</em>.</p>
+  <div class="ux">
+    <div class="tabs">
+      <div class="tab"><b>Hoje</b> · o dia, 4 refeições</div>
+      <div class="tab"><b>Mês</b> · calendário, navegar e trocar</div>
+      <div class="tab"><b>Mercado</b> · lista por intervalo</div>
+      <div class="tab"><b>Receitas</b> · catálogo, criar e editar</div>
+    </div>
+    <div class="ux-grid">
+      <div class="ux-card">
+        <h3>Hoje</h3>
+        <p>Quatro blocos na ordem do relógio. Cada um mostra <em>porções</em>, componentes e calorias já escalados. Tocar abre o modo de preparo; o botão troca.</p>
+      </div>
+      <div class="ux-card">
+        <h3>O espelho</h3>
+        <p>Café da tarde e jantar nascem espelhando manhã e almoço, e a tela diz isso — vêm apagados, com <em>“repete o almoço”</em>. Substituir um solta o espelho só naquele dia.</p>
+      </div>
+      <div class="ux-card">
+        <h3>Substituir</h3>
+        <p>Dois níveis na mesma folha: trocar a <em>refeição inteira</em> por outra das 33, ou tocar um componente e trocar <em>só ele</em> por outro da mesma categoria.</p>
+      </div>
+      <div class="ux-card">
+        <h3>Mercado</h3>
+        <p>Ela escolhe o intervalo, o app soma os ingredientes de todos os dias, converte pra unidade de compra e agrupa por seção. Marcar item é o gesto principal.</p>
+      </div>
+      <div class="ux-card">
+        <h3>Nutrição</h3>
+        <p>Nunca é tela própria — mora onde a decisão acontece: kcal no rodapé de cada refeição, macros ao abrir a receita, total do dia no topo.</p>
+      </div>
+      <div class="ux-card">
+        <h3>Offline, sempre</h3>
+        <p>Arquivo SQLite no aparelho. Sem login, sem carregando, sem erro de rede. Export <code>.json</code> pra backup quando ela quiser.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec">As três direções</h2>
+  <p class="sec-note">Nenhuma é o “app de receita bege com serifa e terracota” — esse é o padrão que todo mundo entrega. Cada uma abaixo puxa de um objeto real da cozinha brasileira.</p>
+
+  <div class="dirs">
+
+    <!-- ============ 1 ============ -->
+    <section class="dir d1">
+      <div class="dir-head">
+        <div class="dir-num">DIREÇÃO 01</div>
+        <h3>Caderno</h3>
+        <p class="thesis">O caderno de receitas de família: papel pautado, esferográfica azul, correção em vermelho, fita marcando a página. Íntimo e pessoal — o app parece <em>dela</em>, não de um serviço.</p>
+      </div>
+      <div class="dir-body">
+        <p class="lbl">Paleta</p>
+        <div class="swatches">
+          <div class="sw" style="background:#FBFAF7"></div><div class="sw" style="background:#D9E2F0"></div>
+          <div class="sw" style="background:#1D3F94"></div><div class="sw" style="background:#C43D3D"></div>
+          <div class="sw" style="background:#E8B93B"></div><div class="sw" style="background:#22262E"></div>
+        </div>
+        <div class="sw-names"><span>papel<br>FBFAF7</span><span>pauta<br>D9E2F0</span><span>tinta<br>1D3F94</span><span>caneta<br>C43D3D</span><span>fita<br>E8B93B</span><span>grafite<br>22262E</span></div>
+
+        <p class="lbl">Tipografia</p>
+        <div class="typespec">
+          <div class="tsn">Newsreader — títulos de prato</div>
+          <div style="font-family:Newsreader,serif;font-size:23px;font-weight:600;color:#fff;line-height:1.2">Picadinho de carne</div>
+          <div class="tsn" style="margin-top:12px">IBM Plex Sans — corpo e listas</div>
+          <div style="font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#b6c0ca">300 g de patinho em cubos, 1 cenoura média</div>
+          <div class="tsn" style="margin-top:12px">Caveat — só margem e porções</div>
+          <div style="font-family:Caveat,cursive;font-size:20px;color:#E88">dia 4 de 33 · 1 porção</div>
+        </div>
+
+        <div class="phone"><div class="screen">
+          <div class="appbar"><span class="m">Setembro 2026</span><span class="dots">⋯</span></div>
+          <div class="scroll">
+            <div class="datehead">
+              <span class="dnum">04</span><span class="dwd">quarta</span>
+              <span class="cyc">dia 4 de 33</span><span class="tab-idx"></span>
+            </div>
+            <div class="meal">
+              <div class="mhead"><span class="mname">Café da manhã</span><span class="port">1 porção</span></div>
+              <p class="mtitle">Tapioca com queijo</p>
+              <div class="comp">Tapioca com queijo coalho</div>
+              <div class="comp">Mamão</div>
+              <div class="comp">Suco de uva</div>
+              <div class="mfoot"><span class="kcal">438 kcal</span><span class="swap">trocar</span></div>
+            </div>
+            <div class="meal">
+              <div class="mhead"><span class="mname">Almoço</span><span class="port">1 porção</span></div>
+              <p class="mtitle">Picadinho de carne com legumes</p>
+              <div class="comp">Arroz branco · Feijão carioca</div>
+              <div class="comp">Picadinho de carne com legumes</div>
+              <div class="comp">Batata-doce cozida e amassada</div>
+              <div class="comp">Alface americana e pepino — molho de mostarda e mel</div>
+              <div class="mfoot"><span class="kcal">712 kcal</span><span class="swap">trocar</span></div>
+            </div>
+            <div class="meal">
+              <div class="mhead"><span class="mname">Café da tarde</span><span class="port">2 porções</span></div>
+              <p class="mtitle" style="color:#8A93A6">Tapioca com queijo</p>
+              <div class="comp" style="color:#98A0AE">repete o café da manhã</div>
+            </div>
+          </div>
+          <div class="navbar">
+            <div class="on"><span class="ico">◉</span>Hoje</div><div><span class="ico">▦</span>Mês</div>
+            <div><span class="ico">✓</span>Mercado</div><div><span class="ico">≡</span>Receitas</div>
+          </div>
+        </div></div>
+
+        <p class="risk"><b>Aposta:</b> a Caveat entra <em>só</em> na margem — posição no ciclo, porção, “trocar”. É a letra de quem anotou à mão sobre a receita impressa. Se invadir os títulos, vira app de scrapbook.</p>
+      </div>
+    </section>
+
+    <!-- ============ 2 ============ -->
+    <section class="dir d2">
+      <div class="dir-head">
+        <div class="dir-num">DIREÇÃO 02</div>
+        <h3>Azulejo</h3>
+        <p class="thesis">O azulejo de cozinha: cobalto sobre louça branca, geometria repetida, junta cinza. O calendário do mês <em>já é</em> uma grade de ladrilhos — a metáfora não é enfeite, é a própria tela.</p>
+      </div>
+      <div class="dir-body">
+        <p class="lbl">Paleta</p>
+        <div class="swatches">
+          <div class="sw" style="background:#1B4FA0"></div><div class="sw" style="background:#5B8FD6"></div>
+          <div class="sw" style="background:#FFFFFF"></div><div class="sw" style="background:#EDF0F4"></div>
+          <div class="sw" style="background:#C96F45"></div><div class="sw" style="background:#16202E"></div>
+        </div>
+        <div class="sw-names"><span>cobalto<br>1B4FA0</span><span>anil<br>5B8FD6</span><span>louça<br>FFFFFF</span><span>junta<br>EDF0F4</span><span>barro<br>C96F45</span><span>grafite<br>16202E</span></div>
+
+        <p class="lbl">Tipografia</p>
+        <div class="typespec">
+          <div class="tsn">Instrument Serif — dias e títulos</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:27px;color:#fff;line-height:1.1">Picadinho de carne</div>
+          <div class="tsn" style="margin-top:12px">Instrument Sans — corpo e rótulos</div>
+          <div style="font-family:'Instrument Sans',sans-serif;font-size:13px;color:#b6c0ca">300 g de patinho em cubos, 1 cenoura média</div>
+          <div class="tsn" style="margin-top:12px">Rótulo em caixa alta, entreletra aberta</div>
+          <div style="font-family:'Instrument Sans',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8FB0E0;font-weight:700">Café da manhã · 1 porção</div>
+        </div>
+
+        <div class="phone"><div class="screen">
+          <div class="appbar">
+            <div class="abrow"><span class="m">Setembro 2026</span><span>⋯</span></div>
+            <div class="dnum">Quarta, 04</div>
+            <div class="dsub">dia 4 de 33 · 1 902 kcal no dia</div>
+          </div>
+          <div class="scroll"><div class="body2">
+            <div class="card">
+              <div class="mhead"><span class="mname">Café da manhã</span><span class="port">1 porção</span></div>
+              <p class="mtitle">Tapioca com queijo</p>
+              <div class="comps">Tapioca com queijo coalho · Mamão · Suco de uva</div>
+              <div class="mfoot"><span class="kcal">438 kcal</span><span class="swap">Substituir</span></div>
+            </div>
+            <div class="card">
+              <div class="mhead"><span class="mname">Almoço</span><span class="port">1 porção</span></div>
+              <p class="mtitle">Picadinho de carne com legumes</p>
+              <div class="comps">Arroz branco · Feijão carioca · Picadinho de carne com legumes · Batata-doce cozida e amassada · Alface americana e pepino com molho de mostarda e mel</div>
+              <div class="mfoot"><span class="kcal">712 kcal</span><span class="swap">Substituir</span></div>
+            </div>
+            <div class="card mirror">
+              <div class="mhead"><span class="mname" style="color:#93A6C4">Café da tarde</span><span class="port" style="background:#F2F5FA;color:#7E93B8">2 porções</span></div>
+              <p class="mtitle" style="color:#93A6C4">Tapioca com queijo</p>
+              <div class="comps" style="color:#93A6C4">repete o café da manhã</div>
+            </div>
+          </div></div>
+          <div class="navbar">
+            <div class="on"><span class="ico">◉</span>Hoje</div><div><span class="ico">▦</span>Mês</div>
+            <div><span class="ico">✓</span>Mercado</div><div><span class="ico">≡</span>Receitas</div>
+          </div>
+        </div></div>
+
+        <p class="risk"><b>Aposta:</b> o ladrilho vive no cabeçalho a 17% de opacidade e reaparece inteiro no calendário e nas telas vazias. O barro é o único quente da paleta e existe pra uma coisa só: a ação de substituir.</p>
+      </div>
+    </section>
+
+    <!-- ============ 3 ============ -->
+    <section class="dir d3">
+      <div class="dir-head">
+        <div class="dir-num">DIREÇÃO 03</div>
+        <h3>Marmita</h3>
+        <p class="thesis">A marmita de compartimentos. Cada refeição dela já é montada por categoria — base, proteína, leguminosa, legume, salada. A cor <em>é</em> o dado: você lê o equilíbrio do prato antes de ler a palavra.</p>
+      </div>
+      <div class="dir-body">
+        <p class="lbl">Paleta — funcional, uma cor por categoria</p>
+        <div class="swatches">
+          <div class="sw c-base"></div><div class="sw c-prot"></div><div class="sw c-legu"></div>
+          <div class="sw c-vege"></div><div class="sw c-sala"></div><div class="sw c-outr"></div>
+        </div>
+        <div class="sw-names"><span>base<br>D99A2B</span><span>proteína<br>B8503F</span><span>legum.<br>7A4B33</span><span>legume<br>2E7D5B</span><span>salada<br>76A82F</span><span>outros<br>3E6DB5</span></div>
+
+        <p class="lbl">Tipografia</p>
+        <div class="typespec">
+          <div class="tsn">Bricolage Grotesque — números e títulos</div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:27px;color:#fff;letter-spacing:-.03em;line-height:1.1">Picadinho de carne</div>
+          <div class="tsn" style="margin-top:12px">Figtree — corpo, chips e listas</div>
+          <div style="font-family:Figtree,sans-serif;font-size:13px;color:#b6c0ca">300 g de patinho em cubos, 1 cenoura média</div>
+          <div class="tsn" style="margin-top:12px">Chips por categoria</div>
+          <div class="chips" style="margin-top:6px">
+            <span class="chip ch-base">Arroz branco</span><span class="chip ch-prot">Picadinho</span><span class="chip ch-sala">Alface e pepino</span>
+          </div>
+        </div>
+
+        <div class="phone"><div class="screen">
+          <div class="appbar"><span class="m">Setembro</span><span class="dots">⋯</span></div>
+          <div class="scroll">
+            <div class="datehead">
+              <span class="dnum">04</span>
+              <span class="dmeta"><span class="dwd">quarta</span><br><span class="cyc">dia 4 de 33 · 1 902 kcal</span></span>
+            </div>
+            <div class="body3">
+              <div class="card">
+                <div class="mhead"><span class="mname">Café da manhã</span><span class="port">1 porção</span></div>
+                <div class="bar"><i class="c-base"></i><i class="c-outr"></i><i class="c-outr"></i></div>
+                <div class="chips">
+                  <span class="chip ch-base">Tapioca com queijo</span><span class="chip ch-outr">Mamão</span><span class="chip ch-outr">Suco de uva</span>
+                </div>
+                <div class="mfoot"><span class="kcal"><b>438</b> kcal · 14 g prot</span><span class="swap">Substituir</span></div>
+              </div>
+              <div class="card">
+                <div class="mhead"><span class="mname">Almoço</span><span class="port">1 porção</span></div>
+                <div class="bar"><i class="c-base"></i><i class="c-legu"></i><i class="c-prot"></i><i class="c-vege"></i><i class="c-sala"></i></div>
+                <div class="chips">
+                  <span class="chip ch-base">Arroz branco</span><span class="chip ch-legu">Feijão carioca</span>
+                  <span class="chip ch-prot">Picadinho de carne</span><span class="chip ch-vege">Batata-doce amassada</span>
+                  <span class="chip ch-sala">Alface e pepino</span>
+                </div>
+                <div class="mfoot"><span class="kcal"><b>712</b> kcal · 38 g prot</span><span class="swap">Substituir</span></div>
+              </div>
+              <div class="card mirror">
+                <div class="mhead"><span class="mname">Café da tarde</span><span class="port" style="background:#EDEFEA">2 porções</span></div>
+                <div class="chips"><span class="chip" style="background:#EDEFEA;color:#7C8880">repete o café da manhã</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="navbar">
+            <div class="on"><span class="ico">◉</span>Hoje</div><div><span class="ico">▦</span>Mês</div>
+            <div><span class="ico">✓</span>Mercado</div><div><span class="ico">≡</span>Receitas</div>
+          </div>
+        </div></div>
+
+        <div class="legend">
+          <span><i class="c-base"></i>base</span><span><i class="c-prot"></i>proteína</span><span><i class="c-legu"></i>leguminosa</span>
+          <span><i class="c-vege"></i>legume</span><span><i class="c-sala"></i>salada</span><span><i class="c-outr"></i>fruta, molho, bebida</span>
+        </div>
+
+        <p class="risk"><b>Aposta:</b> a barrinha de cor no topo de cada refeição é o único gráfico do app — mostra a composição do prato sem número nenhum. É também o que torna a substituição óbvia: some o verde, ela vê que ficou sem salada.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="foot">
+    <b>Como responder:</b> me diga o número — ou misture. Combinações que funcionam: <code>3 com a paleta da 2</code> (cores por categoria dentro do cobalto), <code>1 sem a Caveat</code> (caderno sério, sem manuscrito), <code>2 com os chips da 3</code>.
+    Se nenhuma pegou, diga o que incomodou e eu volto com outra rodada.
+  </p>
+
+</div>
+</body>
+</html>

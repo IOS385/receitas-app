@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 direções navegáveis — App de Refeições</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Caveat:wght@600&family=Chivo:wght@400;500;700;900&family=Chivo+Mono:wght@400;600&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&family=Darker+Grotesque:wght@600;800&family=Figtree:wght@400;500;700&family=Gloock&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif&family=JetBrains+Mono:wght@400;600&family=Lexend:wght@300;400;500;600&family=Manrope:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Public+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   CHROME DA PÁGINA  (neutro de propósito — não é nenhuma das 10 direções)
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#0d1116;color:#dfe4ea;font-family:"Instrument Sans",system-ui,sans-serif;line-height:1.55}
+.wrap{max-width:1500px;margin:0 auto;padding:36px 22px 110px}
+
+.page-head{border-bottom:1px solid #212a33;padding-bottom:24px;margin-bottom:20px}
+.kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#78848f;margin:0 0 9px;font-weight:600}
+.page-head h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(27px,4.2vw,42px);line-height:1.05;margin:0 0 11px;color:#fff;letter-spacing:-.022em}
+.page-head p{margin:0 0 6px;max-width:70ch;color:#95a1ad;font-size:14.5px}
+.page-head em{color:#cfd8e1;font-style:normal;font-weight:500}
+.page-head kbd{font-family:"JetBrains Mono",monospace;font-size:11.5px;background:#1a222a;border:1px solid #2b3641;border-radius:5px;padding:1px 6px;color:#c3ccd5}
+
+/* barra de controle grudada no topo */
+.bar{position:sticky;top:0;z-index:60;background:rgba(13,17,22,.93);backdrop-filter:blur(9px);
+     border-bottom:1px solid #212a33;margin:0 -22px 30px;padding:11px 22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-lbl{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:#78848f;font-weight:600}
+.segs{display:flex;gap:4px;flex-wrap:wrap}
+.seg{border:1px solid #2b3641;background:#161d24;color:#b9c3cd;border-radius:7px;padding:6px 12px;font-size:12.5px;cursor:pointer;
+     font-family:inherit;transition:background .12s,border-color .12s,color .12s}
+.seg:hover{background:#1c242c;color:#e3e9ef}
+.seg[aria-pressed="true"]{background:#e8eef4;color:#0d1116;border-color:#e8eef4;font-weight:600}
+.seg:focus-visible{outline:2px solid #6aa6ff;outline-offset:2px}
+.marked{margin-left:auto;font-size:12.5px;color:#8d99a5}
+.marked b{color:#ffd479;font-weight:600;font-family:"JetBrains Mono",monospace}
+
+/* grade das direções */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(332px,1fr));gap:26px;align-items:start}
+.dir{background:#141a20;border:1px solid #212a33;border-radius:15px;padding:19px 19px 22px;transition:border-color .15s,box-shadow .15s}
+.dir.is-marked{border-color:#8a6d2a;box-shadow:0 0 0 1px #8a6d2a inset,0 10px 34px rgba(232,163,61,.09)}
+.dir-top{display:flex;align-items:flex-start;gap:11px;margin-bottom:8px}
+.dir-n{font-family:"JetBrains Mono",monospace;font-size:11px;color:#6c7883;border:1px solid #2b3641;border-radius:5px;padding:2px 6px;flex:0 0 auto;margin-top:3px}
+.dir-top h2{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:800;color:#fff;letter-spacing:-.016em;line-height:1.2}
+.star{margin-left:auto;background:none;border:1px solid #2b3641;color:#6c7883;border-radius:7px;width:29px;height:29px;cursor:pointer;
+      font-size:14px;line-height:1;flex:0 0 auto;transition:color .12s,border-color .12s}
+.star:hover{color:#c3ccd5;border-color:#3c4854}
+.dir.is-marked .star{color:#ffd479;border-color:#8a6d2a}
+.star:focus-visible{outline:2px solid #6aa6ff;outline-offset:2px}
+.thesis{margin:0 0 14px;font-size:12.8px;color:#8d99a5;line-height:1.52}
+.thesis em{color:#c6d0da;font-style:normal;font-weight:500}
+
+.meta{display:flex;gap:12px;align-items:center;margin:13px 0 0;flex-wrap:wrap}
+.sw{display:flex;gap:3px;flex:0 0 auto}
+.sw i{width:15px;height:15px;border-radius:3px;border:1px solid rgba(255,255,255,.1);display:block}
+.fonts{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:#6c7883;line-height:1.5}
+
+.note{margin:12px 0 0;font-size:11.8px;color:#7f8b96;border-left:2px solid #2b3641;padding-left:10px;line-height:1.5}
+.note b{color:#b4bec8;font-weight:600}
+
+/* ==========================================================================
+   MOLDURA DO CELULAR + SISTEMA DE TEMA
+   ========================================================================== */
+.phone{width:100%;max-width:306px;margin:16px auto 0;border-radius:24px;overflow:hidden;
+       border:1px solid #2f3a45;box-shadow:0 16px 38px rgba(0,0,0,.42)}
+.scr{height:592px;display:flex;flex-direction:column;position:relative;overflow:hidden;
+     background:var(--bg);color:var(--ink);font-family:var(--fb)}
+.view{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.view::-webkit-scrollbar{width:0}
+.pane{display:none}
+.pane.on{display:block}
+
+/* --- barra superior --- */
+.top{flex:0 0 auto;padding:12px 15px 11px;background:var(--bg);position:relative;overflow:hidden}
+[data-head="block"] .top,[data-head="pattern"] .top{background:var(--accent);color:#fff}
+[data-head="pattern"] .top::after{content:"";position:absolute;inset:0;opacity:.16;pointer-events:none;
+  background-image:linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%),linear-gradient(45deg,#fff 25%,transparent 25%,transparent 75%,#fff 75%);
+  background-size:18px 18px;background-position:0 0,9px 9px}
+[data-head="rule"] .top{border-bottom:4px solid var(--ink);padding-bottom:9px}
+[data-head="stripe"] .top{background:var(--accent);color:#fff}
+[data-head="stripe"] .top::after{content:"";position:absolute;inset:0;opacity:.14;pointer-events:none;
+  background-image:repeating-linear-gradient(90deg,#fff 0 13px,transparent 13px 26px)}
+[data-head="speck"] .top{background:var(--accent);color:#fff}
+[data-head="speck"] .top::after{content:"";position:absolute;inset:0;opacity:.3;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.85) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);
+  background-size:15px 15px,23px 23px;background-position:0 0,8px 11px}
+.top-row{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;gap:8px}
+.top-m{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;opacity:.8}
+[data-head="flat"] .top-m{color:var(--accent);opacity:1}
+.top-dots{opacity:.6;font-size:14px}
+.back{background:none;border:0;font:inherit;color:inherit;cursor:pointer;font-size:12.5px;padding:0;display:flex;gap:5px;align-items:center;opacity:.85}
+.back:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:4px}
+
+/* --- cabeçalho de data --- */
+.dhead{display:flex;align-items:flex-end;gap:11px;position:relative;z-index:1;margin-top:8px}
+.dnum{font-family:var(--fd);font-size:44px;line-height:.85;font-weight:var(--dw,700);letter-spacing:var(--dls,-.03em)}
+[data-head="flat"] .dnum{color:var(--accent)}
+.dmeta{padding-bottom:3px;min-width:0}
+.dwd{font-size:9.5px;letter-spacing:.19em;text-transform:uppercase;font-weight:700;opacity:.62}
+.dcyc{font-size:11px;opacity:.68;margin-top:1px}
+[data-head="flat"] .dcyc,[data-head="rule"] .dcyc{color:var(--ink3);opacity:1}
+[data-head="flat"] .dwd,[data-head="rule"] .dwd{color:var(--ink3);opacity:1}
+.hand{font-family:var(--fh);font-size:17px;color:var(--accent2);transform:rotate(-3.5deg);margin-left:auto;white-space:nowrap}
+
+/* --- lista de refeições --- */
+.meals{padding:11px 11px 10px}
+[data-card="ruled"] .meals{padding:0 0 8px}
+.meal{position:relative}
+[data-card="elevated"] .meal{background:var(--surface);border-radius:var(--r);padding:12px 13px;margin-bottom:8px;box-shadow:0 1px 2px rgba(0,0,0,.07),0 5px 14px rgba(0,0,0,.04)}
+[data-card="plain"] .meal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 13px;margin-bottom:8px}
+[data-card="bordered"] .meal{background:var(--surface);border-left:3px solid var(--accent);border-radius:var(--r);padding:12px 13px;margin-bottom:8px}
+[data-card="ruled"] .meal{padding:11px 15px 13px;border-top:1px solid var(--line);margin:0}
+[data-card="thick"] .meal{background:var(--surface);border:2px solid var(--ink);border-radius:0;padding:11px 12px;margin-bottom:8px}
+[data-card="note"] .meal{background:var(--surface);border-radius:var(--r);padding:12px 13px;margin-bottom:11px;
+  box-shadow:0 4px 10px rgba(20,26,32,.2);transform:rotate(-.55deg)}
+[data-card="note"] .meal:nth-child(2n){transform:rotate(.7deg);background:var(--note2)}
+[data-card="note"] .meal:nth-child(3n){background:var(--note3)}
+.meal.mirror{opacity:.72}
+[data-card="elevated"] .meal.mirror,[data-card="note"] .meal.mirror{box-shadow:none;border:1px dashed var(--line);background:var(--surface2)}
+[data-card="bordered"] .meal.mirror{border-left-color:var(--line)}
+[data-card="thick"] .meal.mirror{border-style:dashed;border-color:var(--ink3)}
+
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}
+.mslot{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--accent)}
+[data-card="note"] .mslot,[data-card="thick"] .mslot{color:var(--ink2)}
+.mport{font-size:9.5px;font-weight:700;background:var(--surface2);color:var(--ink);border-radius:var(--rp,999px);padding:2.5px 8px;white-space:nowrap}
+[data-hand="on"] .mport{font-family:var(--fh);font-size:15px;font-weight:400;background:none;color:var(--accent2);padding:0}
+.mtitle{font-family:var(--fd);font-size:var(--mts,17px);font-weight:var(--dw,700);margin:0 0 7px;line-height:1.2;letter-spacing:var(--dls,-.02em)}
+.mirror .mtitle{color:var(--ink3)}
+
+/* barra de composição */
+.bar-cat{display:flex;gap:2.5px;height:5px;margin:0 0 9px}
+.bar-cat i{flex:1;border-radius:99px}
+
+/* componentes: 4 formatos */
+.comp-list div{font-size:11.8px;color:var(--ink2);line-height:1.6;padding-left:11px;position:relative}
+.comp-list div::before{content:"";position:absolute;left:2px;top:8.5px;width:4px;height:4px;border-radius:50%;background:var(--ink3)}
+.comp-inline{font-size:11.5px;color:var(--ink2);line-height:1.6}
+.comp-chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:10.5px;font-weight:500;padding:3.5px 9px;border-radius:999px;background:var(--surface2);color:var(--ink2);line-height:1.35}
+.comp-rows div{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;color:var(--ink2);
+  line-height:1.75;border-bottom:1px dotted var(--line)}
+.comp-rows div:last-child{border-bottom:0}
+.comp-rows span{font-family:var(--fm);font-size:10.5px;color:var(--ink3);white-space:nowrap;align-self:center}
+
+.mfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+[data-card="ruled"] .mfoot,[data-card="thick"] .mfoot{margin-top:9px}
+.kcal{font-family:var(--fm);font-size:10px;color:var(--ink3)}
+.kcal b{color:var(--ink);font-weight:700}
+.swap{background:none;border:0;font:inherit;cursor:pointer;font-size:10.5px;font-weight:700;color:var(--accent2);padding:2px 0}
+[data-hand="on"] .swap{font-family:var(--fh);font-size:16px;font-weight:400;border-bottom:1.5px solid var(--accent2)}
+.swap:focus-visible{outline:2px solid var(--accent2);outline-offset:2px;border-radius:3px}
+
+/* --- barra de navegação --- */
+.nav{flex:0 0 auto;display:flex;background:var(--surface);border-top:1px solid var(--line)}
+.nav button{flex:1;background:none;border:0;font:inherit;cursor:pointer;padding:8px 2px 10px;font-size:8.5px;
+  color:var(--ink3);letter-spacing:.02em;transition:color .12s}
+.nav button i{display:block;font-size:14px;line-height:1.35;font-style:normal;margin-bottom:1px}
+.nav button[aria-current="page"]{color:var(--accent);font-weight:700}
+.nav button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+
+/* ==========================================================================
+   TELA: MÊS
+   ========================================================================== */
+.cal{padding:11px 12px 6px}
+.cal-wd{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:5px}
+.cal-wd span{text-align:center;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-g button{aspect-ratio:1;background:var(--surface);border:1px solid var(--line);border-radius:calc(var(--r) * .55);
+  font:inherit;cursor:pointer;color:var(--ink2);font-size:11px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2px;padding:0;transition:background .12s}
+.cal-g button.empty{background:none;border-color:transparent;cursor:default}
+.cal-g button.sel{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+.cal-g button.today{border-color:var(--accent2);border-width:1.5px}
+.cal-g button:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+.cal-g em{display:flex;gap:1.5px;font-style:normal}
+.cal-g em i{width:3px;height:3px;border-radius:50%;display:block;background:currentColor;opacity:.5}
+.cal-g button.sel em i{background:#fff;opacity:.85}
+.daycard{margin:11px 12px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 13px}
+[data-card="thick"] .daycard{border:2px solid var(--ink);border-radius:0}
+.daycard h4{margin:0 0 3px;font-family:var(--fd);font-size:15px;font-weight:var(--dw,700);letter-spacing:var(--dls,-.02em)}
+.daycard .sub{font-size:10.5px;color:var(--ink3);margin-bottom:9px}
+.dl{display:flex;justify-content:space-between;gap:9px;font-size:11.5px;color:var(--ink2);padding:5px 0;border-bottom:1px solid var(--line)}
+.dl:last-of-type{border-bottom:0}
+.dl b{font-weight:500;min-width:0}
+.dl span{font-family:var(--fm);font-size:10px;color:var(--ink3);white-space:nowrap;align-self:center}
+.totrow{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;padding-top:9px;border-top:2px solid var(--line);
+  font-size:10.5px;color:var(--ink3);font-family:var(--fm)}
+.totrow b{font-family:var(--fd);font-size:19px;color:var(--ink);font-weight:var(--dw,700);letter-spacing:var(--dls,-.02em)}
+
+/* ==========================================================================
+   TELA: MERCADO
+   ========================================================================== */
+.mk-head{padding:10px 12px 8px}
+.range{display:flex;gap:5px;margin-bottom:9px;flex-wrap:wrap}
+.range button{background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:4.5px 11px;
+  font:inherit;font-size:10.5px;color:var(--ink2);cursor:pointer}
+.range button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.range button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.prog{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--ink3);font-family:var(--fm)}
+.prog .track{flex:1;height:4px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.prog .fill{height:100%;background:var(--accent);border-radius:99px;transition:width .18s ease}
+.mk-sec{padding:0 12px}
+.mk-sec h5{margin:13px 0 5px;font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:700;
+  display:flex;justify-content:space-between;align-items:baseline}
+.mk-sec h5 em{font-style:normal;font-family:var(--fm);font-size:9px;color:var(--ink3);letter-spacing:0;text-transform:none}
+.it{display:flex;align-items:center;gap:9px;width:100%;background:var(--surface);border:1px solid var(--line);
+  border-radius:calc(var(--r) * .7);padding:8px 10px;margin-bottom:4px;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+[data-card="thick"] .it{border:1.5px solid var(--ink);border-radius:0}
+.it .box{width:15px;height:15px;border-radius:calc(var(--r) * .35);border:1.5px solid var(--ink3);flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;line-height:1}
+.it .nm{flex:1;font-size:11.8px;min-width:0}
+.it .qt{font-family:var(--fm);font-size:10.5px;color:var(--ink3);white-space:nowrap}
+.it[aria-pressed="true"]{opacity:.45}
+.it[aria-pressed="true"] .nm{text-decoration:line-through}
+.it[aria-pressed="true"] .box{background:var(--accent);border-color:var(--accent)}
+.it:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+
+/* ==========================================================================
+   TELA: RECEITAS (catálogo)
+   ========================================================================== */
+.rc-head{padding:10px 12px 4px}
+.search{width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;
+  font:inherit;font-size:11.5px;color:var(--ink3)}
+.filters{display:flex;gap:5px;overflow-x:auto;padding:9px 12px 4px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:4px 10px;
+  font:inherit;font-size:10px;color:var(--ink2);cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg);font-weight:700}
+.filters button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.rc-list{padding:6px 12px 10px}
+.rc{display:flex;align-items:center;gap:10px;width:100%;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:9px 11px;margin-bottom:6px;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+[data-card="thick"] .rc{border:2px solid var(--ink);border-radius:0}
+.rc .tag{width:4px;align-self:stretch;border-radius:99px;flex:0 0 auto;min-height:30px}
+.rc .b{flex:1;min-width:0}
+.rc .t{font-family:var(--fd);font-size:13.5px;font-weight:var(--dw,700);letter-spacing:var(--dls,-.015em);
+  line-height:1.25;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc .s{font-size:10px;color:var(--ink3);font-family:var(--fm)}
+.rc .k{font-family:var(--fm);font-size:10px;color:var(--ink3);white-space:nowrap}
+.rc:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+.fab{position:absolute;right:13px;bottom:60px;width:44px;height:44px;border-radius:50%;background:var(--accent);
+  color:#fff;border:0;font-size:21px;line-height:1;cursor:pointer;box-shadow:0 5px 16px rgba(0,0,0,.28);z-index:5}
+.fab:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
+
+/* ==========================================================================
+   TELA: DETALHE DA RECEITA
+   ========================================================================== */
+.rd-hero{padding:12px 15px 14px}
+[data-head="block"] .rd-hero,[data-head="pattern"] .rd-hero,[data-head="stripe"] .rd-hero,[data-head="speck"] .rd-hero{background:var(--accent);color:#fff}
+.rd-hero h3{font-family:var(--fd);font-size:23px;font-weight:var(--dw,700);letter-spacing:var(--dls,-.028em);
+  line-height:1.1;margin:9px 0 6px}
+.rd-hero .facts{display:flex;gap:13px;font-size:10.5px;font-family:var(--fm);opacity:.75}
+.nutri{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:11px 12px 4px}
+.nu{background:var(--surface);border:1px solid var(--line);border-radius:calc(var(--r) * .7);padding:8px 5px;text-align:center}
+[data-card="thick"] .nu{border:1.5px solid var(--ink);border-radius:0}
+.nu b{display:block;font-family:var(--fd);font-size:16px;font-weight:var(--dw,700);letter-spacing:-.03em;line-height:1.1}
+.nu span{font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.blk{padding:13px 14px 0}
+.blk h6{margin:0 0 8px;font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:700;
+  display:flex;justify-content:space-between;align-items:baseline}
+.blk h6 em{font-style:normal;font-size:9px;color:var(--ink3);letter-spacing:0;text-transform:none;font-family:var(--fm)}
+.ing{display:flex;justify-content:space-between;gap:10px;font-size:11.8px;color:var(--ink2);padding:5.5px 0;border-bottom:1px solid var(--line)}
+.ing span{font-family:var(--fm);font-size:10.5px;color:var(--ink3);white-space:nowrap;align-self:center}
+.stp{display:flex;gap:9px;font-size:11.8px;color:var(--ink2);line-height:1.55;margin-bottom:9px}
+.stp b{font-family:var(--fd);font-size:13px;color:var(--accent);flex:0 0 15px;line-height:1.45;font-weight:var(--dw,700)}
+.rd-foot{padding:6px 14px 16px}
+.btn{width:100%;background:var(--accent);color:#fff;border:0;border-radius:var(--r);padding:11px;font:inherit;
+  font-size:12px;font-weight:700;cursor:pointer}
+[data-card="thick"] .btn{border-radius:0}
+.btn:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+
+/* ==========================================================================
+   FOLHA DE SUBSTITUIÇÃO
+   ========================================================================== */
+.veil{position:absolute;inset:0;background:rgba(8,10,13,.42);z-index:20;opacity:0;pointer-events:none;transition:opacity .18s}
+.veil.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:21;background:var(--bg);border-radius:16px 16px 0 0;
+  padding:8px 14px 16px;transform:translateY(102%);transition:transform .22s cubic-bezier(.32,.72,0,1);max-height:83%;overflow-y:auto}
+[data-card="thick"] .sheet{border-radius:0;border-top:3px solid var(--ink)}
+.sheet.on{transform:translateY(0)}
+.grab{width:34px;height:4px;border-radius:99px;background:var(--line);margin:0 auto 11px}
+.sheet h4{margin:0 0 2px;font-family:var(--fd);font-size:17px;font-weight:var(--dw,700);letter-spacing:var(--dls,-.02em)}
+.sheet .sh-sub{font-size:10.5px;color:var(--ink3);margin-bottom:13px}
+.sh-lbl{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:13px 0 7px}
+.opt{display:flex;align-items:center;gap:9px;width:100%;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:9px 11px;margin-bottom:5px;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+[data-card="thick"] .opt{border:1.5px solid var(--ink);border-radius:0}
+.opt .b{flex:1;min-width:0}
+.opt .t{font-size:12px;font-weight:600;line-height:1.3;margin-bottom:1px}
+.opt .s{font-size:9.5px;color:var(--ink3);font-family:var(--fm)}
+.opt .tag{width:4px;align-self:stretch;border-radius:99px;flex:0 0 auto;min-height:26px}
+.opt:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+.toast{position:absolute;left:12px;right:12px;bottom:56px;z-index:30;background:var(--ink);color:var(--bg);
+  border-radius:var(--r);padding:9px 12px;font-size:11px;font-weight:600;opacity:0;transform:translateY(7px);
+  transition:opacity .18s,transform .18s;pointer-events:none}
+.toast.on{opacity:1;transform:translateY(0)}
+
+/* ==========================================================================
+   CATEGORIAS (usadas quando o tema liga data-cat="on")
+   ========================================================================== */
+.k-base{background:#D99A2B}.k-prot{background:#B8503F}.k-legu{background:#7A4B33}
+.k-vege{background:#2E7D5B}.k-sala{background:#76A82F}.k-outr{background:#3E6DB5}
+[data-cat="on"] .chip.k-base{background:#FBF0DA;color:#8A6014}
+[data-cat="on"] .chip.k-prot{background:#F8E4E0;color:#8C3729}
+[data-cat="on"] .chip.k-legu{background:#EFE6E0;color:#5C3826}
+[data-cat="on"] .chip.k-vege{background:#DEEFE7;color:#1F5C42}
+[data-cat="on"] .chip.k-sala{background:#E9F3D9;color:#4A6E1D}
+[data-cat="on"] .chip.k-outr{background:#E2EAF7;color:#2C4F84}
+[data-cat="dark"] .chip.k-base{background:#3A2E19;color:#F0C173}
+[data-cat="dark"] .chip.k-prot{background:#3A211C;color:#E79683}
+[data-cat="dark"] .chip.k-legu{background:#2F241C;color:#C6A085}
+[data-cat="dark"] .chip.k-vege{background:#163024;color:#7FCBA4}
+[data-cat="dark"] .chip.k-sala{background:#25301A;color:#B7D97A}
+[data-cat="dark"] .chip.k-outr{background:#1B2635;color:#8FB4E8}
+
+/* ==========================================================================
+   OS 10 TEMAS
+   ========================================================================== */
+.t1{--bg:#FBFAF7;--surface:#FBFAF7;--surface2:#F1EFE8;--ink:#22262E;--ink2:#4C5464;--ink3:#8593AE;
+    --accent:#1D3F94;--accent2:#C43D3D;--line:#E2E7F0;--r:3px;--rp:3px;--mts:17px;--dw:600;--dls:-.01em;
+    --fd:"Newsreader",serif;--fb:"IBM Plex Sans",sans-serif;--fm:"JetBrains Mono",monospace;--fh:"Caveat",cursive}
+.t2{--bg:#EDF0F4;--surface:#FFFFFF;--surface2:#F5F8FC;--ink:#16202E;--ink2:#5A6675;--ink3:#8B98A9;
+    --accent:#1B4FA0;--accent2:#C96F45;--line:#E1E8F1;--r:3px;--rp:3px;--mts:19px;--dw:400;--dls:-.005em;
+    --fd:"Instrument Serif",serif;--fb:"Instrument Sans",sans-serif;--fm:"JetBrains Mono",monospace}
+.t3{--bg:#F1F3EF;--surface:#FFFFFF;--surface2:#EDEFEA;--ink:#1E2422;--ink2:#4E5A54;--ink3:#828E86;
+    --accent:#2E7D5B;--accent2:#B8503F;--line:#E1E5DE;--r:13px;--mts:16px;--dw:800;--dls:-.032em;
+    --fd:"Bricolage Grotesque",sans-serif;--fb:"Figtree",sans-serif;--fm:"Figtree",sans-serif}
+.t4{--bg:#FFF8E3;--surface:#FFFFFF;--surface2:#FFF1C6;--ink:#17150F;--ink2:#4A4436;--ink3:#8E846A;
+    --accent:#0E7A43;--accent2:#D62828;--line:#E9DDB6;--r:0px;--rp:0px;--mts:18px;--dw:400;--dls:-.005em;
+    --fd:"Archivo Black",sans-serif;--fb:"Archivo",sans-serif;--fm:"Archivo",sans-serif}
+.t5{--bg:#E9EDF0;--surface:#FFFFFF;--surface2:#F2F6F8;--ink:#10161C;--ink2:#3E4A55;--ink3:#7E8B96;
+    --accent:#14263F;--accent2:#C7412B;--line:#D6DDE3;--r:10px;--mts:20px;--dw:800;--dls:-.028em;
+    --fd:"Darker Grotesque",sans-serif;--fb:"Manrope",sans-serif;--fm:"Manrope",sans-serif}
+.t6{--bg:#14120F;--surface:#1E1A16;--surface2:#282219;--ink:#F3EDE2;--ink2:#B7AC9C;--ink3:#8A8070;
+    --accent:#E8A33D;--accent2:#D2694A;--line:#2F2820;--r:14px;--mts:16px;--dw:900;--dls:-.028em;
+    --fd:"Chivo",sans-serif;--fb:"Chivo",sans-serif;--fm:"Chivo Mono",monospace}
+.t7{--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#F0F0F0;--ink:#000000;--ink2:#2E2E2E;--ink3:#6E6E6E;
+    --accent:#000000;--accent2:#D8232A;--line:#000000;--r:0px;--rp:0px;--mts:19px;--dw:400;--dls:-.01em;
+    --fd:"Anton",sans-serif;--fb:"Public Sans",sans-serif;--fm:"Public Sans",sans-serif}
+.t8{--bg:#F4F6F0;--surface:#FFFFFF;--surface2:#EBF1E3;--ink:#17251A;--ink2:#40543F;--ink3:#7C8E74;
+    --accent:#1F4D2E;--accent2:#7E9B1E;--line:#DEE7D5;--r:18px;--mts:18px;--dw:400;--dls:-.005em;
+    --fd:"Gloock",serif;--fb:"Lexend",sans-serif;--fm:"Lexend",sans-serif}
+.t9{--bg:#DCE1E4;--surface:#FFF7BF;--note2:#D6F5D6;--note3:#FFD9E4;--surface2:#EFF2F4;--ink:#1B1F22;--ink2:#454B50;--ink3:#7C848C;
+    --accent:#E4572E;--accent2:#178C7E;--line:#C9D1D6;--r:2px;--rp:2px;--mts:17px;--dw:400;--dls:-.01em;
+    --fd:"DM Serif Display",serif;--fb:"DM Sans",sans-serif;--fm:"DM Sans",sans-serif}
+.t10{--bg:#20242A;--surface:#2B3037;--surface2:#353B43;--ink:#ECEFF1;--ink2:#AEB6BD;--ink3:#7F8891;
+    --accent:#FF7A18;--accent2:#4FB3D9;--line:#3D444C;--r:4px;--mts:15px;--dw:700;--dls:-.022em;
+    --fd:"Space Grotesk",sans-serif;--fb:"Space Grotesk",sans-serif;--fm:"Space Mono",monospace}
+.t9 [data-card="note"] .meal.mirror{background:var(--surface2)}
+
+.foot{margin-top:52px;border-top:1px solid #212a33;padding-top:24px;color:#8b97a4;font-size:14px;max-width:78ch;line-height:1.65}
+.foot b{color:#fff;font-weight:600}
+.foot code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#1a222a;padding:2px 6px;border-radius:4px;color:#c3ccd5}
+
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-head">
+    <p class="kicker">Rodada 2 · 10 direções navegáveis</p>
+    <h1>Dez apps, o mesmo dia 4</h1>
+    <p>Cada celular abaixo funciona: toque nas abas de baixo, toque numa refeição pra abrir a receita, toque em <em>Substituir</em>, marque itens no mercado, escolha um dia no calendário. Seis telas por direção, conteúdo real do plano dela.</p>
+    <p>Use a barra <kbd>Mostrar tela</kbd> pra virar os dez ao mesmo tempo e comparar a mesma tela lado a lado. A <kbd>☆</kbd> marca as que você gostou.</p>
+  </header>
+
+  <div class="bar">
+    <span class="bar-lbl">Mostrar tela</span>
+    <div class="segs" id="segs">
+      <button class="seg" data-go="hoje" aria-pressed="true">Hoje</button>
+      <button class="seg" data-go="mes" aria-pressed="false">Mês</button>
+      <button class="seg" data-go="mercado" aria-pressed="false">Mercado</button>
+      <button class="seg" data-go="receitas" aria-pressed="false">Receitas</button>
+      <button class="seg" data-go="detalhe" aria-pressed="false">Receita aberta</button>
+      <button class="seg" data-go="sheet" aria-pressed="false">Substituir</button>
+    </div>
+    <span class="marked">Marcadas: <b id="markedList">nenhuma</b></span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <p class="foot">
+    <b>Como responder:</b> me diga os números que sobreviveram — <code>gostei da 3 e da 6</code> — ou misture: <code>a 5 com as cores da 3</code>, <code>a 7 menos agressiva</code>, <code>a 9 sem os post-its</code>.
+    Vale também apontar a tela: <code>o Mês da 2 e o Hoje da 6</code>. Eu volto com a rodada 3 refinando o que ficou de pé.
+  </p>
+
+</div>
+
+<script>
+/* =========================================================================
+   DADOS — conteúdo real do plano (quarta, dia 4 do ciclo)
+   ========================================================================= */
+const CAT = { base:'base', prot:'prot', legu:'legu', vege:'vege', sala:'sala', outr:'outr' };
+
+const REFS = [
+  { slot:'Café da manhã', porc:1, titulo:'Tapioca com queijo', kcal:438, prot:14,
+    comps:[
+      {n:'Tapioca com queijo coalho', k:'base', q:'1 un'},
+      {n:'Mamão', k:'outr', q:'150 g'},
+      {n:'Suco de uva', k:'outr', q:'200 ml'}
+    ]},
+  { slot:'Almoço', porc:1, titulo:'Picadinho de carne com legumes', kcal:712, prot:38,
+    comps:[
+      {n:'Arroz branco', k:'base', q:'120 g'},
+      {n:'Feijão carioca', k:'legu', q:'90 g'},
+      {n:'Picadinho de carne com legumes', k:'prot', q:'150 g'},
+      {n:'Batata-doce amassada', k:'vege', q:'110 g'},
+      {n:'Alface americana e pepino', k:'sala', q:'80 g'}
+    ]},
+  { slot:'Café da tarde', porc:2, titulo:'Tapioca com queijo', kcal:876, prot:28,
+    espelho:'o café da manhã',
+    comps:[
+      {n:'Tapioca com queijo coalho', k:'base', q:'2 un'},
+      {n:'Mamão', k:'outr', q:'300 g'},
+      {n:'Suco de uva', k:'outr', q:'400 ml'}
+    ]},
+  { slot:'Jantar', porc:2, titulo:'Picadinho de carne com legumes', kcal:1424, prot:76,
+    espelho:'o almoço',
+    comps:[
+      {n:'Arroz branco', k:'base', q:'240 g'},
+      {n:'Feijão carioca', k:'legu', q:'180 g'},
+      {n:'Picadinho de carne com legumes', k:'prot', q:'300 g'},
+      {n:'Batata-doce amassada', k:'vege', q:'220 g'},
+      {n:'Alface americana e pepino', k:'sala', q:'160 g'}
+    ]}
+];
+
+const MERCADO = [
+  { sec:'Hortifrúti', itens:[
+    {n:'Batata-doce', q:'1,4 kg'}, {n:'Cenoura', q:'900 g'}, {n:'Alface americana', q:'3 pés'},
+    {n:'Pepino', q:'6 un'}, {n:'Mamão formosa', q:'2,1 kg'}, {n:'Cebola', q:'1,2 kg'}, {n:'Alho', q:'2 cabeças'}
+  ]},
+  { sec:'Açougue', itens:[
+    {n:'Patinho em cubos', q:'1,05 kg'}, {n:'Carne moída (acém)', q:'800 g'}, {n:'Filé de frango', q:'1,2 kg'}
+  ]},
+  { sec:'Mercearia', itens:[
+    {n:'Arroz branco', q:'2 kg'}, {n:'Feijão carioca', q:'1 kg'}, {n:'Goma de tapioca', q:'500 g'},
+    {n:'Azeite', q:'500 ml'}, {n:'Suco de uva integral', q:'3 L'}
+  ]},
+  { sec:'Laticínios', itens:[
+    {n:'Queijo coalho', q:'600 g'}, {n:'Manteiga', q:'200 g'}, {n:'Leite integral', q:'4 L'}
+  ]},
+  { sec:'Padaria', itens:[ {n:'Pão francês', q:'14 un'}, {n:'Pão de forma', q:'1 pacote'} ]}
+];
+
+const CATALOGO = [
+  {n:'Picadinho de carne com legumes', k:'prot', c:'Proteína · 35 min', kcal:'312 kcal'},
+  {n:'Arroz branco',                   k:'base', c:'Base · 20 min',     kcal:'128 kcal'},
+  {n:'Feijão carioca',                 k:'legu', c:'Leguminosa · 40 min', kcal:'76 kcal'},
+  {n:'Batata-doce cozida e amassada',  k:'vege', c:'Legume · 25 min',   kcal:'94 kcal'},
+  {n:'Alface americana e pepino',      k:'sala', c:'Salada · 8 min',    kcal:'42 kcal'},
+  {n:'Tapioca com queijo coalho',      k:'base', c:'Base · 10 min',     kcal:'268 kcal'},
+  {n:'Frango grelhado simples',        k:'prot', c:'Proteína · 22 min', kcal:'187 kcal'},
+  {n:'Chuchu refogado com cebola',     k:'vege', c:'Legume · 18 min',   kcal:'51 kcal'}
+];
+
+const INGREDIENTES = [
+  {n:'Patinho em cubos', q:'150 g'}, {n:'Cenoura em cubos', q:'60 g'},
+  {n:'Batata em cubos', q:'70 g'},   {n:'Cebola picada', q:'40 g'},
+  {n:'Alho', q:'1 dente'},           {n:'Azeite', q:'1 col. sopa'},
+  {n:'Extrato de tomate', q:'15 g'}, {n:'Sal', q:'a gosto'}
+];
+
+const PREPARO = [
+  'Tempere a carne com sal e alho e deixe descansar 10 minutos.',
+  'Aqueça o azeite e sele a carne em fogo alto até dourar por fora.',
+  'Junte a cebola, refogue até ficar transparente, acrescente o extrato.',
+  'Adicione cenoura, batata e água até cobrir. Tampe.',
+  'Cozinhe 20 minutos em fogo baixo, até os legumes ficarem macios.'
+];
+
+const TROCA_COMBO = [
+  {n:'Frango grelhado com brócolis', s:'dia 6 · 648 kcal', k:'prot'},
+  {n:'Strogonoff de carne',          s:'dia 13 · 812 kcal', k:'prot'},
+  {n:'Fricassê de frango',           s:'dia 18 · 734 kcal', k:'prot'},
+  {n:'Quibe assado com legumes',     s:'dia 11 · 690 kcal', k:'prot'}
+];
+
+/* =========================================================================
+   AS 10 DIREÇÕES
+   ========================================================================= */
+const DIRS = [
+  { id:1, nome:'Caderno', head:'flat', card:'ruled', comp:'list', hand:'on', cat:'off', bar:'off',
+    tese:'O caderno de receitas de família: papel pautado, esferográfica azul, correção em vermelho. O manuscrito entra <em>só</em> na margem — porção, ciclo, "trocar".',
+    sw:['#FBFAF7','#E2E7F0','#1D3F94','#C43D3D','#8593AE','#22262E'],
+    fonts:'Newsreader · IBM Plex Sans · Caveat',
+    nota:'<b>Aposta:</b> a pauta corre atrás do texto e as refeições não têm cartão — o dia é uma página, não uma lista de caixas.' },
+
+  { id:2, nome:'Azulejo', head:'pattern', card:'bordered', comp:'inline', hand:'off', cat:'off', bar:'off',
+    tese:'Cobalto sobre louça branca, junta cinza, ladrilho geométrico. O calendário do mês <em>já é</em> uma grade de ladrilhos — a metáfora vira função.',
+    sw:['#1B4FA0','#5B8FD6','#FFFFFF','#EDF0F4','#C96F45','#16202E'],
+    fonts:'Instrument Serif · Instrument Sans',
+    nota:'<b>Aposta:</b> o barro é o único quente da paleta e existe pra uma coisa só — a ação de substituir.' },
+
+  { id:3, nome:'Marmita', head:'flat', card:'elevated', comp:'chips', hand:'off', cat:'on', bar:'on',
+    tese:'A marmita de compartimentos. Base, proteína, leguminosa, legume, salada — a cor <em>é</em> o dado: você lê o equilíbrio do prato antes da palavra.',
+    sw:['#D99A2B','#B8503F','#7A4B33','#2E7D5B','#76A82F','#3E6DB5'],
+    fonts:'Bricolage Grotesque · Figtree',
+    nota:'<b>Aposta:</b> a barrinha no topo é o único gráfico do app. Some o verde, ela vê que ficou sem salada.' },
+
+  { id:4, nome:'Feira', head:'stripe', card:'plain', comp:'rows', hand:'off', cat:'off', bar:'off',
+    tese:'A feira livre: lona listrada verde e branca, papel amarelado, preço escrito em marcador vermelho. Quantidade em corpo grande, como placa de banca.',
+    sw:['#0E7A43','#D62828','#FFF8E3','#FFF1C6','#E9DDB6','#17150F'],
+    fonts:'Archivo Black · Archivo',
+    nota:'<b>Aposta:</b> zero arredondamento e nada de sombra. É sinalização impressa, não interface de vidro.' },
+
+  { id:5, nome:'Esmalte', head:'speck', card:'plain', comp:'list', hand:'off', cat:'off', bar:'off',
+    tese:'A panela de ágata esmaltada: branco respingado, azul-marinho profundo, aro escuro. Louça de fogão a lenha, não de loja de departamento.',
+    sw:['#14263F','#C7412B','#FFFFFF','#E9EDF0','#D6DDE3','#10161C'],
+    fonts:'Darker Grotesque · Manrope',
+    nota:'<b>Aposta:</b> o respingo é gerado em CSS no cabeçalho, nunca no corpo — textura onde não atrapalha a leitura.' },
+
+  { id:6, nome:'Noite', head:'flat', card:'elevated', comp:'chips', hand:'off', cat:'dark', bar:'on',
+    tese:'Escura de propósito. Ela abre isso às 6h com a luz apagada e às 22h montando a marmita do dia seguinte — carvão quente, âmbar, creme.',
+    sw:['#14120F','#1E1A16','#E8A33D','#D2694A','#B7AC9C','#F3EDE2'],
+    fonts:'Chivo · Chivo Mono',
+    nota:'<b>Aposta:</b> única escura das dez. Categorias reajustadas pro fundo — as mesmas seis cores em versão luminosa.' },
+
+  { id:7, nome:'Etiqueta', head:'rule', card:'thick', comp:'rows', hand:'off', cat:'off', bar:'off',
+    tese:'O rótulo nutricional: preto sobre branco, réguas grossas, tabela sem enfeite. O número é o herói e a hierarquia é a régua.',
+    sw:['#000000','#D8232A','#FFFFFF','#F0F0F0','#6E6E6E','#2E2E2E'],
+    fonts:'Anton · Public Sans',
+    nota:'<b>Aposta:</b> a mais rígida e a mais legível de longe — mas exige disciplina, porque uma cor a mais quebra tudo.' },
+
+  { id:8, nome:'Horta', head:'block', card:'plain', comp:'list', hand:'off', cat:'off', bar:'off',
+    tese:'Verde-mata sobre creme frio, com chartreuse ácido de contraponto. Cantos generosos, respiro largo — o oposto calmo da Etiqueta.',
+    sw:['#1F4D2E','#7E9B1E','#FFFFFF','#F4F6F0','#DEE7D5','#17251A'],
+    fonts:'Gloock · Lexend',
+    nota:'<b>Aposta:</b> raio de 18 px e entrelinha aberta. É a direção mais "confortável" — e a que mais corre risco de virar genérica se eu relaxar.' },
+
+  { id:9, nome:'Geladeira', head:'flat', card:'note', comp:'list', hand:'off', cat:'off', bar:'off',
+    tese:'A porta da geladeira: aço escovado e bilhetinhos presos por ímã. Cada refeição é um post-it torto — amarelo, verde, rosa.',
+    sw:['#DCE1E4','#FFF7BF','#D6F5D6','#FFD9E4','#E4572E','#1B1F22'],
+    fonts:'DM Serif Display · DM Sans',
+    nota:'<b>Aposta:</b> a rotação é de 0,6° e alterna de sinal. Passou disso vira brinquedo; menos que isso ninguém percebe.' },
+
+  { id:10, nome:'Ficha', head:'flat', card:'bordered', comp:'rows', hand:'off', cat:'off', bar:'off',
+    tese:'A ficha técnica de cozinha profissional: cinza-aço, laranja de sinalização, quantidade em monoespaçada. Denso, preciso, sem carinho.',
+    sw:['#20242A','#2B3037','#FF7A18','#4FB3D9','#AEB6BD','#ECEFF1'],
+    fonts:'Space Grotesk · Space Mono',
+    nota:'<b>Aposta:</b> tudo alinhado em coluna monoespaçada. Se ela é do tipo que confere quantidade, essa ganha das outras nove.' }
+];
+
+/* =========================================================================
+   HELPERS
+   ========================================================================= */
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function comps(d, ref){
+  const c = ref.comps;
+  if (d.comp === 'chips')
+    return '<div class="comp-chips">' + c.map(x => '<span class="chip k-' + x.k + '">' + esc(x.n) + '</span>').join('') + '</div>';
+  if (d.comp === 'inline')
+    return '<div class="comp-inline">' + c.map(x => esc(x.n)).join(' · ') + '</div>';
+  if (d.comp === 'rows')
+    return '<div class="comp-rows">' + c.map(x => '<div><b>' + esc(x.n) + '</b><span>' + esc(x.q) + '</span></div>').join('') + '</div>';
+  return '<div class="comp-list">' + c.map(x => '<div>' + esc(x.n) + '</div>').join('') + '</div>';
+}
+
+function catBar(d, ref){
+  if (d.bar !== 'on') return '';
+  return '<div class="bar-cat">' + ref.comps.map(x => '<i class="k-' + x.k + '"></i>').join('') + '</div>';
+}
+
+/* --------------------------- TELA: HOJE --------------------------- */
+function paneHoje(d){
+  const meals = REFS.map((r, i) => {
+    const mirror = r.espelho ? ' mirror' : '';
+    const body = r.espelho
+      ? '<div class="comp-list"><div>repete ' + r.espelho + '</div></div>'
+      : catBar(d, r) + comps(d, r);
+    const foot = r.espelho ? '' :
+      '<div class="mfoot"><span class="kcal"><b>' + r.kcal + '</b> kcal · ' + r.prot + ' g prot</span>' +
+      '<button class="swap" data-act="sheet">Substituir</button></div>';
+    return '<div class="meal' + mirror + '" data-act="detalhe" data-i="' + i + '">' +
+      '<div class="mrow"><span class="mslot">' + esc(r.slot) + '</span>' +
+      '<span class="mport">' + r.porc + (r.porc > 1 ? ' porções' : ' porção') + '</span></div>' +
+      '<h3 class="mtitle">' + esc(r.titulo) + '</h3>' + body + foot + '</div>';
+  }).join('');
+
+  return '<div class="pane on" data-pane="hoje">' +
+    '<div class="top"><div class="top-row"><span class="top-m">Setembro 2026</span><span class="top-dots">⋯</span></div>' +
+    '<div class="dhead"><span class="dnum">04</span><span class="dmeta">' +
+    '<span class="dwd">quarta</span><div class="dcyc">dia 4 de 33 · 1 902 kcal</div></span>' +
+    (d.hand === 'on' ? '<span class="hand">semana</span>' : '') + '</div></div>' +
+    '<div class="meals">' + meals + '</div></div>';
+}
+
+/* --------------------------- TELA: MÊS --------------------------- */
+function paneMes(){
+  const first = new Date(2026, 8, 1).getDay();   // setembro/2026
+  const dias = 30, sel = 4;
+  let cells = '';
+  for (let i = 0; i < first; i++) cells += '<button class="empty" tabindex="-1" aria-hidden="true"></button>';
+  for (let dnum = 1; dnum <= dias; dnum++){
+    const cls = dnum === sel ? ' sel' : (dnum === 12 ? ' today' : '');
+    cells += '<button class="' + cls.trim() + '" data-act="pickday" data-d="' + dnum + '">' +
+      dnum + '<em><i></i><i></i></em></button>';
+  }
+  return '<div class="pane" data-pane="mes">' +
+    '<div class="top"><div class="top-row"><span class="top-m">‹ Setembro 2026 ›</span><span class="top-dots">⋯</span></div></div>' +
+    '<div class="cal"><div class="cal-wd"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>' +
+    '<div class="cal-g">' + cells + '</div></div>' +
+    '<div class="daycard"><h4 data-daytitle>Quarta, 4 de setembro</h4>' +
+    '<div class="sub" data-daysub>dia 4 de 33 · 1 porção no café e no almoço</div>' +
+    REFS.map(r => '<div class="dl"><b>' + esc(r.slot) + '</b><span>' + r.kcal + ' kcal</span></div>').join('') +
+    '<div class="totrow"><span>total do dia</span><b>1 902 kcal</b></div></div></div>';
+}
+
+/* --------------------------- TELA: MERCADO --------------------------- */
+function paneMercado(){
+  const total = MERCADO.reduce((a, s) => a + s.itens.length, 0);
+  const secs = MERCADO.map(s =>
+    '<div class="mk-sec"><h5>' + esc(s.sec) + '<em>' + s.itens.length + ' itens</em></h5>' +
+    s.itens.map(i =>
+      '<button class="it" data-act="tick" aria-pressed="false">' +
+      '<span class="box">✓</span><span class="nm">' + esc(i.n) + '</span><span class="qt">' + esc(i.q) + '</span></button>'
+    ).join('') + '</div>'
+  ).join('');
+
+  return '<div class="pane" data-pane="mercado">' +
+    '<div class="top"><div class="top-row"><span class="top-m">Lista de mercado</span><span class="top-dots">⋯</span></div></div>' +
+    '<div class="mk-head"><div class="range">' +
+    '<button aria-pressed="true">Esta semana</button><button aria-pressed="false">Este mês</button>' +
+    '<button aria-pressed="false">Escolher…</button></div>' +
+    '<div class="prog"><span data-count>0 de ' + total + '</span><span class="track"><span class="fill" style="width:0%"></span></span>' +
+    '<span>1 – 7 set</span></div></div>' + secs +
+    '<div style="height:14px"></div></div>';
+}
+
+/* --------------------------- TELA: RECEITAS --------------------------- */
+function paneReceitas(){
+  const cats = ['Todas','Base','Proteína','Leguminosa','Legume','Salada'];
+  return '<div class="pane" data-pane="receitas">' +
+    '<div class="top"><div class="top-row"><span class="top-m">Receitas · 182</span><span class="top-dots">⋯</span></div></div>' +
+    '<div class="rc-head"><div class="search">Buscar receita ou ingrediente</div></div>' +
+    '<div class="filters">' + cats.map((c, i) =>
+      '<button aria-pressed="' + (i === 0) + '">' + c + '</button>').join('') + '</div>' +
+    '<div class="rc-list">' + CATALOGO.map(r =>
+      '<button class="rc" data-act="detalhe"><span class="tag k-' + r.k + '"></span>' +
+      '<span class="b"><span class="t">' + esc(r.n) + '</span><span class="s">' + esc(r.c) + '</span></span>' +
+      '<span class="k">' + esc(r.kcal) + '</span></button>').join('') +
+    '</div><button class="fab" aria-label="Nova receita">+</button></div>';
+}
+
+/* --------------------------- TELA: DETALHE --------------------------- */
+function paneDetalhe(){
+  return '<div class="pane" data-pane="detalhe">' +
+    '<div class="top rd-hero"><div class="top-row">' +
+    '<button class="back" data-act="voltar">‹ Voltar</button><span class="top-dots">⋯</span></div>' +
+    '<h3>Picadinho de carne com legumes</h3>' +
+    '<div class="facts"><span>35 min</span><span>1 porção</span><span>Proteína</span></div></div>' +
+    '<div class="nutri">' +
+    '<div class="nu"><b>312</b><span>kcal</span></div><div class="nu"><b>28</b><span>prot g</span></div>' +
+    '<div class="nu"><b>14</b><span>carb g</span></div><div class="nu"><b>16</b><span>gord g</span></div></div>' +
+    '<div class="blk"><h6>Ingredientes<em>para 1 porção</em></h6>' +
+    INGREDIENTES.map(i => '<div class="ing"><b>' + esc(i.n) + '</b><span>' + esc(i.q) + '</span></div>').join('') + '</div>' +
+    '<div class="blk"><h6>Modo de preparo</h6>' +
+    PREPARO.map((p, i) => '<div class="stp"><b>' + (i + 1) + '</b><span>' + esc(p) + '</span></div>').join('') + '</div>' +
+    '<div class="rd-foot"><button class="btn" data-act="sheet">Substituir esta receita</button></div></div>';
+}
+
+/* --------------------------- FOLHA: SUBSTITUIR --------------------------- */
+function sheet(){
+  return '<div class="veil" data-act="fechar"></div><div class="sheet">' +
+    '<div class="grab"></div><h4>Substituir o almoço</h4>' +
+    '<div class="sh-sub">quarta, 4 de setembro · 1 porção</div>' +
+    '<div class="sh-lbl">Trocar a refeição inteira</div>' +
+    TROCA_COMBO.map(o =>
+      '<button class="opt" data-act="escolher"><span class="tag k-' + o.k + '"></span>' +
+      '<span class="b"><span class="t">' + esc(o.n) + '</span><span class="s">' + esc(o.s) + '</span></span></button>').join('') +
+    '<div class="sh-lbl">Ou trocar só um componente</div>' +
+    REFS[1].comps.map(c =>
+      '<button class="opt" data-act="escolher"><span class="tag k-' + c.k + '"></span>' +
+      '<span class="b"><span class="t">' + esc(c.n) + '</span><span class="s">' + esc(c.q) + '</span></span></button>').join('') +
+    '</div><div class="toast">Almoço substituído só nesta quarta</div>';
+}
+
+/* =========================================================================
+   MONTAGEM
+   ========================================================================= */
+const grid = document.getElementById('grid');
+grid.innerHTML = DIRS.map(d =>
+  '<section class="dir" data-dir="' + d.id + '">' +
+    '<div class="dir-top"><span class="dir-n">' + String(d.id).padStart(2, '0') + '</span>' +
+      '<h2>' + d.nome + '</h2>' +
+      '<button class="star" data-act="marcar" aria-label="Marcar ' + d.nome + '">☆</button></div>' +
+    '<p class="thesis">' + d.tese + '</p>' +
+    '<div class="meta"><span class="sw">' + d.sw.map(c => '<i style="background:' + c + '"></i>').join('') + '</span>' +
+      '<span class="fonts">' + d.fonts + '</span></div>' +
+    '<div class="phone"><div class="scr t' + d.id + '" data-head="' + d.head + '" data-card="' + d.card +
+      '" data-hand="' + d.hand + '" data-cat="' + d.cat + '" data-screen="hoje">' +
+      '<div class="view">' + paneHoje(d) + paneMes() + paneMercado() + paneReceitas() + paneDetalhe() + '</div>' +
+      '<nav class="nav">' +
+        '<button data-act="ir" data-go="hoje" aria-current="page"><i>◉</i>Hoje</button>' +
+        '<button data-act="ir" data-go="mes"><i>▦</i>Mês</button>' +
+        '<button data-act="ir" data-go="mercado"><i>✓</i>Mercado</button>' +
+        '<button data-act="ir" data-go="receitas"><i>≡</i>Receitas</button>' +
+      '</nav>' + sheet() +
+    '</div></div>' +
+    '<p class="note">' + d.nota + '</p>' +
+  '</section>'
+).join('');
+
+/* --------------------------- NAVEGAÇÃO --------------------------- */
+const DIAS_SEM = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+
+function irPara(scr, alvo){
+  if (alvo === 'sheet'){ abrirSheet(scr); return; }
+  fecharSheet(scr);
+  scr.dataset.screen = alvo;
+  scr.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.dataset.pane === alvo));
+  scr.querySelectorAll('.nav button').forEach(b => {
+    if (b.dataset.go === alvo) b.setAttribute('aria-current', 'page');
+    else b.removeAttribute('aria-current');
+  });
+  const v = scr.querySelector('.view'); if (v) v.scrollTop = 0;
+}
+function abrirSheet(scr){
+  if (scr.dataset.screen !== 'detalhe') irPara(scr, 'hoje');
+  scr.querySelector('.veil').classList.add('on');
+  scr.querySelector('.sheet').classList.add('on');
+}
+function fecharSheet(scr){
+  scr.querySelector('.veil').classList.remove('on');
+  scr.querySelector('.sheet').classList.remove('on');
+}
+function toast(scr){
+  const t = scr.querySelector('.toast');
+  t.classList.add('on');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 1900);
+}
+
+document.addEventListener('click', e => {
+  /* barra de controle global */
+  const seg = e.target.closest('.seg');
+  if (seg){
+    document.querySelectorAll('#segs .seg').forEach(s => s.setAttribute('aria-pressed', String(s === seg)));
+    document.querySelectorAll('.scr').forEach(scr => irPara(scr, seg.dataset.go));
+    return;
+  }
+
+  /* estrela de marcar */
+  const st = e.target.closest('[data-act="marcar"]');
+  if (st){
+    const dir = st.closest('.dir');
+    dir.classList.toggle('is-marked');
+    st.textContent = dir.classList.contains('is-marked') ? '★' : '☆';
+    const ns = [...document.querySelectorAll('.dir.is-marked')].map(d => d.dataset.dir);
+    document.getElementById('markedList').textContent = ns.length ? ns.join(', ') : 'nenhuma';
+    return;
+  }
+
+  const scr = e.target.closest('.scr');
+  if (!scr) return;
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  const act = el.dataset.act;
+
+  if (act === 'ir')        irPara(scr, el.dataset.go);
+  else if (act === 'detalhe') irPara(scr, 'detalhe');
+  else if (act === 'voltar')  irPara(scr, 'hoje');
+  else if (act === 'sheet')   { e.stopPropagation(); abrirSheet(scr); }
+  else if (act === 'fechar')  fecharSheet(scr);
+  else if (act === 'escolher'){ fecharSheet(scr); toast(scr); }
+
+  else if (act === 'tick'){
+    const on = el.getAttribute('aria-pressed') === 'true';
+    el.setAttribute('aria-pressed', String(!on));
+    const itens = scr.querySelectorAll('.it');
+    const feitos = scr.querySelectorAll('.it[aria-pressed="true"]').length;
+    scr.querySelector('[data-count]').textContent = feitos + ' de ' + itens.length;
+    scr.querySelector('.fill').style.width = (feitos / itens.length * 100) + '%';
+  }
+
+  else if (act === 'pickday'){
+    const d = +el.dataset.d;
+    scr.querySelectorAll('.cal-g button').forEach(b => b.classList.remove('sel'));
+    el.classList.add('sel');
+    const wd = DIAS_SEM[new Date(2026, 8, d).getDay()];
+    const fds = wd === 'Sábado' || wd === 'Domingo';
+    scr.querySelector('[data-daytitle]').textContent = wd + ', ' + d + ' de setembro';
+    scr.querySelector('[data-daysub]').textContent =
+      'dia ' + (((d - 1) % 33) + 1) + ' de 33 · ' +
+      (fds ? '2 porções o dia todo' : '1 porção no café e no almoço');
+  }
+});
+
+/* faixas do mercado: alterna o intervalo (visual apenas) */
+document.addEventListener('click', e => {
+  const r = e.target.closest('.range button');
+  if (!r) return;
+  r.parentElement.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === r)));
+});
+document.addEventListener('click', e => {
+  const f = e.target.closest('.filters button');
+  if (!f) return;
+  f.parentElement.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === f)));
+});
+</script>
+</body>
+</html>
