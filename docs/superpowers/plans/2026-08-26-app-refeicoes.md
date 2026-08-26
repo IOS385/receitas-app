@@ -183,9 +183,20 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  drift_dev: ^2.34.5
-  build_runner: ^2.16.0
+  drift_dev: ^2.34.0
+  build_runner: ^2.15.1
 ```
+
+**Por que as duas ferramentas de codegen recuam** (corrigido em 2026-08-26, durante a
+execução): `flutter_test` do SDK 3.44.1 fixa **`meta: 1.18.0` exato**. `drift_dev ≥ 2.34.1`
+e `build_runner ≥ 2.15.2` dependem de `analyzer ≥ 13.3.0`, que exige `meta ^1.18.3` —
+insatisfazível. Não é erro de digitação: são de fato as versões mais recentes publicadas,
+e o grafo não fecha nesta versão do Flutter.
+
+Relaxar só o `drift_dev` **não basta** — `build_runner` bloqueia sozinho. Os dois valores
+acima são exatamente os que o `financas-app-mobile` já usa, e resolvem: `analyzer 12.1.0`,
+`meta 1.18.0`, com `drift 2.34.3` e `flutter_riverpod 3.4.2` **intactos** no runtime. O
+recuo é dev-only, não afeta o app.
 
 Não adicionar `google_fonts`: ele baixa fonte em tempo de execução, o que viola a
 restrição global de rede zero. As fontes entram como asset na Task 14.
