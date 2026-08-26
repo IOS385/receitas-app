@@ -76,6 +76,20 @@ void main() {
       expect(r.single.secao, SecaoMercado.mercearia);
       expect(r.single.unidadeCompra, UnidadeCompra.unidade);
     });
+
+    test('alimento so com a gosto nao aparece na lista', () {
+      final r = agregar(const [
+        LinhaIngrediente(alimentoId: 1, unidade: Unidade.aGosto, quantidade: 1),
+      ]);
+      expect(r, isEmpty);
+    });
+
+    test('alimento so com pitada tambem nao aparece', () {
+      final r = agregar(const [
+        LinhaIngrediente(alimentoId: 1, unidade: Unidade.pitada, quantidade: 1),
+      ]);
+      expect(r, isEmpty);
+    });
   });
 
   group('formatarCompra', () {
@@ -119,6 +133,19 @@ void main() {
       final f = formatarCompra(
           gramas: 260, compra: UnidadeCompra.unidade, gramasPorUnidade: null);
       expect(f.unidade, 'g');
+    });
+
+    test('unidade com massa zero ou negativa cai em grama', () {
+      expect(
+          formatarCompra(
+                  gramas: 260, compra: UnidadeCompra.unidade, gramasPorUnidade: 0)
+              .unidade,
+          'g');
+      expect(
+          formatarCompra(
+                  gramas: 260, compra: UnidadeCompra.unidade, gramasPorUnidade: -5)
+              .unidade,
+          'g');
     });
   });
 
