@@ -1650,7 +1650,7 @@ RefeicaoResolvida resolverRefeicao({
 flutter test test/resolucao_test.dart
 ```
 
-Esperado: 17 testes passando. Os que mais importam são
+Esperado: 18 testes passando. Os que mais importam são
 `override no jantar nao volta para o almoco` e
 `slot com override de combo proprio nao herda componente do base`.
 
@@ -1907,6 +1907,12 @@ List<ItemMercado> agregarMercado({
     soma.update(l.alimentoId, (v) => v + g, ifAbsent: () => g);
   }
 
+  // Assimetria proposital com o `ConversaoAusente` acima: seção e unidade de
+  // compra caem em padrão, quantidade não. Seção faltando põe o item na
+  // mercearia em vez da sua prateleira — degradação cosmética, a lista continua
+  // correta. Conversão faltando tornaria a QUANTIDADE desconhecida, e não há
+  // padrão honesto para isso. Falha alto onde o valor não pode ser inventado;
+  // degrada onde pode.
   final itens = soma.entries
       .map((e) => ItemMercado(
             alimentoId: e.key,
@@ -2247,7 +2253,9 @@ rodar `flutter pub upgrade --major-versions drift drift_dev` e repetir.
 `test/app_database_test.dart`:
 
 ```dart
-import 'package:drift/drift.dart';
+// `hide`: drift exporta `isNull`/`isNotNull` top-level deprecados que
+// colidem com os matchers homonimos do package:matcher.
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
@@ -4036,7 +4044,9 @@ git commit -m "feat(data): repositorios de plano, receitas, mercado e config"
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:drift/drift.dart';
+// `hide`: drift exporta `isNull`/`isNotNull` top-level deprecados que
+// colidem com os matchers homonimos do package:matcher.
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
