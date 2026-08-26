@@ -10,9 +10,13 @@ void main() {
     for (final f in dir.listSync(recursive: true).whereType<File>()) {
       if (!f.path.endsWith('.dart')) continue;
       final texto = f.readAsStringSync();
-      for (final pacote in const ['package:flutter/', 'package:drift/']) {
-        if (texto.contains("import '$pacote")) {
-          proibidos.add('${f.path} importa $pacote');
+      for (final pacote in const ['flutter', 'drift']) {
+        final regex = RegExp(
+          r'''^\s*(import|export)\s+['"]package:''' + pacote + r'''/''',
+          multiLine: true,
+        );
+        if (regex.hasMatch(texto)) {
+          proibidos.add('${f.path} importa/exporta package:$pacote/');
         }
       }
     }
@@ -21,10 +25,17 @@ void main() {
 
   test('nenhum arquivo de lib faz chamada de rede', () {
     final proibidos = <String>[];
+    final httpRegex = RegExp(
+      r'''^\s*(import|export)\s+['"]package:http/''',
+      multiLine: true,
+    );
     for (final f in Directory('lib').listSync(recursive: true).whereType<File>()) {
       if (!f.path.endsWith('.dart') || f.path.endsWith('.g.dart')) continue;
       final texto = f.readAsStringSync();
-      for (final agulha in const ['package:http/', 'HttpClient(', 'WebSocket.']) {
+      if (httpRegex.hasMatch(texto)) {
+        proibidos.add('${f.path} usa package:http/');
+      }
+      for (final agulha in const ['HttpClient(', 'WebSocket.']) {
         if (texto.contains(agulha)) proibidos.add('${f.path} usa $agulha');
       }
     }
