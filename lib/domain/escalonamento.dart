@@ -16,7 +16,11 @@ double escalarQuantidade({
   if (unidadesSemMedida.contains(unidade)) return quantidade;
   if (rendimento <= 0) return quantidade;
 
-  final bruto = quantidade * (porcoes / rendimento);
+  // Multiplica ANTES de dividir. Calcular a razão `porcoes / rendimento`
+  // primeiro introduz erro de ponto flutuante que empurra resultados exatos
+  // para cima da fronteira inteira, e o `ceil()` abaixo então erra por 1:
+  // `21 * (9 / 7)` dá 27.000000000000004 e arredonda para 28, não 27.
+  final bruto = quantidade * porcoes / rendimento;
   if (unidadesDiscretas.contains(unidade)) {
     return math.max(1, bruto.ceil()).toDouble();
   }

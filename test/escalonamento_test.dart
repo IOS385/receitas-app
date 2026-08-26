@@ -42,6 +42,13 @@ void main() {
     expect(e(1, Unidade.unidade, 1, 2), 1);
   });
 
+  test('resultado inteiro exato nao infla por erro de ponto flutuante', () {
+    // com `quantidade * (porcoes / rendimento)` isto dava 28
+    expect(e(21, Unidade.unidade, 9, 7), 27);
+    expect(e(25, Unidade.fatia, 11, 5), 55);
+    expect(e(27, Unidade.dente, 7, 3), 63);
+  });
+
   test('rendimento zero nao divide por zero', () {
     expect(e(100, Unidade.g, 2, 0), 100);
   });
