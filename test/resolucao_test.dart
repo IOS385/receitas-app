@@ -101,6 +101,17 @@ void main() {
       expect(res.comboId, 40);
       expect(res.espelhoIntacto, isFalse);
     });
+
+    test('override no jantar nao vaza para o almoco nem via componente', () {
+      final res = r(SlotRefeicao.almoco,
+          combos: {(data, SlotRefeicao.jantar): 99},
+          comps: {
+            (data, SlotRefeicao.jantar): {12: 20},
+          });
+      expect(res.comboId, 41, reason: 'o almoco continua o do ciclo');
+      expect(res.receitaIds, [10, 11, 12, 13, 14],
+          reason: 'nada do jantar contamina o almoco');
+    });
   });
 
   group('substituicao de componente', () {
@@ -149,6 +160,18 @@ void main() {
       });
       expect(res.espelhoIntacto, isTrue);
       expect(res.comboId, 41);
+    });
+
+    test('override de combo e de componente no mesmo slot proprio convivem', () {
+      final res = r(SlotRefeicao.jantar,
+          combos: {(data, SlotRefeicao.jantar): 99},
+          comps: {
+            (data, SlotRefeicao.jantar): {20: 12},
+          });
+      expect(res.comboId, 99);
+      expect(res.espelhoIntacto, isFalse);
+      expect(res.receitaIds, [12, 10],
+          reason: 'a camada do proprio slot se aplica sobre o combo trocado');
     });
   });
 
