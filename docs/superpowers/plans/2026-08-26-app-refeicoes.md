@@ -508,6 +508,7 @@ Esperado: FAIL — `Target of URI doesn't exist: 'package:refeicoes_app/domain/m
 
 ```dart
 /// Vocabulário do domínio. Dart puro: nada aqui conhece Flutter nem banco.
+library;
 
 enum SlotRefeicao { cafeManha, almoco, cafeTarde, jantar }
 
@@ -744,8 +745,15 @@ import 'modelos.dart';
 
 /// Posição de uma data dentro do ciclo, de 1 a [tamanho].
 ///
-/// O módulo é duplo de propósito: em Dart, `-1 % 33` devolve `-1`, e a usuária
-/// precisa poder navegar para datas anteriores ao início do ciclo.
+/// Atenção ao operador: em Dart, `%` sobre `int` é **euclidiano** — o resultado
+/// é sempre em `[0, tamanho)` mesmo para dias negativos (`-2 % 33 == 31`).
+/// Isso difere de C, Java e JavaScript. Quem quer o resto truncado usa
+/// `remainder()`, que devolveria `-2` e quebraria a navegação para datas
+/// anteriores ao início do ciclo.
+///
+/// O módulo duplo abaixo é redundante nesta linguagem, e fica de propósito:
+/// custa nada e protege se alguém trocar `%` por `remainder()`. O teste de
+/// varredura de 800 dias é o que guarda essa promessa.
 int posicaoNoCiclo({
   required DataPura inicio,
   required DataPura data,
@@ -1129,7 +1137,11 @@ double escalarQuantidade({
   if (unidadesSemMedida.contains(unidade)) return quantidade;
   if (rendimento <= 0) return quantidade;
 
-  final bruto = quantidade * (porcoes / rendimento);
+  // Multiplica ANTES de dividir. Calcular a razão `porcoes / rendimento`
+  // primeiro introduz erro de ponto flutuante que empurra resultados exatos
+  // para cima da fronteira inteira, e o `ceil()` abaixo então erra por 1:
+  // `21 * (9 / 7)` dá 27.000000000000004 e arredonda para 28, não 27.
+  final bruto = quantidade * porcoes / rendimento;
   if (unidadesDiscretas.contains(unidade)) {
     return math.max(1, bruto.ceil()).toDouble();
   }
