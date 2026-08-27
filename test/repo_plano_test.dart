@@ -166,4 +166,51 @@ void main() {
     expect(d.posicao, inInclusiveRange(1, 33));
     expect(d.refeicoes, hasLength(4));
   });
+
+  test('nutricao do jantar dobra junto com a porcao', () async {
+    final d = await repo.dia(sexta);
+    final arrozAlmoco = slotDe(d, SlotRefeicao.almoco)
+        .componentes
+        .firstWhere((c) => c.nome == 'Arroz branco');
+    final arrozJantar = slotDe(d, SlotRefeicao.jantar)
+        .componentes
+        .firstWhere((c) => c.nome == 'Arroz branco');
+
+    expect(arrozAlmoco.nutrientes.kcal, greaterThan(0));
+    expect(arrozJantar.nutrientes.kcal,
+        closeTo(arrozAlmoco.nutrientes.kcal * 2, 1.0),
+        reason: 'a nutricao tem de usar a quantidade ESCALADA, nao a crua');
+  });
+
+  test('componentes do combo vem na ordem cadastrada', () async {
+    final d = await repo.dia(sexta);
+    expect(
+      slotDe(d, SlotRefeicao.almoco).componentes.map((c) => c.nome).toList(),
+      [
+        'Arroz branco',
+        'Feijao carioca',
+        'Picadinho de carne com legumes',
+        'Batata-doce cozida e amassada',
+        'Alface americana e pepino com molho de mostarda e mel',
+      ],
+      reason: 'a ordem do prato e significativa: base, leguminosa, proteina, legume, salada',
+    );
+  });
+
+  test('diasEditados filtra pelo intervalo pedido', () async {
+    await repo.substituirCombo(
+        data: sexta, slot: SlotRefeicao.almoco, comboId: 5);
+    await repo.substituirCombo(
+        data: const DataPura('2026-10-20'),
+        slot: SlotRefeicao.almoco,
+        comboId: 5);
+
+    final setembro = await repo.diasEditados(
+        const DataPura('2026-09-01'), const DataPura('2026-09-30'));
+    expect(setembro, {sexta}, reason: 'outubro nao pode entrar');
+
+    final ambos = await repo.diasEditados(
+        const DataPura('2026-09-01'), const DataPura('2026-10-31'));
+    expect(ambos, hasLength(2));
+  });
 }
