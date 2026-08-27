@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
+import 'package:refeicoes_app/data/repo_config.dart';
+import 'package:refeicoes_app/data/repo_plano.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
 import 'package:refeicoes_app/presentation/hoje/hoje_provider.dart';
 import 'package:refeicoes_app/presentation/hoje/hoje_screen.dart';
@@ -41,12 +43,22 @@ void main() {
   });
 
   testWidgets('cabecalho traz dia, posicao no ciclo e kcal', (tester) async {
-    await abrir(tester);
+    const iso = '2026-09-04';
+    await abrir(tester, iso: iso);
 
     expect(find.text('04'), findsOneWidget);
     expect(find.text('SEXTA'), findsOneWidget);
     expect(find.text('dia 4 de 4'), findsOneWidget);
     expect(find.text('KCAL NO DIA'), findsOneWidget);
+
+    // relacional de proposito: prova que a TELA renderiza o que o REPOSITORIO
+    // calcula, sem cravar um numero que quebra se a semente mudar
+    final esperado = (await RepoPlano(db, RepoConfig(db)).dia(DataPura(iso)))
+        .total
+        .kcal
+        .round();
+    expect(find.text('$esperado'), findsOneWidget,
+        reason: 'o total do cabecalho tem de ser o que o repositorio calcula');
   });
 
   testWidgets('sexta mostra 1 porcao no almoco e 2 no jantar',

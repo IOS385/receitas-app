@@ -242,7 +242,10 @@ class _LinhaComponente extends StatelessWidget {
     final t = Theme.of(context).textTheme;
     final cores = context.esmalte;
 
-    // A medida principal do componente: o primeiro ingrediente com massa.
+    // A medida principal do componente: o primeiro ingrediente COM MEDIDA
+    // (qualquer unidade que nao seja `aGosto`/`pitada`) — pode ser discreta,
+    // como `2 fatia`, nao necessariamente massa. A ordem vem do cadastro da
+    // receita, onde o ingrediente principal vem primeiro.
     final principal = componente.ingredientes.firstWhere(
       (i) => !unidadesSemMedida.contains(i.unidade),
       orElse: () => componente.ingredientes.isEmpty
