@@ -42,7 +42,14 @@ class HojeScreen extends ConsumerWidget {
                     for (final r in d.refeicoes)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
-                        child: BlocoRefeicao(refeicao: r, data: data),
+                        child: BlocoRefeicao(
+                          refeicao: r,
+                          data: data,
+                          porcoesBase: d.refeicoes
+                              .firstWhere((b) => b.slot == slotBaseDe(r.slot),
+                                  orElse: () => r)
+                              .porcoes,
+                        ),
                       ),
                   ],
                 ),
@@ -138,10 +145,15 @@ class BlocoRefeicao extends ConsumerWidget {
   final RefeicaoDoDia refeicao;
   final DataPura data;
 
+  /// Porções do slot de onde este repete. Serve para dizer "em dobro" só
+  /// quando é dobro de verdade — no fim de semana almoço e jantar empatam.
+  final int porcoesBase;
+
   const BlocoRefeicao({
     super.key,
     required this.refeicao,
     required this.data,
+    required this.porcoesBase,
   });
 
   @override
@@ -190,8 +202,11 @@ class BlocoRefeicao extends ConsumerWidget {
           const SizedBox(height: 9),
           if (espelhado) ...[
             Text(
-              'repete ${rotuloSlot(slotBaseDe(refeicao.slot)).toLowerCase()},'
-              ' em dobro',
+              // Derivado das porções: no sábado almoço = 2 e jantar = 2, e
+              // "em dobro" ao lado de dois selos "2 porções" e mentira.
+              // A spec seção 10 pede só "repete o almoço".
+              'repete o ${rotuloSlot(slotBaseDe(refeicao.slot)).toLowerCase()}'
+              '${refeicao.porcoes == porcoesBase * 2 ? ', em dobro' : ''}',
               style: t.bodySmall
                   ?.copyWith(color: cores.ink3, fontStyle: FontStyle.italic),
             ),

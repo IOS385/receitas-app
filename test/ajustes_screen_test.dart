@@ -1,8 +1,21 @@
+import 'package:drift/drift.dart' show DatabaseConnection, Value;
+import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
+import 'package:refeicoes_app/data/backup.dart';
+import 'package:refeicoes_app/data/database_provider.dart';
 import 'package:refeicoes_app/data/repo_config.dart';
+import 'package:refeicoes_app/data/repo_plano.dart';
+import 'package:refeicoes_app/data/semente.dart';
+import 'package:refeicoes_app/domain/modelos.dart';
+import 'package:refeicoes_app/presentation/ajustes/ajustes_provider.dart';
 import 'package:refeicoes_app/presentation/ajustes/ajustes_screen.dart';
+import 'package:refeicoes_app/presentation/hoje/hoje_provider.dart';
+import 'package:refeicoes_app/presentation/mercado/mercado_provider.dart';
+import 'package:refeicoes_app/presentation/mes/mes_provider.dart';
+import 'package:refeicoes_app/presentation/receitas/receitas_provider.dart';
 
 import 'util_teste.dart';
 
@@ -101,6 +114,63 @@ void main() {
     await tester.tap(find.text('Cancelar'));
     await tester.pumpAndSettle();
     expect(await db.select(db.alimentos).get(), hasLength(40));
+  });
+
+  test('importar backup nao deixa provider nenhum com dado velho', () async {
+    final hoje = DataPura.de(DateTime.now());
+
+    // Um backup com conteudo DIFERENTE: nome de receita, tema e um dia
+    // substituido — um sintoma por provider que ficava de fora.
+    final origem = AppDatabase(DatabaseConnection(
+      NativeDatabase.memory(),
+      closeStreamsSynchronously: true,
+    ));
+    await carregarSemente(origem, lerAsset: lerSementeDoDisco, versao: 1);
+    await (origem.update(origem.receitas)..where((t) => t.id.equals(1)))
+        .write(const ReceitasCompanion(nome: Value('Arroz do backup')));
+    await RepoConfig(origem).definir('tema', 'escuro');
+    await RepoPlano(origem, RepoConfig(origem))
+        .substituirCombo(data: hoje, slot: SlotRefeicao.almoco, comboId: 5);
+    final arquivo = await exportarJson(origem);
+    await origem.close();
+
+    final c = ProviderContainer(overrides: [
+      bancoProvider.overrideWithValue(db),
+      semeaduraProvider.overrideWith((ref) async {}),
+    ]);
+    addTearDown(c.dispose);
+
+    // aquece os oito, como a usuaria faz ao passear pelas abas antes de importar
+    for (final p in providersDoBanco) {
+      c.invalidate(p);
+    }
+    final catalogoVelho = await c.read(catalogoProvider.future);
+    final listaVelha = await c.read(listaMercadoProvider.future);
+    await c.read(temaModoProvider.future);
+    await c.read(diasEditadosProvider.future);
+    await c.read(resumoProvider.future);
+    await c.read(regrasPorcaoProvider.future);
+    await c.read(diaProvider.future);
+    expect(catalogoVelho.map((r) => r.nome), isNot(contains('Arroz do backup')));
+    expect(listaVelha.itens, isNotEmpty);
+
+    await importarJson(db, arquivo);
+    for (final p in providersDoBanco) {
+      c.invalidate(p);
+    }
+
+    expect((await c.read(catalogoProvider.future)).map((r) => r.nome),
+        contains('Arroz do backup'),
+        reason: 'a aba Receitas mostrava o catalogo antigo');
+    expect(await c.read(temaModoProvider.future), ThemeMode.dark,
+        reason: 'o tema do arquivo nao era aplicado');
+    expect(await c.read(diasEditadosProvider.future), contains(hoje),
+        reason: 'o ponto de brasa do Mes ficava velho');
+    final listaNova = await c.read(listaMercadoProvider.future);
+    expect(listaNova.itens, isNotEmpty,
+        reason: 'o Mercado apontava para um listaId que o import apagou');
+    expect(listaNova.listaId, isNot(listaVelha.listaId));
+    expect((await c.read(resumoProvider.future)).receitas, 24);
   });
 
   testWidgets('renderiza no escuro sem estourar', (tester) async {

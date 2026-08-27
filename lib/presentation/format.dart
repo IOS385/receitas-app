@@ -2,17 +2,21 @@ import '../domain/espelho.dart' as espelho;
 import '../domain/modelos.dart';
 import '../domain/porcoes.dart' as porcoes;
 
-const _sufixo = {
-  Unidade.g: 'g',
-  Unidade.ml: 'ml',
-  Unidade.unidade: 'un',
-  Unidade.colherSopa: 'col. sopa',
-  Unidade.colherCha: 'col. chá',
-  Unidade.xicara: 'xíc.',
-  Unidade.dente: 'dente',
-  Unidade.fatia: 'fatia',
-  Unidade.folha: 'folha',
-};
+/// Rótulo curto da unidade. Serve ao sufixo de [qtd] e ao dropdown do
+/// formulário, para a tela não falar duas línguas sobre a mesma unidade.
+String rotuloUnidade(Unidade u) => switch (u) {
+      Unidade.g => 'g',
+      Unidade.ml => 'ml',
+      Unidade.unidade => 'un',
+      Unidade.colherSopa => 'col. sopa',
+      Unidade.colherCha => 'col. chá',
+      Unidade.xicara => 'xíc.',
+      Unidade.dente => 'dente',
+      Unidade.fatia => 'fatia',
+      Unidade.folha => 'folha',
+      Unidade.pitada => 'pitada',
+      Unidade.aGosto => 'a gosto',
+    };
 
 /// Quantidade pronta para tela. Grama e mililitro viram inteiro; colher e
 /// xícara arredondam para meio; discreta já vem inteira do escalonamento.
@@ -20,7 +24,7 @@ String qtd(double valor, Unidade unidade) {
   if (unidade == Unidade.aGosto) return 'a gosto';
   if (unidade == Unidade.pitada) return 'uma pitada';
 
-  final sufixo = _sufixo[unidade] ?? '';
+  final sufixo = rotuloUnidade(unidade);
 
   if (unidade == Unidade.g || unidade == Unidade.ml) {
     return '${valor.round()} $sufixo';

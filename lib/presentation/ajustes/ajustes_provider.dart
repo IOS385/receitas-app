@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// `ProviderOrFamily` fica fora do barril principal do riverpod 3 (só em
+// `misc.dart`), como o `Override` que os testes importam de lá.
+import 'package:flutter_riverpod/misc.dart' show ProviderOrFamily;
 
 import '../../data/database_provider.dart';
 import '../../domain/modelos.dart';
+import '../hoje/hoje_provider.dart';
+import '../mercado/mercado_provider.dart';
+import '../mes/mes_provider.dart';
+import '../receitas/receitas_provider.dart';
 
 /// Aparência: claro, escuro ou seguir o sistema. Persistida em `config.tema`.
 class TemaModo extends AsyncNotifier<ThemeMode> {
@@ -54,3 +61,20 @@ final resumoProvider = FutureProvider<Resumo>((ref) async {
 final regrasPorcaoProvider =
     FutureProvider<Map<(SlotRefeicao, bool), int>>((ref) =>
         ref.watch(repoConfigProvider).regras());
+
+/// Tudo que é lido do banco e fica em cache.
+///
+/// Importar backup troca o banco INTEIRO, então nada pode sobreviver ao
+/// import. Antes daqui só três eram invalidados: a aba Receitas voltava com o
+/// catálogo antigo, o Mercado apontava para um `listaId` que o import apagou,
+/// o ponto de brasa do Mês ficava velho e o tema do arquivo não era aplicado.
+final providersDoBanco = <ProviderOrFamily>[
+  resumoProvider,
+  regrasPorcaoProvider,
+  temaModoProvider,
+  diaProvider,
+  catalogoProvider,
+  listaIdProvider,
+  listaMercadoProvider,
+  diasEditadosProvider,
+];

@@ -11,6 +11,17 @@ import '../tema/cores.dart';
 import '../tema/respingo.dart';
 import 'receitas_provider.dart';
 
+/// Quantidade no campo de texto. Inteiro quando é inteiro; vírgula decimal,
+/// que é como ela escreve meia colher.
+String _textoQuantidade(double v) => v == v.roundToDouble()
+    ? '${v.round()}'
+    : v.toString().replaceAll('.', ',');
+
+/// Lê de volta o que ela digitou. Aceita vírgula e ponto; vazio conta como
+/// zero, para o painel de macros acompanhar enquanto ela apaga e redigita.
+double _lerQuantidade(String texto) =>
+    double.tryParse(texto.trim().replaceAll(',', '.')) ?? 0;
+
 /// Linha em edição. Mutável de propósito: é estado de formulário.
 class _LinhaIng {
   int alimentoId;
@@ -18,6 +29,12 @@ class _LinhaIng {
   double quantidade;
   Unidade unidade;
   String? observacao;
+
+  /// A quantidade é campo de texto (spec D8 / risco 2 da seção 18: ela corrige
+  /// o que estiver errado sem depender de código), então cada linha carrega o
+  /// controller dela. `late` para poder ler `quantidade` já atribuída.
+  late final TextEditingController ctrlQtd =
+      TextEditingController(text: _textoQuantidade(quantidade));
 
   _LinhaIng({
     required this.alimentoId,
@@ -45,6 +62,11 @@ class _FormState extends ConsumerState<ReceitaFormScreen> {
   final _ingredientes = <_LinhaIng>[];
   var _salvando = false;
 
+  /// Falha do carregamento, guardada para a tela poder mostrar saida.
+  /// Sem isto o FutureBuilder ficava em `connectionState != done` para sempre:
+  /// um spinner eterno, nem o botao Cancelar desenhado.
+  Object? _erro;
+
   // A Future e criada UMA vez. `FutureBuilder(future: _carregar())` dentro do
   // build criaria uma nova a cada rebuild, e `_carregar` chama setState —
   // o guard evitava o pior, mas o padrao certo e carregar uma vez so.
@@ -62,12 +84,21 @@ class _FormState extends ConsumerState<ReceitaFormScreen> {
   void dispose() {
     _nome.dispose();
     _preparo.dispose();
+    for (final l in _ingredientes) {
+      l.ctrlQtd.dispose();
+    }
     super.dispose();
   }
 
   Future<void> _carregar() async {
     if (_novo) return;
-    final d = await ref.read(detalheProvider(widget.receitaId!).future);
+    final DetalheReceita d;
+    try {
+      d = await ref.read(detalheProvider(widget.receitaId!).future);
+    } catch (e) {
+      if (mounted) setState(() => _erro = e);
+      return;
+    }
     if (!mounted) return;
     setState(() {
       _nome.text = d.receita.nome;
@@ -75,6 +106,9 @@ class _FormState extends ConsumerState<ReceitaFormScreen> {
       _categoria = d.receita.categoria;
       _rende = d.receita.rendimentoPorcoes;
       _tempo = d.receita.tempoPreparoMin;
+      for (final l in _ingredientes) {
+        l.ctrlQtd.dispose();
+      }
       _ingredientes
         ..clear()
         ..addAll(d.ingredientes.map((i) => _LinhaIng(
@@ -174,6 +208,9 @@ class _FormState extends ConsumerState<ReceitaFormScreen> {
           return const Scaffold(
               body: Center(child: CircularProgressIndicator()));
         }
+
+        final erro = _erro ?? snap.error;
+        if (erro != null) return _telaDeErro(erro);
 
         return Scaffold(
           body: ListView(
@@ -315,6 +352,36 @@ class _FormState extends ConsumerState<ReceitaFormScreen> {
     );
   }
 
+  /// Saida quando a receita nao pode ser montada. O importante e o Voltar:
+  /// sem ele ela fica presa numa tela sem nenhum botao.
+  Widget _telaDeErro(Object erro) {
+    final t = Theme.of(context).textTheme;
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(22),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextButton.icon(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.chevron_left, size: 19),
+                label: const Text('Voltar'),
+                style: TextButton.styleFrom(
+                    minimumSize: const Size(44, 44)),
+              ),
+              const SizedBox(height: 12),
+              Text('Não foi possível abrir esta receita.',
+                  style: t.titleMedium),
+              const SizedBox(height: 8),
+              Text(_recado(erro), style: t.bodyMedium),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _rotulo(String texto) => Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 7),
         child: Text(texto.toUpperCase(),
@@ -355,15 +422,62 @@ class _FormState extends ConsumerState<ReceitaFormScreen> {
           borderRadius: BorderRadius.circular(7),
           border: Border.all(color: cores.linha),
         ),
+        // Larguras fixas somam 200 dp; num viewport de 412 dp sobram ~164 dp
+        // para o nome, que elide. Nada aqui pode virar Expanded solto: a linha
+        // ja era apertada com o texto da medida no lugar dos campos.
         child: Row(
           children: [
-            Expanded(child: Text(l.nome, style: t.bodyMedium)),
-            Text(qtd(l.quantidade, l.unidade),
-                style: t.labelMedium?.copyWith(color: cores.ink3)),
+            Expanded(
+              child: Text(l.nome,
+                  style: t.bodyMedium,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis),
+            ),
+            SizedBox(
+              width: 54,
+              child: TextField(
+                key: ValueKey('qtd-${l.nome}'),
+                controller: l.ctrlQtd,
+                textAlign: TextAlign.end,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                style: t.labelMedium?.copyWith(fontSize: 12.5),
+                decoration: const InputDecoration(
+                  isDense: true,
+                  contentPadding: EdgeInsets.symmetric(vertical: 5),
+                ),
+                onChanged: (texto) =>
+                    setState(() => l.quantidade = _lerQuantidade(texto)),
+              ),
+            ),
+            const SizedBox(width: 6),
+            SizedBox(
+              width: 92,
+              child: DropdownButton<Unidade>(
+                key: ValueKey('unidade-${l.nome}'),
+                value: l.unidade,
+                isExpanded: true,
+                isDense: true,
+                style: t.labelMedium?.copyWith(color: cores.ink2),
+                items: [
+                  for (final u in Unidade.values)
+                    DropdownMenuItem(
+                      value: u,
+                      child: Text(rotuloUnidade(u),
+                          maxLines: 1, overflow: TextOverflow.ellipsis),
+                    ),
+                ],
+                onChanged: (u) {
+                  if (u == null) return;
+                  setState(() => l.unidade = u);
+                },
+              ),
+            ),
             IconButton(
               tooltip: 'Remover ${l.nome}',
               icon: const Icon(Icons.close, size: 17),
-              onPressed: () => setState(() => _ingredientes.removeAt(i)),
+              onPressed: () =>
+                  setState(() => _ingredientes.removeAt(i).ctrlQtd.dispose()),
             ),
           ],
         ),
@@ -426,6 +540,17 @@ class _FormState extends ConsumerState<ReceitaFormScreen> {
     if (mounted) Navigator.of(context).pop();
   }
 }
+
+/// Recado de tela cheia, em vez do `toString()` cru da exceção.
+String _recado(Object erro) => erro is ConversaoAusente
+    ? 'Falta a conversão de unidade de um ingrediente. Corrija a unidade da '
+        'linha e a conta volta.'
+    : '$erro';
+
+/// Motivo curto, em minúscula, para emendar numa frase de uma linha.
+String _motivo(Object erro) => erro is ConversaoAusente
+    ? 'falta conversão de unidade para um ingrediente'
+    : '$erro';
 
 class _Contador extends StatelessWidget {
   final String valor;
@@ -499,6 +624,13 @@ class _PainelCalculado extends StatelessWidget {
           FutureBuilder<Nutrientes>(
             future: calcular(),
             builder: (context, snap) {
+              // Zero calado e pior que quebrar (ver nutricao.dart:5-9): sem
+              // este branch uma conversao faltando virava "0 KCAL" na tela,
+              // ela salvava, e Receita e Hoje quebravam depois.
+              if (snap.hasError) {
+                return Text('Não foi possível calcular: ${_motivo(snap.error!)}',
+                    style: t.labelMedium?.copyWith(color: cores.brasa));
+              }
               final n = snap.data ?? Nutrientes.zero;
               return Row(
                 children: [

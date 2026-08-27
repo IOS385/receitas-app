@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
+import 'package:refeicoes_app/data/database_provider.dart';
 import 'package:refeicoes_app/data/repo_config.dart';
 import 'package:refeicoes_app/data/repo_plano.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
@@ -8,6 +9,7 @@ import 'package:refeicoes_app/presentation/format.dart';
 import 'package:refeicoes_app/presentation/hoje/hoje_provider.dart';
 import 'package:refeicoes_app/presentation/mes/mes_provider.dart';
 import 'package:refeicoes_app/presentation/mes/mes_screen.dart';
+import 'package:refeicoes_app/presentation/substituir/substituir_sheet.dart';
 
 import 'util_teste.dart';
 
@@ -125,6 +127,32 @@ void main() {
 
     await abrir(tester);
     expect(find.text('1 neste mês'), findsOneWidget);
+  });
+
+  testWidgets('substituir atualiza o ponto de brasa sem folhear',
+      (tester) async {
+    await abrir(tester);
+    expect(find.text('0 neste mês'), findsOneWidget);
+
+    // Abre a folha de substituicao SOBRE o Mes. No app o IndexedStack mantem
+    // o MesScreen montado, entao o valor em cache do diasEditadosProvider nao
+    // se renova sozinho — quem substitui tem de invalidar.
+    final contexto = tester.element(find.byType(MesScreen));
+    final container = ProviderScope.containerOf(contexto);
+    final dia = await container.read(repoPlanoProvider).dia(sexta);
+    final almoco =
+        dia.refeicoes.firstWhere((r) => r.slot == SlotRefeicao.almoco);
+
+    final folha =
+        abrirSubstituir(context: contexto, data: sexta, refeicao: almoco);
+    await tester.pumpAndSettle();
+    await tester.tap(find.textContaining('combo ').first);
+    await tester.pumpAndSettle();
+    await folha;
+
+    expect(find.text('1 neste mês'), findsOneWidget,
+        reason: 'sem invalidate do diasEditadosProvider o ponto de brasa fica '
+            'velho ate ela folhear o mes de ida e volta');
   });
 
   testWidgets('cada dia e um botao acessivel', (tester) async {

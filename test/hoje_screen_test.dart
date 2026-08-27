@@ -76,12 +76,26 @@ void main() {
 
   testWidgets('espelhado diz que repete e nao oferece substituir',
       (tester) async {
+    // sexta: almoço 1 e jantar 2, café da manhã 1 e café da tarde 2 — aqui
+    // "em dobro" e verdade
     await abrir(tester);
 
-    expect(find.text('repete almoço, em dobro'), findsOneWidget);
-    expect(find.text('repete café da manhã, em dobro'), findsOneWidget);
+    expect(find.text('repete o almoço, em dobro'), findsOneWidget);
+    expect(find.text('repete o café da manhã, em dobro'), findsOneWidget);
     // so os dois slots base tem botao
     expect(find.text('SUBSTITUIR'), findsNWidgets(2));
+  });
+
+  testWidgets('no fim de semana nao diz em dobro, porque nao e',
+      (tester) async {
+    // sabado: os quatro slots vem com 2 porções. Nao ha dobro nenhum, e o
+    // selo "2 porções" aparece nos dois cartoes do par.
+    await abrir(tester, iso: '2026-09-05');
+
+    expect(find.text('repete o almoço'), findsOneWidget);
+    expect(find.text('repete o café da manhã'), findsOneWidget);
+    expect(find.textContaining('em dobro'), findsNothing,
+        reason: 'sabado tem 2 porções em todo slot — "em dobro" e mentira');
   });
 
   testWidgets('cartao espelhado fica apagado', (tester) async {

@@ -8,6 +8,7 @@ import '../../domain/espelho.dart';
 import '../../domain/modelos.dart';
 import '../format.dart';
 import '../hoje/hoje_provider.dart';
+import '../mes/mes_provider.dart';
 import '../tema/cores.dart';
 
 /// Abre a folha de substituição de uma refeição.
@@ -92,6 +93,7 @@ class SubstituirSheet extends ConsumerWidget {
                         await ref.read(repoPlanoProvider).substituirCombo(
                             data: data, slot: refeicao.slot, comboId: c.id);
                         ref.invalidate(diaProvider);
+                        ref.invalidate(diasEditadosProvider);
                         if (context.mounted) Navigator.of(context).pop();
                       },
                     ),
@@ -115,6 +117,7 @@ class SubstituirSheet extends ConsumerWidget {
                     .read(repoPlanoProvider)
                     .limparOverrides(data, refeicao.slot);
                 ref.invalidate(diaProvider);
+                ref.invalidate(diasEditadosProvider);
                 if (context.mounted) Navigator.of(context).pop();
               },
               child: const Text('Voltar ao plano original'),
@@ -158,6 +161,7 @@ class SubstituirSheet extends ConsumerWidget {
                         receitaNovaId: r.id,
                       );
                   ref.invalidate(diaProvider);
+                  ref.invalidate(diasEditadosProvider);
                   if (ctx.mounted) Navigator.of(ctx).pop();
                   if (context.mounted) Navigator.of(context).pop();
                 },
@@ -173,6 +177,7 @@ class SubstituirSheet extends ConsumerWidget {
                       receitaNovaId: null,
                     );
                 ref.invalidate(diaProvider);
+                ref.invalidate(diasEditadosProvider);
                 if (ctx.mounted) Navigator.of(ctx).pop();
                 if (context.mounted) Navigator.of(context).pop();
               },

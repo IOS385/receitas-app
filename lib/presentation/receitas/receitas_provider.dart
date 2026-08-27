@@ -65,8 +65,16 @@ class DetalheReceita {
 }
 
 /// Detalhe no rendimento nativo da receita, sem escalar por porção do dia.
-final detalheProvider =
-    FutureProvider.family<DetalheReceita, int>((ref, receitaId) async {
+///
+/// `retry: null` de propósito. O riverpod 3 reexecuta provider que falhou até
+/// dez vezes com backoff (ProviderContainer.defaultRetry, ~38 s no total) e
+/// enquanto isso o estado fica `AsyncLoading` **com** erro anexado — ou seja,
+/// `.future` não completa e `.when(error:)` não dispara. Aqui a falha é sempre
+/// determinística (conversão de unidade faltando, receita inexistente): tentar
+/// de novo não muda nada e só troca a mensagem de erro por meio minuto de
+/// ampulheta. Sem isto, o formulário e a tela Receita giram para sempre.
+final detalheProvider = FutureProvider.family<DetalheReceita, int>(
+    retry: (_, _) => null, (ref, receitaId) async {
   final repo = ref.watch(repoReceitasProvider);
   final db = ref.watch(bancoProvider);
 

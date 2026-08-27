@@ -204,9 +204,10 @@ class AjustesScreen extends ConsumerWidget {
     try {
       final texto = await File(caminho).readAsString();
       await importarJson(ref.read(bancoProvider), texto);
-      ref.invalidate(resumoProvider);
-      ref.invalidate(regrasPorcaoProvider);
-      ref.invalidate(diaProvider);
+      // Os OITO, nao tres: ver `providersDoBanco`.
+      for (final p in providersDoBanco) {
+        ref.invalidate(p);
+      }
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Backup importado.')));
