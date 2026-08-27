@@ -4,12 +4,19 @@ import '../../data/database_provider.dart';
 import '../../domain/modelos.dart';
 import '../hoje/hoje_provider.dart';
 
-/// O mês que a grade está mostrando. Independe da data selecionada: ela pode
-/// folhear meses sem trocar o dia escolhido.
+/// O mês que a grade está mostrando.
+///
+/// Inicializa a partir da data selecionada e **não** reage a mudanças
+/// posteriores dela: `ref.read` e não `ref.watch`. Com `watch`, qualquer troca
+/// de data — inclusive vinda de outra tela — reconstruiria o notifier e
+/// descartaria o mês que ela estava folheando, sem ação dela.
+///
+/// Tocar num dia da grade continua funcionando porque a grade só mostra dias do
+/// mês visível: o dia escolhido nunca está fora dele.
 class MesVisivel extends Notifier<({int ano, int mes})> {
   @override
   ({int ano, int mes}) build() {
-    final d = ref.watch(dataSelecionadaProvider).comoDateTime;
+    final d = ref.read(dataSelecionadaProvider).comoDateTime;
     return (ano: d.year, mes: d.month);
   }
 

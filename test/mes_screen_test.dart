@@ -1,8 +1,10 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
 import 'package:refeicoes_app/data/repo_config.dart';
 import 'package:refeicoes_app/data/repo_plano.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
+import 'package:refeicoes_app/presentation/format.dart';
 import 'package:refeicoes_app/presentation/hoje/hoje_provider.dart';
 import 'package:refeicoes_app/presentation/mes/mes_provider.dart';
 import 'package:refeicoes_app/presentation/mes/mes_screen.dart';
@@ -83,6 +85,33 @@ void main() {
     expect(find.text('31'), findsOneWidget);
     // o resumo continua no dia 4 de setembro
     expect(find.text('Sexta, 4 de setembro'), findsOneWidget);
+  });
+
+  testWidgets('folhear sobrevive a mudanca de data vinda de fora',
+      (tester) async {
+    telaDeCelular(tester);
+    // Sem override de dataSelecionadaProvider: usa a data real de hoje, como
+    // outra tela faria ao chamar `avancar`/`ir`/`hoje` no notifier real.
+    await tester.pumpWidget(envolver(const MesScreen(), db: db));
+    await tester.pumpAndSettle();
+
+    final agora = DateTime.now();
+    final proximo = DateTime.utc(agora.year, agora.month + 1);
+    final rotuloProximo = '${mesNome(proximo.month)} ${proximo.year}'.toUpperCase();
+
+    // folheia um mes adiante
+    await tester.tap(find.byTooltip('Mês seguinte'));
+    await tester.pumpAndSettle();
+    expect(find.text(rotuloProximo), findsOneWidget);
+
+    // outra tela troca a data selecionada — o Mes nao pode voltar sozinho
+    final elemento = tester.element(find.byType(MesScreen));
+    final container = ProviderScope.containerOf(elemento);
+    container.read(dataSelecionadaProvider.notifier).avancar(1);
+    await tester.pumpAndSettle();
+
+    expect(find.text(rotuloProximo), findsOneWidget,
+        reason: 'mudanca de data vinda de fora nao pode descartar o folhear');
   });
 
   testWidgets('dia sem substituicao nao tem contagem', (tester) async {
