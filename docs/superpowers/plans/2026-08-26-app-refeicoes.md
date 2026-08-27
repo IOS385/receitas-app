@@ -7026,7 +7026,7 @@ flutter test test/mes_screen_test.dart
 flutter analyze
 ```
 
-Esperado: 10 testes passando. Se `primeiroDiaDaSemana` falhar em 2, conferir: 
+Esperado: **9** testes passando (2 puros + 7 de widget). Se `primeiroDiaDaSemana` falhar em 2, conferir: 
 `DateTime.weekday` devolve 2 para terça, e `2 % 7 == 2` — o `% 7` só serve para
 mapear domingo (7) na coluna 0.
 

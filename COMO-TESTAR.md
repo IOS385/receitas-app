@@ -112,3 +112,50 @@ A aba Hoje ganhou conteúdo. É a tela que sua esposa vai abrir todo dia.
 **O que ainda NÃO funciona:** Mês, Mercado e Receitas seguem placeholder. Tocar numa refeição abre uma tela crua.
 
 **Nota:** o jantar e o café da tarde não têm botão `Substituir` — eles seguem o slot base. Ver a pergunta no fim do Checkpoint 2.
+
+---
+
+## ⚠️ Item de conteúdo para vocês decidirem
+
+Descobri isto durante a execução, e não consertei de propósito — é decisão de conteúdo, não bug.
+
+**22 dos 40 alimentos da semente carregam sufixo de estado:** `Arroz branco cozido`, `Patinho cru`, `Cebola crua`, `Alface americana crua`, `Ovo de galinha cru`, `Batata-doce crua`, e assim por diante.
+
+Isso existe por um bom motivo: a tabela TACO lista "batata doce crua" e "batata doce cozida" como entradas **diferentes**, com valores nutricionais diferentes. O sufixo é o que dá rastreabilidade ao código TACO de cada alimento, e é o que faz a nutrição ser auditável.
+
+**Mas esses nomes aparecem na lista de mercado.** Ou seja, a lista de compras dela vai dizer "Cebola crua" e "Patinho cru" — coisa que ninguém escreve num papel de mercado.
+
+Consertar de verdade exige um campo separado de "nome de compra" no banco, além do nome nutricional. É mudança de estrutura, não de dado, e não quis fazer isso de madrugada sem vocês.
+
+**Pergunta para ela:** incomoda? Se sim, eu acrescento o campo e ela vê "Cebola" na lista e "Cebola crua" só na receita. Se não incomoda, fica como está e economizamos uma migração.
+
+
+---
+
+## Checkpoint 4 — Tasks 18 e 19 · Mês e Mercado
+
+**Commits:** `ebf4160` (Mês) e `ec0ac95` (Mercado) · **APK:** 55,1 MB
+
+Duas telas de uma vez. Agora **três das quatro abas** têm conteúdo real.
+
+### Aba Mês
+
+1. A grade do mês, com o dia de hoje marcado por um ponto de brasa embaixo.
+2. **Toque num sábado** → o resumo embaixo muda para *"2 porções o dia todo"*. Toque numa terça → volta para *"1 porção no café e no almoço"*. É a regra de porções aparecendo no calendário.
+3. Volte para a aba **Hoje**: a data que você escolheu no Mês é a mesma. As duas telas compartilham a seleção.
+4. Substitua algo num dia, volte ao Mês → aquele dia ganha **ponto de brasa no canto**, e o contador *"N neste mês"* sobe.
+5. Folheie para outubro com a seta → 31 dias, e o resumo continua no dia que você escolheu.
+
+### Aba Mercado
+
+1. Abre em *"Esta semana"*, agrupada por seção **na ordem do percurso**: hortifrúti, açougue, padaria, laticínios, mercearia.
+2. Quantidade convertida para unidade de compra: arroz em **kg**, ovo em **un**.
+3. **Sal não aparece** — é "a gosto", e a spec decidiu que isso não entra na lista.
+4. **Marque um item** → risca, apaga, e a barra de progresso anda. Marque de novo → desmarca.
+
+   Este é o gesto que mais importa aqui. Meu plano original tinha um bug que fazia a marca **desaparecer** ao ser feita: o app regenerava a lista inteira a cada toque. Achei lendo o código antes de mandar implementar. Se a marca não ficar, me diz.
+5. Troque para *"Este mês"* → a lista cresce. *"Escolher…"* abre o seletor de intervalo.
+
+**Vale conferir se as quantidades fazem sentido para vocês** — é o primeiro momento em que dá para julgar se os números do conteúdo estão plausíveis. Lembre que a lista usa os nomes com sufixo ("Cebola crua") — ver a pergunta na seção anterior.
+
+**O que ainda NÃO funciona:** a aba Receitas segue placeholder (Task 20), criar/editar receita (Task 21) e Ajustes (Task 22).
