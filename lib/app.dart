@@ -25,6 +25,15 @@ import 'presentation/tema/tema.dart';
 /// `tamanho_ciclo`) e o I4 por vinte e duas revisões.
 Duration? semRetry(int tentativa, Object erro) => null;
 
+/// A raiz do app, em constante para `main()` e o teste usarem a MESMA
+/// expressão.
+///
+/// Sem isto a política de retry em `main()` não tinha teste que a guardasse:
+/// alguém removia o parâmetro, nenhum teste ficava vermelho, e as telas
+/// voltavam a girar ~38 s em vez de mostrar erro — a regressão exata do I4,
+/// em silêncio. Agora `a raiz do app desliga o retry` exercita esta expressão.
+const appRaiz = ProviderScope(retry: semRetry, child: AppRefeicoes());
+
 class AppRefeicoes extends ConsumerWidget {
   const AppRefeicoes({super.key});
 

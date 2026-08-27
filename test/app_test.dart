@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:refeicoes_app/app.dart';
 import 'package:refeicoes_app/presentation/tema/cores.dart';
 import 'package:refeicoes_app/presentation/tema/tema.dart';
 import 'package:refeicoes_app/presentation/widgets/cartao_esmalte.dart';
@@ -9,6 +10,13 @@ void main() {
         theme: temaClaro(),
         home: Scaffold(body: child),
       );
+
+  test('a raiz do app desliga o retry', () {
+    // `main()` nao roda sob teste, entao a expressao que ele usa e que precisa
+    // ser exercida. Nao e circular: le o campo publico de um valor de lib/.
+    expect(appRaiz.retry, same(semRetry),
+        reason: 'sem isto, remover o retry de main() nao deixa teste vermelho');
+  });
 
   testWidgets('cartao normal tem aro marinho no topo', (tester) async {
     await tester.pumpWidget(comTema(
