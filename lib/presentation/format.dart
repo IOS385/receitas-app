@@ -1,5 +1,6 @@
 import '../domain/espelho.dart' as espelho;
 import '../domain/modelos.dart';
+import '../domain/porcoes.dart' as porcoes;
 
 const _sufixo = {
   Unidade.g: 'g',
@@ -93,3 +94,5 @@ String dataLonga(DataPura d) {
 // Reexporta o espelho com nome explícito para uso na apresentação.
 bool ehEspelhadoSlot(SlotRefeicao s) => espelho.ehEspelhado(s);
 SlotRefeicao slotBaseDe(SlotRefeicao s) => espelho.slotBase(s);
+
+bool ehDiaUtilData(DataPura d) => porcoes.ehDiaUtil(d);
