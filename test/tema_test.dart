@@ -44,6 +44,34 @@ void main() {
     expect(t.bodyMedium!.fontVariations, isNotEmpty);
   });
 
+  test('todo estilo de fonte variavel declara o eixo wght', () {
+    final t = temaClaro().textTheme;
+    final porNome = <String, TextStyle?>{
+      'displayLarge': t.displayLarge,
+      'displaySmall': t.displaySmall,
+      'titleLarge': t.titleLarge,
+      'titleMedium': t.titleMedium,
+      'bodyMedium': t.bodyMedium,
+      'bodySmall': t.bodySmall,
+      'labelSmall': t.labelSmall,
+      'labelMedium': t.labelMedium,
+    };
+
+    for (final entrada in porNome.entries) {
+      final e = entrada.value!;
+      if (e.fontFamily == 'IBMPlexMono') {
+        // fonte estatica: o peso vem do arquivo declarado no pubspec,
+        // nao de um eixo variavel
+        continue;
+      }
+      expect(e.fontVariations, isNotNull,
+          reason: '${entrada.key} usa fonte variavel e precisa de fontVariations '
+              '— fontWeight nao move o eixo wght');
+      expect(e.fontVariations!.map((v) => v.axis), contains('wght'),
+          reason: '${entrada.key} sem o eixo wght');
+    }
+  });
+
   test('medida usa monoespacada', () {
     expect(temaClaro().textTheme.labelMedium!.fontFamily, 'IBMPlexMono');
   });
@@ -73,5 +101,32 @@ void main() {
       ).first,
     );
     expect(texto.style.color, Colors.white);
+  });
+
+  testWidgets('CampoRespingo pinta o aro e usa icone branco', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      theme: temaClaro(),
+      home: const Scaffold(
+        body: CampoRespingo(child: Icon(Icons.more_horiz)),
+      ),
+    ));
+
+    final iconThemes = tester
+        .widgetList<IconTheme>(find.descendant(
+          of: find.byType(CampoRespingo),
+          matching: find.byType(IconTheme),
+        ))
+        .toList();
+    expect(iconThemes.any((it) => it.data.color == Colors.white), isTrue,
+        reason: 'conteudo sobre o campo marinho precisa de icone branco');
+
+    final container = tester.widget<Container>(find.descendant(
+      of: find.byType(CampoRespingo),
+      matching: find.byType(Container),
+    ).first);
+    final borda = (container.decoration as BoxDecoration).border as Border;
+    expect(borda.bottom.color, Esmalte.aro,
+        reason: 'o aro escuro sob a barra e assinatura da direcao visual');
+    expect(borda.bottom.width, 2);
   });
 }
