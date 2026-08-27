@@ -46,6 +46,10 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   drift_dev: ^2.34.0
   build_runner: ^2.15.1
+  # riverpod 3 mantém `Override` fora do barril principal de flutter_riverpod
+  # (só em package:riverpod/misc.dart) — test/util_teste.dart precisa dele
+  # direto, então vira dependência explícita para o linter não reclamar.
+  riverpod: ^3.4.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

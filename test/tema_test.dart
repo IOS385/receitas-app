@@ -124,9 +124,11 @@ void main() {
       of: find.byType(CampoRespingo),
       matching: find.byType(Container),
     ).first);
-    final borda = (container.decoration as BoxDecoration).border as Border;
-    expect(borda.bottom.color, Esmalte.aro,
+    final deco = container.decoration as BoxDecoration;
+    expect(deco.border, isNotNull,
         reason: 'o aro escuro sob a barra e assinatura da direcao visual');
+    final borda = deco.border! as Border;
+    expect(borda.bottom.color, Esmalte.aro);
     expect(borda.bottom.width, 2);
   });
 }
