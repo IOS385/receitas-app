@@ -4,6 +4,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
 import 'package:refeicoes_app/data/database_provider.dart';
 import 'package:refeicoes_app/data/repo_config.dart';
@@ -48,4 +49,16 @@ Widget envolver(
       home: child,
     ),
   );
+}
+
+/// Ajusta a superficie de teste para um celular real (412×915 dp, densidade 3).
+///
+/// O padrao do `flutter_test` e 800×600 — mais BAIXO que qualquer aparelho, o
+/// que empurra conteudo legitimo para fora da viewport e faz `tap()` errar em
+/// silencio (avisa, mas nao falha). Chame no inicio de todo teste de tela.
+void telaDeCelular(WidgetTester tester) {
+  tester.view.physicalSize = const Size(412 * 3, 915 * 3);
+  tester.view.devicePixelRatio = 3.0;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
 }

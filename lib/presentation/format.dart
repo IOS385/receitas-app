@@ -1,3 +1,4 @@
+import '../domain/espelho.dart' as espelho;
 import '../domain/modelos.dart';
 
 const _sufixo = {
@@ -88,3 +89,7 @@ String dataLonga(DataPura d) {
   final dt = d.comoDateTime;
   return '${diaDaSemana(d)}, ${dt.day} de ${mesNome(dt.month)}';
 }
+
+// Reexporta o espelho com nome explícito para uso na apresentação.
+bool ehEspelhadoSlot(SlotRefeicao s) => espelho.ehEspelhado(s);
+SlotRefeicao slotBaseDe(SlotRefeicao s) => espelho.slotBase(s);
