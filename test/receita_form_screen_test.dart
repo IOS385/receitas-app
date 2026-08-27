@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
+import 'package:refeicoes_app/data/database_provider.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
+import 'package:refeicoes_app/domain/nutricao.dart';
 import 'package:refeicoes_app/presentation/receitas/receita_form_screen.dart';
 import 'package:refeicoes_app/presentation/receitas/receitas_provider.dart';
 import 'package:refeicoes_app/presentation/receitas/receitas_screen.dart';
@@ -197,6 +199,29 @@ void main() {
 
     expect(kcalNoPainel(tester), greaterThan(antes),
         reason: 'dobrar a carne tem de mover as macros — e a promessa da tela');
+  });
+
+  test('detalhe erra na hora mesmo sem o retry global', () async {
+    // Container montado a mao, SEM o `retry: semRetry` que main() e envolver()
+    // poem — como o teste de import de backup monta. E o que guarda o `retry`
+    // local do detalheProvider: sem ele, o riverpod reexecuta 10x com backoff
+    // e `.future` fica pendurado em vez de completar com erro.
+    final patinho = (await db.select(db.alimentos).get())
+        .firstWhere((a) => a.nome == 'Patinho cru');
+    await (db.delete(db.conversoes)
+          ..where((t) => t.alimentoId.equals(patinho.id)))
+        .go();
+
+    final c = ProviderContainer(overrides: [
+      bancoProvider.overrideWithValue(db),
+      semeaduraProvider.overrideWith((ref) async {}),
+    ]);
+    addTearDown(c.dispose);
+
+    await expectLater(
+      c.read(detalheProvider(3).future).timeout(const Duration(seconds: 2)),
+      throwsA(isA<ConversaoAusente>()),
+    );
   });
 
   testWidgets('a linha de ingrediente cabe em 412 dp em toda receita',

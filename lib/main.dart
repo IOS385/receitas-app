@@ -4,5 +4,5 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app.dart';
 
 void main() {
-  runApp(const ProviderScope(child: AppRefeicoes()));
+  runApp(const ProviderScope(retry: semRetry, child: AppRefeicoes()));
 }

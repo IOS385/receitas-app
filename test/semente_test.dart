@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:drift/drift.dart';
+// / do drift colidem com os do matcher neste arquivo.
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
@@ -99,6 +100,54 @@ void main() {
     final listaId = await RepoMercado(db, RepoPlano(db, config))
         .gerar(semana.de, semana.ate);
     expect(listaId, greaterThan(0));
+  });
+
+  test('backup sem tamanho_ciclo nao reabre o crash do Mercado', () async {
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+    final config = RepoConfig(db);
+    await config.definir('data_inicio_ciclo', '2026-09-01');
+
+    // Um backup importado pode nao trazer a chave. O fallback tem de sair do
+    // dado: com um literal 33 aqui, `resolverRefeicao` volta a estourar.
+    await (db.delete(db.config)
+          ..where((t) => t.chave.equals('tamanho_ciclo')))
+        .go();
+    expect(await config.ler('tamanho_ciclo'), isNull, reason: 'sanidade');
+
+    final tamanho = await config.tamanhoCiclo();
+    expect(tamanho, 4, reason: 'derivado da maior posicao em ciclo_itens');
+
+    final repo = RepoPlano(db, config);
+    for (var i = 0; i <= tamanho; i++) {
+      final d = DataPura.de(DateTime.utc(2026, 9, 1).add(Duration(days: i)));
+      await repo.dia(d); // nao pode estourar em nenhum dia do ciclo + 1
+    }
+  });
+
+  test('mercado da semana gera com backup sem tamanho_ciclo', () async {
+    // O sintoma do C1 pelo caminho de producao, agora vindo do fallback.
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+    await (db.delete(db.config)
+          ..where((t) => t.chave.equals('tamanho_ciclo')))
+        .go();
+
+    final config = RepoConfig(db);
+    final semana = semanaDe(DateTime.now());
+    final listaId = await RepoMercado(db, RepoPlano(db, config))
+        .gerar(semana.de, semana.ate);
+    expect(listaId, greaterThan(0));
+  });
+
+  test('ciclo vazio devolve tamanho 1, nao zero nem 33', () async {
+    // Guarda do `?? 1`: MAX() sobre tabela vazia devolve uma linha com NULL,
+    // e tamanho 0 faria `posicaoNoCiclo` dividir por zero.
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+    await db.delete(db.cicloItens).go();
+    await (db.delete(db.config)
+          ..where((t) => t.chave.equals('tamanho_ciclo')))
+        .go();
+
+    expect(await RepoConfig(db).tamanhoCiclo(), 1);
   });
 
   test('nao sobrescreve receita que virou do usuario', () async {

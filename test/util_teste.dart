@@ -5,6 +5,7 @@ import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:refeicoes_app/app.dart';
 import 'package:refeicoes_app/data/app_database.dart';
 import 'package:refeicoes_app/data/database_provider.dart';
 import 'package:refeicoes_app/data/repo_config.dart';
@@ -39,6 +40,9 @@ Widget envolver(
   Brightness brilho = Brightness.light,
 }) {
   return ProviderScope(
+    // A MESMA politica do main(): sem isto o teste roda com retry e o app
+    // sem, e a divergencia esconde erro de provider (ver `semRetry`).
+    retry: semRetry,
     overrides: [
       bancoProvider.overrideWithValue(db),
       semeaduraProvider.overrideWith((ref) async {}),

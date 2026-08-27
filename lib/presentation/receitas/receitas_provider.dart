@@ -66,13 +66,13 @@ class DetalheReceita {
 
 /// Detalhe no rendimento nativo da receita, sem escalar por porção do dia.
 ///
-/// `retry: null` de propósito. O riverpod 3 reexecuta provider que falhou até
-/// dez vezes com backoff (ProviderContainer.defaultRetry, ~38 s no total) e
-/// enquanto isso o estado fica `AsyncLoading` **com** erro anexado — ou seja,
-/// `.future` não completa e `.when(error:)` não dispara. Aqui a falha é sempre
-/// determinística (conversão de unidade faltando, receita inexistente): tentar
-/// de novo não muda nada e só troca a mensagem de erro por meio minuto de
-/// ampulheta. Sem isto, o formulário e a tela Receita giram para sempre.
+/// `retry: null` mesmo com `semRetry` já valendo no `ProviderScope` do app:
+/// esta é a única das duas camadas que um teste consegue guardar. O retry do
+/// escopo é wiring de entrada — trocá-lo em `main()` não reprova nada — e
+/// container montado à mão (o teste de import de backup monta um) não herda
+/// escopo nenhum. Como este provider é justamente o que girava para sempre
+/// (I4), a política fica pinada aqui também, e `detalhe erra na hora mesmo sem
+/// o retry global` reprova se alguém tirar.
 final detalheProvider = FutureProvider.family<DetalheReceita, int>(
     retry: (_, _) => null, (ref, receitaId) async {
   final repo = ref.watch(repoReceitasProvider);

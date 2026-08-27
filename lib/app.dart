@@ -9,6 +9,22 @@ import 'presentation/mes/mes_screen.dart';
 import 'presentation/receitas/receitas_screen.dart';
 import 'presentation/tema/tema.dart';
 
+/// Política de retry do app: nenhuma.
+///
+/// App offline total, SQLite local, sem rede em lugar nenhum — toda falha de
+/// provider aqui é determinística: conversão de unidade faltando, receita
+/// inexistente, erro de banco. O padrão do riverpod 3
+/// (`ProviderContainer.defaultRetry`) reexecuta o provider até dez vezes com
+/// backoff, ~38 s no total, e enquanto isso mantém o estado em `AsyncLoading`
+/// **com** o erro anexado — então `.future` não completa e os branches
+/// `error:` que as telas já têm nunca disparam. Reexecutar não conserta nada
+/// aqui; só troca "erro visível em 100 ms" por "gira meio minuto".
+///
+/// `envolver()` em `test/util_teste.dart` usa esta MESMA função, de propósito:
+/// harness que diverge do app é o que escondeu o C1 (override de
+/// `tamanho_ciclo`) e o I4 por vinte e duas revisões.
+Duration? semRetry(int tentativa, Object erro) => null;
+
 class AppRefeicoes extends ConsumerWidget {
   const AppRefeicoes({super.key});
 
