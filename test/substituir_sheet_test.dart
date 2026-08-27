@@ -149,16 +149,21 @@ void main() {
       slot(d, SlotRefeicao.jantar).componentes.map((c) => c.nome),
       contains('Frango grelhado simples'),
     );
+
+    // a TELA tem de refletir: sem o invalidate o cartao segue com a carne
+    expect(find.text('Frango grelhado simples'), findsWidgets,
+        reason: 'o componente novo tem de aparecer no cartao');
   });
 
   testWidgets('tirar do prato remove o componente', (tester) async {
     final antes =
         slot(await plano.dia(sexta), SlotRefeicao.almoco).componentes.length;
+    const nomeRemovido = 'Picadinho de carne com legumes';
 
     await abrirFolha(tester);
     await tester.tap(find.descendant(
       of: find.byType(BottomSheet),
-      matching: find.text('Picadinho de carne com legumes'),
+      matching: find.text(nomeRemovido),
     ));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Tirar do prato hoje'));
@@ -167,9 +172,18 @@ void main() {
     final depois =
         slot(await plano.dia(sexta), SlotRefeicao.almoco).componentes.length;
     expect(depois, antes - 1);
+
+    // a TELA: sem o invalidate o componente removido continua na tela
+    // (o jantar espelha o almoco, entao some dos dois cartoes)
+    expect(find.text(nomeRemovido), findsNothing,
+        reason: 'o componente tirado nao pode continuar na tela');
   });
 
   testWidgets('voltar ao plano original limpa os overrides', (tester) async {
+    // capturado ANTES de qualquer substituicao: o nome que o ciclo devolve
+    final nomeOriginal =
+        slot(await plano.dia(sexta), SlotRefeicao.almoco).comboNome;
+
     await plano.substituirCombo(
         data: sexta, slot: SlotRefeicao.almoco, comboId: 5);
 
@@ -182,6 +196,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(await db.select(db.overridesCombo).get(), isEmpty);
+
+    // a TELA: sem o invalidate o dia parece continuar substituido, mesmo
+    // com o banco ja limpo — e ela conclui que o botao nao funcionou
+    expect(find.text(nomeOriginal), findsWidgets,
+        reason: 'o combo do ciclo tem de voltar a aparecer na tela');
   });
 }
 
