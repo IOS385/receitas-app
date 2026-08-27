@@ -159,3 +159,36 @@ Duas telas de uma vez. Agora **três das quatro abas** têm conteúdo real.
 **Vale conferir se as quantidades fazem sentido para vocês** — é o primeiro momento em que dá para julgar se os números do conteúdo estão plausíveis. Lembre que a lista usa os nomes com sufixo ("Cebola crua") — ver a pergunta na seção anterior.
 
 **O que ainda NÃO funciona:** a aba Receitas segue placeholder (Task 20), criar/editar receita (Task 21) e Ajustes (Task 22).
+
+---
+
+## Checkpoint 5 — Tasks 20 e 21 · Receitas
+
+**Commits:** `1182398` (catálogo + receita) e `de96283` (editar) · **APK:** 55,7 MB
+
+**Todas as quatro abas agora têm conteúdo real.**
+
+### Catálogo e receita aberta
+
+1. Aba Receitas: **24 receitas**, com busca e filtro por categoria.
+2. Filtre por **Proteína** → só proteínas. Busque "tapioca" → uma só. A busca não diferencia maiúscula.
+3. Abra uma receita: macros no topo, ingredientes com quantidade, preparo numerado.
+4. Na receita com sal, aparece o aviso *"Sal e temperos a gosto não entram na conta."* Na tapioca, não aparece — porque ela não tem ingrediente sem medida.
+
+### Criar e editar
+
+5. Botão `+` → formulário vazio. Dê nome, adicione um ingrediente, salve → **aparece no catálogo** com um lápis ao lado.
+6. Abra uma receita da semente, toque no lápis, mude o nome, salve → mudou, e agora **ela também tem o lápis**. Isso significa que virou dela: atualização futura de conteúdo não sobrescreve mais.
+7. **O painel de nutrição é cinza e não deixa digitar.** A nota explica que vem da tabela TACO. Remova um ingrediente e veja os números mudarem sozinhos. Ela nunca vai digitar caloria errada.
+8. Salvar sem nome, ou sem ingrediente, avisa e não grava.
+9. Excluir pede confirmação, e **desativa** em vez de apagar — para não abrir buraco em dias passados.
+
+### ⚠️ ESTE é o checkpoint para julgar o CONTEÚDO
+
+**Leia dois ou três modos de preparo e veja se batem com o jeito que ela cozinha.**
+
+As 24 receitas foram escritas por mim: quantidades, ordem dos passos, tempos. É chute informado. Se o jeito dela de fazer arroz ou temperar carne for diferente, **é agora que sai barato descobrir** — antes de eu gerar as outras 158.
+
+O ponto 7 existe justamente para isso: ela corrige o que estiver errado sozinha, sem depender de você abrir o editor.
+
+**O que ainda NÃO funciona:** a tela de Ajustes (Task 22) — porções, aparência, export/import de backup.
