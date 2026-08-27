@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'data/database_provider.dart';
+import 'presentation/ajustes/ajustes_provider.dart';
 import 'presentation/hoje/hoje_screen.dart';
 import 'presentation/mercado/mercado_screen.dart';
 import 'presentation/mes/mes_screen.dart';
@@ -13,11 +14,14 @@ class AppRefeicoes extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final modo = ref.watch(temaModoProvider).value ?? ThemeMode.system;
+
     return MaterialApp(
       title: 'Refeições',
       debugShowCheckedModeBanner: false,
       theme: temaClaro(),
       darkTheme: temaEscuro(),
+      themeMode: modo,
       home: const Casca(),
     );
   }
