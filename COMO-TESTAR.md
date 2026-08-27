@@ -91,3 +91,24 @@ A aba Hoje ganhou conteúdo. É a tela que sua esposa vai abrir todo dia.
 **O que ainda NÃO funciona:** o botão `Substituir` abre uma folha vazia (Task 17), e tocar numa refeição abre uma tela crua (Task 20). Mês, Mercado e Receitas seguem placeholder.
 
 **Uma limitação que eu quero sua opinião:** só o café da manhã e o almoço têm botão `Substituir`. O jantar e o café da tarde não — eles seguem o que você trocar no slot base. O app *sabe* soltar o espelho (está testado), mas não oferece o botão. Faz sentido para vocês, ou ela vai querer trocar só o jantar algum dia?
+
+---
+
+## Checkpoint 3 — Task 17 · substituir refeição
+
+**Commit:** `54a9f5f` · **APK:** 53,8 MB
+
+**Este é o checkpoint mais importante da noite.** É a regra mais sutil do app, e ela só se prova na mão.
+
+**Faça nesta ordem exata:**
+
+1. `Substituir` no **almoço** → escolha outro combo. **O jantar tem que acompanhar.**
+2. `Substituir` no **almoço** de novo → toque num componente (ex. a carne). Só aparecem opções da **mesma categoria** — outras proteínas, não arroz. Troque.
+3. `Tirar do prato hoje` num componente → ele desaparece só daquele dia.
+4. `Voltar ao plano original` → o dia volta ao ciclo e o espelho é restaurado.
+
+**Se o passo 1 não arrastar o jantar, é bug de verdade** — é a regra da spec que eu passei a noite inteira testando.
+
+**O que ainda NÃO funciona:** Mês, Mercado e Receitas seguem placeholder. Tocar numa refeição abre uma tela crua.
+
+**Nota:** o jantar e o café da tarde não têm botão `Substituir` — eles seguem o slot base. Ver a pergunta no fim do Checkpoint 2.
