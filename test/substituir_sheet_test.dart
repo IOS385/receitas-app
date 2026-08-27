@@ -72,6 +72,8 @@ void main() {
 
     final combos = await db.select(db.combos).get();
     final atual = slot(await plano.dia(sexta), SlotRefeicao.almoco).comboId;
+    final nomeAntigo =
+        slot(await plano.dia(sexta), SlotRefeicao.almoco).comboNome;
     final outro = combos.firstWhere(
         (c) => c.tipo == TipoCombo.refeicao && c.id != atual);
 
@@ -82,6 +84,14 @@ void main() {
     expect(slot(depois, SlotRefeicao.almoco).comboId, outro.id);
     // o espelho segue intacto: o jantar acompanha
     expect(slot(depois, SlotRefeicao.jantar).comboId, outro.id);
+
+    // E a TELA: sem `ref.invalidate(diaProvider)` a gravacao acontece mas o
+    // cartao continua mostrando o combo antigo. Estas duas asserções são o
+    // unico guarda-corpo disso em toda a suite.
+    expect(find.text(outro.nome), findsWidgets,
+        reason: 'almoco e jantar (espelhado) tem de mostrar o combo novo');
+    expect(find.text(nomeAntigo), findsNothing,
+        reason: 'o combo antigo nao pode sobrar na tela');
   });
 
   testWidgets('trocar componente abre a lista da mesma categoria',
