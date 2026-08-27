@@ -25,10 +25,16 @@ depende de uma coisa: **sua esposa revisar esses 4 dias primeiro.** Se o jeito d
 medir arroz ou temperar carne for diferente do meu chute, é mais barato descobrir em
 24 receitas do que em 182.
 
-Uma consequência prática disso: navegar para o **dia 5 do ciclo** vai dar erro, porque
-não existe conteúdo lá. Nos testes eu configurei `tamanho_ciclo = 4`; no app real ele
-está em 33, então datas fora das 4 primeiras posições não têm combo. **Isso é
-esperado nesta fase**, não é bug para reportar.
+O ciclo **gira nos 4 dias**: o dia 5 volta a ser o dia 1, o dia 6 vira o 2, e assim por
+diante. Nenhuma data dá erro, e nenhuma aba trava.
+
+> **Correção importante.** Uma versão anterior deste arquivo dizia que navegar para o dia 5
+> daria erro "esperado". **Estava errado, e escondia um bug grave.** O app declarava ciclo de
+> 33 dias com só 4 cadastrados, e como a aba **Mercado** abre em "esta semana" (sete dias
+> consecutivos), ela **estourava na primeira abertura, em qualquer aparelho** — sete posições
+> consecutivas nunca cabem em quatro. A revisão final da branch achou isso; os 261 testes eram
+> cegos porque o ambiente de teste fixava o tamanho em 4 e só a produção usava 33.
+> Consertado: o tamanho agora é **derivado do conteúdo cadastrado**, nunca escrito à mão.
 
 ---
 
@@ -192,3 +198,49 @@ As 24 receitas foram escritas por mim: quantidades, ordem dos passos, tempos. É
 O ponto 7 existe justamente para isso: ela corrige o que estiver errado sozinha, sem depender de você abrir o editor.
 
 **O que ainda NÃO funciona:** a tela de Ajustes (Task 22) — porções, aparência, export/import de backup.
+
+---
+
+## Checkpoint final — depois da revisão da branch inteira
+
+**Commits:** `97c4036`, `3b2d2dc`, `8462864`, `0fb4090` · **APK:** 56,9 MB · **261 testes**
+
+As 22 revisões anteriores olharam uma tarefa cada. A revisão da **branch inteira** olhou tudo junto, e achou **três bugs graves que nenhuma delas podia ver**. Todos consertados, cada um com teste que falha sem o conserto.
+
+### 1. A aba Mercado não abria. Nunca, em nenhum aparelho.
+
+Explicado na correção acima. Se você abrir o Mercado e ele funcionar, é este conserto.
+
+### 2. Reabrir o app apagava todas as marcas do mercado
+
+Ela marcava 12 itens, o Android matava o app no bolso dela, ela reabria → **tudo desmarcado**. E uma lista nova era criada a cada abertura, acumulando para sempre.
+
+Isso contradizia literalmente a decisão de design que existe para a lista **não** se mexer embaixo dela.
+
+**Teste você:** marque alguns itens, feche o app de vez (não só minimize), abra de novo. As marcas têm que estar lá.
+
+### 3. Ela não podia editar quantidade nem unidade de ingrediente
+
+O formulário deixava editar nome e modo de preparo, mas a quantidade era **texto**, não campo. Ela só podia apagar a linha e recriar como "100 g".
+
+Isso derrubava o motivo do formulário existir: o conteúdo é chute meu, e a defesa era ela poder corrigir sozinha. **Inclusive o azeite que eu deixei para ela decidir — ela não teria como consertar.**
+
+**Teste você:** abra uma receita, toque no lápis, mude a quantidade de um ingrediente e a unidade. Os macros têm que recalcular na hora.
+
+### Outros seis consertos
+
+- O ponto de brasa do Mês ficava velho depois de substituir
+- O painel de macros mostrava **zero** em silêncio quando faltava conversão de unidade
+- "Editar receita" **girava para sempre** quando o carregamento falhava — e a causa era o Riverpod reexecutar provider falho 10× com backoff, mantendo o estado em "carregando" com o erro anexado. Desligado no app inteiro: num app offline, retry não compra nada
+- Importar backup deixava 5 de 8 telas com dado velho
+- "em dobro" era texto fixo, e **mentia no fim de semana** (sábado é 2 e 2, não há dobro)
+- Um teste do mercado passava com `999999` na tela
+
+---
+
+## O que ficou pendente, e é seu
+
+1. **O roteiro de 12 verificações no aparelho**, incluindo **modo avião** — precisa do celular na mão. Nada foi simulado.
+2. **A revisão de conteúdo com ela** (Checkpoint 5). É o portão para o Plano 2.
+3. **Duas decisões de conteúdo** que eu deliberadamente não tomei: o azeite com 8 g por colher de sopa (real ~13,5) e os 22 alimentos com sufixo de estado na lista de mercado ("Cebola crua").
+4. **A pergunta do Checkpoint 2:** ela vai querer trocar só o jantar algum dia? Hoje só café da manhã e almoço têm botão de substituir.
