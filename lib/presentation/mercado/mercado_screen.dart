@@ -271,7 +271,7 @@ class _Item extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  Text(_medida(item),
+                  Text(medidaDeCompra(item.valor, item.unidade),
                       style: t.labelMedium?.copyWith(color: cores.ink3)),
                 ],
               ),
@@ -280,13 +280,5 @@ class _Item extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  static String _medida(ItemNaTela i) {
-    final v = i.valor;
-    final texto = v == v.roundToDouble()
-        ? '${v.round()}'
-        : v.toStringAsFixed(1).replaceAll('.', ',');
-    return '$texto ${i.unidade}';
   }
 }

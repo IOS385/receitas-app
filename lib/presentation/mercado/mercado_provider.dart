@@ -22,6 +22,17 @@ class ItemNaTela {
   });
 }
 
+/// Medida pronta para a tela: valor + unidade de compra.
+///
+/// Vive aqui, e nao dentro do widget, para que o teste possa assertar o
+/// numero que a interface desenha — e nao so o sufixo.
+String medidaDeCompra(double valor, String unidade) {
+  final texto = valor == valor.roundToDouble()
+      ? '${valor.round()}'
+      : valor.toStringAsFixed(1).replaceAll('.', ',');
+  return '$texto $unidade';
+}
+
 class ListaNaTela {
   final int listaId;
   final DataPura de;
@@ -79,7 +90,18 @@ final intervaloProvider =
 /// chamada (por design, spec D6), entao regenerar ao marcar apagaria a marca.
 final listaIdProvider = FutureProvider<int>((ref) async {
   final intervalo = ref.watch(intervaloProvider);
-  return ref.watch(repoMercadoProvider).gerar(intervalo.de, intervalo.ate);
+  final repo = ref.watch(repoMercadoProvider);
+
+  // Reusa a lista do mesmo intervalo em vez de gerar outra. `gerar()` cria
+  // linha nova por design (spec D6/9), entao gerar a cada abertura do app
+  // apagaria as marcas dela — exatamente o que D6 existe para impedir.
+  final ultima = await repo.ultimaLista();
+  if (ultima != null &&
+      ultima.dataInicio == intervalo.de &&
+      ultima.dataFim == intervalo.ate) {
+    return ultima.id;
+  }
+  return repo.gerar(intervalo.de, intervalo.ate);
 });
 
 /// Le os itens da lista gerada. Marcar item invalida SO este provider, entao

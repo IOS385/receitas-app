@@ -118,10 +118,13 @@ Future<void> carregarSemente(
     }
 
     // --- ciclo
+    var maiorPosicao = 0;
     for (final raw in ler('ciclo.json')) {
       final c = raw as Map<String, dynamic>;
+      final posicao = c['posicao'] as int;
+      if (posicao > maiorPosicao) maiorPosicao = posicao;
       await db.into(db.cicloItens).insertOnConflictUpdate(CicloItensCompanion(
-            posicao: Value(c['posicao'] as int),
+            posicao: Value(posicao),
             tipoSlot: Value(TipoCombo.values.byName(c['tipo'] as String)),
             comboId: Value(c['combo'] as int),
           ));
@@ -148,7 +151,11 @@ Future<void> carregarSemente(
           .insert(ConfigCompanion.insert(chave: chave, valor: valor));
     }
 
-    await configPadrao('tamanho_ciclo', '33');
+    // O tamanho vem do proprio ciclo.json, nao de um numero cravado aqui.
+    // Fixar 33 com 4 posicoes cadastradas transforma conteudo parcial em
+    // travamento duro: `resolverRefeicao` estoura StateError na primeira
+    // posicao sem combo, e o Mercado (sete dias seguidos) sempre pega uma.
+    await configPadrao('tamanho_ciclo', '$maiorPosicao');
     await configPadrao(
         'data_inicio_ciclo', DataPura.de(DateTime.now()).iso);
     await configPadrao('tema', 'sistema');

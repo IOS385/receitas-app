@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
+import 'package:refeicoes_app/data/database_provider.dart';
+import 'package:refeicoes_app/domain/mercado.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
 import 'package:refeicoes_app/presentation/mercado/mercado_provider.dart';
 import 'package:refeicoes_app/presentation/mercado/mercado_screen.dart';
@@ -65,13 +68,50 @@ void main() {
     expect(acougue, lessThan(mercearia));
   });
 
-  testWidgets('quantidade vem convertida para unidade de compra',
+  testWidgets('quantidade na tela e o valor convertido, nao so o sufixo',
       (tester) async {
     await abrir(tester);
-    // arroz numa semana passa de 1 kg
-    expect(find.textContaining('kg'), findsWidgets);
-    // ovo e comprado por unidade
-    expect(find.textContaining('un'), findsWidgets);
+
+    final container = ProviderScope.containerOf(
+        tester.element(find.byType(MercadoScreen)));
+    final lista = await container.read(listaMercadoProvider.future);
+    final brutos =
+        await container.read(repoMercadoProvider).itens(lista.listaId);
+    final alimentos = await db.select(db.alimentos).get();
+    final conversoes = await db.select(db.conversoes).get();
+
+    // arroz e comprado por kg e numa semana passa de 1 kg; ovo, por unidade
+    for (final nome in const ['Arroz branco cozido', 'Ovo de galinha cru']) {
+      final a = alimentos.firstWhere((x) => x.nome == nome);
+      final bruto = brutos.firstWhere((x) => x.alimentoId == a.id);
+      double? gramasPorUnidade;
+      for (final c in conversoes) {
+        if (c.alimentoId == a.id && c.unidade == Unidade.unidade) {
+          gramasPorUnidade = c.gramas;
+        }
+      }
+
+      // Esperado derivado do banco pela MESMA funcao de dominio, sem numero
+      // magico. A asserção antiga olhava so o sufixo: `999999 kg` passava.
+      final esperado = formatarCompra(
+        gramas: bruto.quantidadeG,
+        compra: a.unidadeCompra,
+        gramasPorUnidade: gramasPorUnidade,
+      );
+      final texto = medidaDeCompra(esperado.valor, esperado.unidade);
+
+      final linha =
+          find.ancestor(of: find.text(nome), matching: find.byType(Row)).first;
+      expect(find.descendant(of: linha, matching: find.text(texto)),
+          findsOneWidget,
+          reason: '$nome tem de mostrar "$texto" na propria linha');
+    }
+
+    // e o sufixo continua sendo o da unidade de compra
+    expect(lista.itens.firstWhere((i) => i.nome == 'Arroz branco cozido').unidade,
+        'kg');
+    expect(lista.itens.firstWhere((i) => i.nome == 'Ovo de galinha cru').unidade,
+        'un');
   });
 
   testWidgets('sal a gosto nao aparece na lista', (tester) async {
@@ -108,6 +148,28 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining(RegExp(r'^0 de \d+$')), findsOneWidget);
+  });
+
+  testWidgets('reabrir o app nao apaga as marcas nem acumula listas',
+      (tester) async {
+    await abrir(tester);
+
+    await tester.tap(find.text('Batata-doce crua'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining(RegExp(r'^1 de \d+$')), findsOneWidget);
+
+    final listasAntes = (await db.select(db.listasCompra).get()).length;
+
+    // Derruba a arvore inteira e monta um ProviderScope NOVO sobre o MESMO
+    // banco: e o que o Android faz ao matar o app e ela reabrir depois.
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pumpAndSettle();
+    await abrir(tester);
+
+    expect(find.textContaining(RegExp(r'^1 de \d+$')), findsOneWidget,
+        reason: 'a marca dela tem de sobreviver a reabertura do app (spec D6)');
+    expect(await db.select(db.listasCompra).get(), hasLength(listasAntes),
+        reason: 'gerar() a cada abertura acumularia lista_compra sem fim');
   });
 
   testWidgets('renderiza no escuro sem estourar', (tester) async {

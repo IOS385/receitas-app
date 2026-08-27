@@ -5,8 +5,12 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
+import 'package:refeicoes_app/data/repo_config.dart';
+import 'package:refeicoes_app/data/repo_mercado.dart';
+import 'package:refeicoes_app/data/repo_plano.dart';
 import 'package:refeicoes_app/data/semente.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
+import 'package:refeicoes_app/presentation/mercado/mercado_provider.dart';
 
 String lerDoDisco(String nome) =>
     File('assets/semente/$nome').readAsStringSync();
@@ -58,8 +62,43 @@ void main() {
     final mapa = {for (final l in linhas) l.chave: l.valor};
 
     expect(mapa['seed_version'], '1');
-    expect(mapa['tamanho_ciclo'], '33');
     expect(mapa['data_inicio_ciclo'], isNotEmpty);
+
+    // O tamanho e DERIVADO do ciclo.json, nao cravado: gravar 33 com 4
+    // posicoes cadastradas e crash garantido em qualquer posicao 5-33.
+    final maiorPosicao = (jsonDecode(lerDoDisco('ciclo.json')) as List)
+        .map((e) => (e as Map<String, dynamic>)['posicao'] as int)
+        .reduce((a, b) => a > b ? a : b);
+    expect(mapa['tamanho_ciclo'], '$maiorPosicao');
+    expect(mapa['tamanho_ciclo'], '4',
+        reason: 'a semente desta fase cadastra 4 dias de ciclo');
+  });
+
+  test('ciclo inteiro resolve sem override de tamanho', () async {
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+    final config = RepoConfig(db);
+    await config.definir('data_inicio_ciclo', '2026-09-01');
+    // NAO define tamanho_ciclo — usa o que a semente derivou
+    final tamanho = await config.tamanhoCiclo();
+    final repo = RepoPlano(db, config);
+
+    for (var i = 0; i <= tamanho; i++) {
+      final d = DataPura.de(DateTime.utc(2026, 9, 1).add(Duration(days: i)));
+      await repo.dia(d); // nao pode estourar em nenhum dia do ciclo + 1
+    }
+  });
+
+  test('mercado da semana corrente gera sem override de tamanho', () async {
+    // O caminho exato de producao: sete dias CONSECUTIVOS a partir da data
+    // real de hoje, com o tamanho de ciclo que a semente gravou. Sete
+    // posicoes seguidas nunca caem todas dentro de {1,2,3,4}.
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+    final config = RepoConfig(db);
+    final semana = semanaDe(DateTime.now());
+
+    final listaId = await RepoMercado(db, RepoPlano(db, config))
+        .gerar(semana.de, semana.ate);
+    expect(listaId, greaterThan(0));
   });
 
   test('nao sobrescreve receita que virou do usuario', () async {
