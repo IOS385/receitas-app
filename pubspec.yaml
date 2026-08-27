@@ -50,6 +50,7 @@ dev_dependencies:
   # (só em package:riverpod/misc.dart) — test/util_teste.dart precisa dele
   # direto, então vira dependência explícita para o linter não reclamar.
   riverpod: ^3.4.2
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -77,3 +78,10 @@ flutter:
         - asset: assets/fontes/IBMPlexMono-Regular.ttf
         - asset: assets/fontes/IBMPlexMono-Medium.ttf
           weight: 500
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icone/icone.png"
+  adaptive_icon_background: "#14263F"
+  adaptive_icon_foreground: "assets/icone/icone.png"
