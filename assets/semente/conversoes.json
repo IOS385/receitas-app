@@ -14,6 +14,7 @@
   {"alimento": 8,  "unidade": "dente", "gramas": 3},
   {"alimento": 9,  "unidade": "g", "gramas": 1},
   {"alimento": 9,  "unidade": "colherSopa", "gramas": 8},
+  {"alimento": 9,  "unidade": "colherCha", "gramas": 3},
   {"alimento": 10, "unidade": "g", "gramas": 1},
   {"alimento": 10, "unidade": "colherSopa", "gramas": 15},
   {"alimento": 11, "unidade": "g", "gramas": 1},

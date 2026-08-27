@@ -2479,6 +2479,7 @@ quando for comprado por unidade. Conversão faltando estoura na carga (Task 7).
   {"alimento": 8,  "unidade": "dente", "gramas": 3},
   {"alimento": 9,  "unidade": "g", "gramas": 1},
   {"alimento": 9,  "unidade": "colherSopa", "gramas": 8},
+  {"alimento": 9,  "unidade": "colherCha", "gramas": 3},
   {"alimento": 10, "unidade": "g", "gramas": 1},
   {"alimento": 10, "unidade": "colherSopa", "gramas": 15},
   {"alimento": 11, "unidade": "g", "gramas": 1},
@@ -2884,6 +2885,29 @@ void main() {
     for (final a in porUnidade) {
       expect(temUnidade, contains(a.id), reason: '${a.nome} sem g por unidade');
     }
+  });
+
+  test('todo par (alimento, unidade) usado em receita tem conversao', () async {
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+
+    final conv = {
+      for (final c in await db.select(db.conversoes).get())
+        (c.alimentoId, c.unidade)
+    };
+    final alimentos = {
+      for (final a in await db.select(db.alimentos).get()) a.id: a.nome
+    };
+
+    final faltando = <String>[];
+    for (final i in await db.select(db.receitaIngredientes).get()) {
+      if (unidadesSemMedida.contains(i.unidade)) continue;
+      if (!conv.contains((i.alimentoId, i.unidade))) {
+        faltando.add('receita ${i.receitaId}: '
+            '${alimentos[i.alimentoId]} em ${i.unidade.name}');
+      }
+    }
+    expect(faltando, isEmpty, reason: faltando.join('
+'));
   });
 
   test('todo json da semente e valido', () {
@@ -3483,6 +3507,9 @@ void main() {
     final config = RepoConfig(db);
     // ciclo comeca em 2026-09-01 para o dia 4 cair na posicao 4
     await config.definir('data_inicio_ciclo', '2026-09-01');
+    // a semente desta fase tem so 4 posicoes; sem isto, qualquer data que caia
+    // na posicao 5+ estoura `StateError: ciclo sem combo`
+    await config.definir('tamanho_ciclo', '4');
     repo = RepoPlano(db, config);
   });
   tearDown(() async => db.close());
@@ -3628,17 +3655,10 @@ flutter test test/repo_plano_test.dart
 
 Esperado: primeiro FAIL (arquivos ausentes), depois 14 testes passando.
 
-Se `dia anterior ao inicio` estourar com `StateError: ciclo sem combo`, é esperado:
-a semente só tem as posições 1 a 4. Ajustar o teste para uma data cuja posição caia
-em 1..4 — por exemplo `2026-08-29` com ciclo de 33 cai na posição 32. Para manter o
-teste honesto **sem** conteúdo completo, sobrescrever `tamanho_ciclo` para `4` neste
-teste específico:
-
-```dart
-await RepoConfig(db).definir('tamanho_ciclo', '4');
-```
-
-Adicionar essa linha dentro do próprio teste, antes de chamar `repo.dia`.
+O `setUp` já define `tamanho_ciclo = '4'`, porque a semente desta fase só tem 4
+posições. Sem isso, **dois** testes estouram `StateError: ciclo sem combo`:
+`sabado tem 2 porcoes em tudo` (2026-09-05 cai na posição 5) e
+`dia anterior ao inicio do ciclo resolve sem estourar`.
 
 - [ ] **Step 5: Escrever `RepoReceitas`**
 

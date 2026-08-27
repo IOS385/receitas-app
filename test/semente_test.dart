@@ -162,6 +162,28 @@ void main() {
         reason: 'mas seed_version sobrescreve — e a assimetria');
   });
 
+  test('todo par (alimento, unidade) usado em receita tem conversao', () async {
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+
+    final conv = {
+      for (final c in await db.select(db.conversoes).get())
+        (c.alimentoId, c.unidade)
+    };
+    final alimentos = {
+      for (final a in await db.select(db.alimentos).get()) a.id: a.nome
+    };
+
+    final faltando = <String>[];
+    for (final i in await db.select(db.receitaIngredientes).get()) {
+      if (unidadesSemMedida.contains(i.unidade)) continue;
+      if (!conv.contains((i.alimentoId, i.unidade))) {
+        faltando.add('receita ${i.receitaId}: '
+            '${alimentos[i.alimentoId]} em ${i.unidade.name}');
+      }
+    }
+    expect(faltando, isEmpty, reason: faltando.join('\n'));
+  });
+
   test('todo json da semente e valido', () {
     for (final nome in const [
       'alimentos.json', 'conversoes.json', 'receitas.json',
