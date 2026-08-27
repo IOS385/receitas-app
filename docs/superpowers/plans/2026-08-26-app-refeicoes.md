@@ -4237,15 +4237,28 @@ Future<void> importarJson(AppDatabase db, String texto) async {
     throw Exception('arquivo de backup invalido: ${e.message}');
   }
 
+  final formato = mapa['formato'];
+  if (formato != formatoBackup) {
+    throw Exception(
+        'backup de formato incompativel: arquivo e $formato, '
+        'este app le $formatoBackup');
+  }
+
   final tabelas = mapa['tabelas'];
   if (tabelas is! Map<String, dynamic>) {
     throw Exception('arquivo de backup sem a secao "tabelas"');
   }
 
+  // O pragma NAO tem efeito dentro de uma transacao — o SQLite o ignora
+  // enquanto ha transacao ativa (confirmado empiricamente: dentro da transacao,
+  // um SELECT do pragma devolve 1 mesmo depois do OFF). Por isso ele fica FORA,
+  // e o `finally` garante que a integridade volte a ligar mesmo se o import
+  // estourar no meio — rollback nao restaura estado de conexao.
+  await db.customStatement('PRAGMA foreign_keys = OFF');
+  try {
   await db.transaction(() async {
-    await db.customStatement('PRAGMA foreign_keys = OFF');
-
-    // Apaga na ordem inversa para não brigar com dependência.
+    // Apaga na ordem inversa da declaracao das tabelas, que e uma ordenacao
+    // topologica valida: filho antes do pai. NAO conte com o pragma para isso.
     for (final t in db.allTables.toList().reversed) {
       await db.customStatement('DELETE FROM ${t.actualTableName}');
     }
@@ -4267,16 +4280,20 @@ Future<void> importarJson(AppDatabase db, String texto) async {
       }
     }
 
-    await db.customStatement('PRAGMA foreign_keys = ON');
   });
+  } finally {
+    await db.customStatement('PRAGMA foreign_keys = ON');
+  }
 }
 
 Variable<Object> _variavel(Object? v) => switch (v) {
       null => const Variable<String>(null),
       final int i => Variable<int>(i),
       final double d => Variable<double>(d),
+      // Defensivo: hoje o customSelect devolve bool como int 0/1 cru, entao
+      // este branch nao e alcancado. Fica para o caso de o formato passar a
+      // codificar booleano como true/false. NAO remover sem trocar o formato.
       final bool b => Variable<bool>(b),
-      final Uint8List u => Variable<Uint8List>(u),
       _ => Variable<String>(v.toString()),
     };
 ```
