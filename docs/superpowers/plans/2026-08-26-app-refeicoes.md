@@ -3844,7 +3844,12 @@ class RepoMercado {
 
   Future<ListaCompra?> ultimaLista() => (db.select(db.listasCompra)
         ..orderBy([
-          (t) => OrderingTerm(expression: t.criadaEm, mode: OrderingMode.desc)
+          // criadaEm sozinho nao basta: o drift guarda DateTime como segundos
+          // unix por padrao (sem milissegundos), entao duas chamadas de
+          // gerar() no mesmo segundo empatam e o ORDER BY fica
+          // nao-deterministico. `id` desempata porque e autoincrement.
+          (t) => OrderingTerm(expression: t.criadaEm, mode: OrderingMode.desc),
+          (t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc),
         ])
         ..limit(1))
       .getSingleOrNull();
@@ -3992,7 +3997,8 @@ const int versaoSemente = 1;
 
 final bancoProvider = Provider<AppDatabase>((ref) {
   final db = AppDatabase();
-  ref.onDispose(db.dispose);
+  // `close()`, nao `dispose()` — GeneratedDatabase nao tem dispose.
+  ref.onDispose(db.close);
   return db;
 });
 
@@ -4043,6 +4049,22 @@ com 14.
 git add lib/data/ test/repo_plano_test.dart test/repo_mercado_test.dart
 git commit -m "feat(data): repositorios de plano, receitas, mercado e config"
 ```
+
+- [ ] **Step 11: Testes de cobertura que a revisão exigiu**
+
+A revisão desta tarefa provou, por mutação, que quatro invariantes ficavam sem guarda.
+Os testes que fecham isso estão no commit `e504f51` e cobrem:
+
+| Invariante | Onde | Mutação que ele mata |
+|---|---|---|
+| Nutrição usa quantidade **escalada**, não crua | `repo_plano_test.dart` | trocar `quantidade` por `ing.quantidade` em `emGramas` |
+| Ordem dos componentes do prato é preservada | `repo_plano_test.dart` | inverter `orderBy(t.ordem)` para `desc` |
+| `diasEditados` filtra pelo intervalo | `repo_plano_test.dart` | remover o `where` de intervalo |
+| `RepoReceitas`: posse, substituição de lista, desativar em vez de apagar | `repo_receitas_test.dart` (novo, 8 testes) | — cobertura que não existia |
+
+O arquivo `test/repo_receitas_test.dart` **não estava** na lista de arquivos deste Step
+originalmente. Foi acrescentado porque `RepoReceitas` é o repositório que toca dado criado
+pela usuária, e três telas dependem de `salvar` marcar a posse corretamente.
 
 ---
 
