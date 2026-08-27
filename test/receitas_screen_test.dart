@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
 import 'package:refeicoes_app/presentation/receitas/receita_screen.dart';
+import 'package:refeicoes_app/presentation/receitas/receitas_provider.dart';
 import 'package:refeicoes_app/presentation/receitas/receitas_screen.dart';
 
 import 'util_teste.dart';
@@ -103,6 +105,53 @@ void main() {
       expect(find.text('PROT G'), findsOneWidget);
       expect(find.text('calculado dos ingredientes · tabela TACO'),
           findsOneWidget);
+    });
+
+    testWidgets('macros da tela batem com o que o provider calcula',
+        (tester) async {
+      await abrirDetalhe(tester, 3);
+
+      final container = ProviderScope.containerOf(
+          tester.element(find.byType(ReceitaScreen)));
+      final d = await container.read(detalheProvider(3).future);
+
+      expect(d.nutrientes.kcal, greaterThan(0),
+          reason: 'sanidade: a receita 3 tem ingredientes com caloria');
+      expect(find.text('${d.nutrientes.kcal.round()}'), findsOneWidget,
+          reason: 'o kcal exibido tem de ser o calculado, nao um placeholder');
+      expect(find.text('${d.nutrientes.proteina.round()}'), findsOneWidget);
+    });
+
+    testWidgets('cada numero de passo fica ao lado do passo certo',
+        (tester) async {
+      await abrirDetalhe(tester, 3);
+
+      final container = ProviderScope.containerOf(
+          tester.element(find.byType(ReceitaScreen)));
+      final d = await container.read(detalheProvider(3).future);
+
+      // o Row do passo 1 tem de conter o texto do PRIMEIRO passo
+      expect(
+        find.ancestor(of: find.text('1'), matching: find.byType(Row)).evaluate(),
+        isNotEmpty,
+      );
+      expect(
+        find.descendant(
+          of: find.ancestor(
+              of: find.text(d.passos.first), matching: find.byType(Row)),
+          matching: find.text('1'),
+        ),
+        findsOneWidget,
+        reason: 'numeracao invertida passaria sem isto',
+      );
+      expect(
+        find.descendant(
+          of: find.ancestor(
+              of: find.text(d.passos.last), matching: find.byType(Row)),
+          matching: find.text('${d.passos.length}'),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('lista ingredientes com quantidade e observacao',

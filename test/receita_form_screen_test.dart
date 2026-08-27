@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/data/app_database.dart';
 import 'package:refeicoes_app/presentation/receitas/receita_form_screen.dart';
+import 'package:refeicoes_app/presentation/receitas/receitas_provider.dart';
+import 'package:refeicoes_app/presentation/receitas/receitas_screen.dart';
 
 import 'util_teste.dart';
 
@@ -83,6 +86,81 @@ void main() {
     await tester.tap(find.byTooltip('Remover Patinho cru'));
     await tester.pumpAndSettle();
     expect(find.text('Patinho cru'), findsNothing);
+  });
+
+  testWidgets('macros do formulario mudam ao remover ingrediente',
+      (tester) async {
+    await abrir(tester, id: 3);
+
+    // captura o kcal exibido antes
+    final container = ProviderScope.containerOf(
+        tester.element(find.byType(ReceitaFormScreen)));
+    final antes = (await container.read(detalheProvider(3).future))
+        .nutrientes
+        .kcal
+        .round();
+    expect(find.text('$antes'), findsOneWidget,
+        reason: 'o painel tem de comecar mostrando o calculado');
+
+    // remove o ingrediente de maior peso calorico (patinho, o primeiro)
+    await tester.ensureVisible(find.byTooltip('Remover Patinho cru'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Remover Patinho cru'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('$antes'), findsNothing,
+        reason: 'o painel tem de recalcular ao mudar a lista — e a promessa da tela');
+  });
+
+  testWidgets('receita nova aparece no catalogo depois de salvar',
+      (tester) async {
+    telaDeCelular(tester);
+    await tester.pumpWidget(envolver(const ReceitasScreen(), db: db));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Nova receita'));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField).first, 'Omelete simples');
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Adicionar ingrediente'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Adicionar ingrediente'));
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Ovo de galinha cru'),
+      200,
+      scrollable: find.descendant(
+        of: find.byType(BottomSheet),
+        matching: find.byType(Scrollable),
+      ),
+    );
+    await tester.tap(find.text('Ovo de galinha cru').first);
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Salvar receita'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Salvar receita'));
+    await tester.pumpAndSettle();
+
+    // De volta no catalogo (25 receitas, ordem alfabetica): "Omelete simples"
+    // fica no indice 17, fora do cacheExtent inicial da ListView.builder.
+    // (Nao usar a busca aqui: digitar no campo mexe em filtroProvider, que o
+    // catalogoProvider observa — isso forcaria um refetch por conta propria e
+    // mascararia justamente a falta do invalidate que este teste prova.)
+    await tester.scrollUntilVisible(
+      find.text('Omelete simples'),
+      300,
+      scrollable: find.descendant(
+        of: find.byWidgetPredicate(
+            (w) => w is ListView && w.scrollDirection == Axis.vertical),
+        matching: find.byType(Scrollable),
+      ),
+    );
+
+    expect(find.text('Omelete simples'), findsOneWidget,
+        reason: 'sem invalidate do catalogoProvider ela salva e nao aparece');
   });
 
   testWidgets('salvar sem nome avisa e nao grava', (tester) async {
