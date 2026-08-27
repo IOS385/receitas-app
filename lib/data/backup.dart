@@ -1,8 +1,4 @@
 import 'dart:convert';
-// drift.dart reexporta Uint8List hoje; import explícito para não depender
-// disso se o reexport sumir numa atualização futura do drift.
-// ignore: unnecessary_import
-import 'dart:typed_data';
 
 import 'package:drift/drift.dart';
 
@@ -52,40 +48,54 @@ Future<void> importarJson(AppDatabase db, String texto) async {
     throw Exception('arquivo de backup sem a secao "tabelas"');
   }
 
-  await db.transaction(() async {
-    await db.customStatement('PRAGMA foreign_keys = OFF');
+  final formato = mapa['formato'];
+  if (formato != formatoBackup) {
+    throw Exception(
+        'backup de formato incompativel: arquivo e $formato, '
+        'este app le $formatoBackup');
+  }
 
-    // Apaga na ordem inversa para não brigar com dependência.
-    for (final t in db.allTables.toList().reversed) {
-      await db.customStatement('DELETE FROM ${t.actualTableName}');
-    }
-
-    for (final t in db.allTables) {
-      final linhas = tabelas[t.actualTableName];
-      if (linhas is! List) continue;
-
-      for (final raw in linhas) {
-        final linha = Map<String, dynamic>.from(raw as Map);
-        final colunas = linha.keys.toList();
-        final marcadores = List.filled(colunas.length, '?').join(', ');
-
-        await db.customInsert(
-          'INSERT INTO ${t.actualTableName} '
-          '(${colunas.join(', ')}) VALUES ($marcadores)',
-          variables: colunas.map((c) => _variavel(linha[c])).toList(),
-        );
+  // O pragma NAO tem efeito dentro de uma transacao — SQLite o ignora enquanto
+  // ha transacao ativa. Por isso ele fica FORA, e o `finally` garante que a
+  // integridade volte a ligar mesmo se o import falhar no meio.
+  await db.customStatement('PRAGMA foreign_keys = OFF');
+  try {
+    await db.transaction(() async {
+      // Apaga na ordem inversa da declaracao das tabelas, que e uma ordenacao
+      // topologica valida: filho antes do pai.
+      for (final t in db.allTables.toList().reversed) {
+        await db.customStatement('DELETE FROM ${t.actualTableName}');
       }
-    }
 
+      for (final t in db.allTables) {
+        final linhas = tabelas[t.actualTableName];
+        if (linhas is! List) continue;
+
+        for (final raw in linhas) {
+          final linha = Map<String, dynamic>.from(raw as Map);
+          final colunas = linha.keys.toList();
+          final marcadores = List.filled(colunas.length, '?').join(', ');
+
+          await db.customInsert(
+            'INSERT INTO ${t.actualTableName} '
+            '(${colunas.join(', ')}) VALUES ($marcadores)',
+            variables: colunas.map((c) => _variavel(linha[c])).toList(),
+          );
+        }
+      }
+    });
+  } finally {
     await db.customStatement('PRAGMA foreign_keys = ON');
-  });
+  }
 }
 
 Variable<Object> _variavel(Object? v) => switch (v) {
       null => const Variable<String>(null),
       final int i => Variable<int>(i),
       final double d => Variable<double>(d),
+      // Defensivo: hoje o customSelect devolve bool como int 0/1 cru, entao
+      // este branch nao e alcancado. Fica para o caso de o formato passar a
+      // codificar booleano como true/false.
       final bool b => Variable<bool>(b),
-      final Uint8List u => Variable<Uint8List>(u),
       _ => Variable<String>(v.toString()),
     };

@@ -89,4 +89,39 @@ void main() {
 
     await db.close();
   });
+
+  test('falha no meio do import reverte o delete', () async {
+    final db = novoBanco();
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+    final texto = await exportarJson(db);
+
+    // JSON valido, mas com uma coluna que nao existe numa linha de receitas:
+    // a falha acontece DEPOIS do DELETE de todas as tabelas.
+    final mapa = jsonDecode(texto) as Map<String, dynamic>;
+    (mapa['tabelas'] as Map)['receitas'][0]['coluna_que_nao_existe'] = 1;
+
+    await expectLater(
+        importarJson(db, jsonEncode(mapa)), throwsA(isA<Exception>()));
+
+    expect(await db.select(db.alimentos).get(), hasLength(40),
+        reason: 'a transacao tem de reverter o delete que ja rodou');
+    expect(await db.select(db.receitas).get(), hasLength(24));
+
+    await db.close();
+  });
+
+  test('backup de formato incompativel e recusado', () async {
+    final db = novoBanco();
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+    final texto = await exportarJson(db);
+
+    final mapa = jsonDecode(texto) as Map<String, dynamic>;
+    mapa['formato'] = 999;
+
+    await expectLater(
+        importarJson(db, jsonEncode(mapa)), throwsA(isA<Exception>()));
+    expect(await db.select(db.alimentos).get(), hasLength(40));
+
+    await db.close();
+  });
 }
