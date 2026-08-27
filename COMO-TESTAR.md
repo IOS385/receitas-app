@@ -70,3 +70,24 @@ Primeiro APK que vale abrir. As 14 tarefas anteriores não tinham tela.
 **O que ainda NÃO funciona:** as quatro telas são placeholders com o nome escrito. A aba Hoje ganha conteúdo na Task 16.
 
 **Se algo parecer errado na fonte ou na cor, me diz** — é a única coisa desta fase que teste automatizado não alcança.
+
+---
+
+## Checkpoint 2 — Task 16 · a tela Hoje
+
+**Commit:** `08479c2` · **APK:** 53,4 MB
+
+A aba Hoje ganhou conteúdo. É a tela que sua esposa vai abrir todo dia.
+
+**O que olhar:**
+
+1. **Os quatro horários** com o combo do dia, cada componente com a quantidade já escalada, e as calorias.
+2. **As porções, que são o ponto da tela.** Se hoje for dia de semana: café da manhã **1**, almoço **1**, café da tarde **2**, jantar **2**. Confira se bate com a rotina dela.
+3. **O espelho.** Café da tarde e jantar vêm **apagados** — sem a faixa marinho no topo do cartão, fundo recuado — com a linha *"repete o almoço, em dobro"*. **E listam os componentes com a quantidade dobrada:** o arroz aparece `120 g` no almoço e `240 g` no jantar.
+
+   Essa parte mudou durante a execução. Meu plano original escondia os componentes no cartão espelhado, e um subagente provou que isso contradizia o próprio motivo de mostrar quantidade na tela. Se você achar que ficou pesado demais, é reversível numa linha — me diz.
+4. **O cabeçalho:** dia grande, dia da semana, posição no ciclo, e o total de kcal do dia.
+
+**O que ainda NÃO funciona:** o botão `Substituir` abre uma folha vazia (Task 17), e tocar numa refeição abre uma tela crua (Task 20). Mês, Mercado e Receitas seguem placeholder.
+
+**Uma limitação que eu quero sua opinião:** só o café da manhã e o almoço têm botão `Substituir`. O jantar e o café da tarde não — eles seguem o que você trocar no slot base. O app *sabe* soltar o espelho (está testado), mas não oferece o botão. Faz sentido para vocês, ou ela vai querer trocar só o jantar algum dia?

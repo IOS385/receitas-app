@@ -5338,6 +5338,18 @@ Future<AppDatabase> bancoDeTeste() async {
   return db;
 }
 
+/// Ajusta a superficie de teste para um celular real (412x915 dp, densidade 3).
+///
+/// O padrao do `flutter_test` e 800x600 — mais BAIXO que qualquer aparelho, o
+/// que empurra conteudo legitimo para fora da viewport e faz `tap()` errar em
+/// SILENCIO (avisa, nao falha). Chame no inicio de todo teste de tela.
+void telaDeCelular(WidgetTester tester) {
+  tester.view.physicalSize = const Size(412 * 3, 915 * 3);
+  tester.view.devicePixelRatio = 3.0;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
+}
+
 /// Envolve um widget com tema, ProviderScope e o banco de teste já pronto.
 Widget envolver(
   Widget child, {
@@ -5732,12 +5744,21 @@ class BlocoRefeicao extends ConsumerWidget {
               style: t.titleLarge
                   ?.copyWith(color: espelhado ? cores.ink3 : null)),
           const SizedBox(height: 9),
-          if (espelhado)
+          // Espelhado mostra a linha de repeticao E a lista de componentes.
+          // O sinal de "isto e repeticao" vem do visual apagado (cartao sem
+          // aro, fundo recuado), nao do texto — e esconder a quantidade
+          // obrigaria ela a dobrar tudo de cabeca, que e o trabalho que esta
+          // tela existe para poupar. Sem rodape de kcal e sem SUBSTITUIR:
+          // so os dois slots base tem botao.
+          if (espelhado) ...[
             Text('repete ${rotuloSlot(slotBaseDe(refeicao.slot)).toLowerCase()},'
                 ' em dobro',
                 style: t.bodySmall
-                    ?.copyWith(color: cores.ink3, fontStyle: FontStyle.italic))
-          else ...[
+                    ?.copyWith(color: cores.ink3, fontStyle: FontStyle.italic)),
+            const SizedBox(height: 7),
+            for (final c in refeicao.componentes)
+              _LinhaComponente(componente: c),
+          ] else ...[
             for (final c in refeicao.componentes)
               _LinhaComponente(componente: c),
             const SizedBox(height: 11),
