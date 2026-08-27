@@ -48,7 +48,7 @@ void main() {
 
     expect(find.text('04'), findsOneWidget);
     expect(find.text('SEXTA'), findsOneWidget);
-    expect(find.text('dia 4 de 4'), findsOneWidget);
+    expect(find.text('dia 4 de ${tamanhoDoCiclo()}'), findsOneWidget);
     expect(find.text('KCAL NO DIA'), findsOneWidget);
 
     // relacional de proposito: prova que a TELA renderiza o que o REPOSITORIO
@@ -119,10 +119,16 @@ void main() {
   testWidgets('abre a folha de substituicao', (tester) async {
     await abrir(tester);
 
+    // Com a foto do prato no cartao, o SUBSTITUIR do segundo cartao nasce
+    // abaixo de 915 dp. Sem rolar, o tap erra e apenas AVISA — nao reprova.
+    await tester.ensureVisible(find.text('SUBSTITUIR').last);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('SUBSTITUIR').last);
     await tester.pumpAndSettle();
 
-    expect(find.text('Trocar a refeição inteira'), findsOneWidget);
+    expect(find.text('Trocar só um componente'), findsOneWidget,
+        reason: 'a folha abre no nivel componente — ver o comentario de ordem '
+            'em substituir_sheet.dart');
   });
 
   testWidgets('renderiza no modo escuro sem estourar', (tester) async {

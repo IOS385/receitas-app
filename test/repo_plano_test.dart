@@ -9,6 +9,8 @@ import 'package:refeicoes_app/data/repo_plano.dart';
 import 'package:refeicoes_app/data/semente.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
 
+import 'util_teste.dart';
+
 String lerDoDisco(String nome) =>
     File('assets/semente/$nome').readAsStringSync();
 
@@ -29,9 +31,9 @@ void main() {
     final config = RepoConfig(db);
     // ciclo comeca em 2026-09-01 para o dia 4 cair na posicao 4
     await config.definir('data_inicio_ciclo', '2026-09-01');
-    // a semente desta fase tem so 4 posicoes; sem isto, qualquer data que caia
-    // na posicao 5+ estoura `StateError: ciclo sem combo`
-    await config.definir('tamanho_ciclo', '4');
+    // O tamanho NAO e definido aqui: a semente o deriva do ciclo.json, e
+    // harness que escreve config de producao a mao foi o que escondeu o C1.
+    // Ver Pesquisa/divergencia-de-harness-esconde-bug no vault.
     repo = RepoPlano(db, config);
   });
   tearDown(() async => db.close());
@@ -115,7 +117,8 @@ void main() {
     await repo.substituirCombo(
         data: sexta, slot: SlotRefeicao.jantar, comboId: 5);
     final d = await repo.dia(sexta);
-    expect(slotDe(d, SlotRefeicao.almoco).comboId, 8);
+    expect(slotDe(d, SlotRefeicao.almoco).comboId,
+        comboDaSemente(4, 'refeicao'));
     expect(slotDe(d, SlotRefeicao.jantar).comboId, 5);
     expect(slotDe(d, SlotRefeicao.jantar).espelhoIntacto, isFalse);
   });
@@ -149,7 +152,8 @@ void main() {
         data: sexta, slot: SlotRefeicao.jantar, comboId: 5);
     await repo.limparOverrides(sexta, SlotRefeicao.jantar);
     final d = await repo.dia(sexta);
-    expect(slotDe(d, SlotRefeicao.jantar).comboId, 8);
+    expect(slotDe(d, SlotRefeicao.jantar).comboId,
+        comboDaSemente(4, 'refeicao'));
     expect(slotDe(d, SlotRefeicao.jantar).espelhoIntacto, isTrue);
   });
 

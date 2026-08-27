@@ -70,6 +70,13 @@ class Combos extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get nome => text()();
   TextColumn get tipo => textEnum<TipoCombo>()();
+
+  /// Asset com a foto do prato montado. A foto e do combo inteiro (o prato
+  /// como ela ve na mesa), nao de uma receita solta: uma receita como "Arroz
+  /// branco" nao tem foto propria e nunca tera. Nulo quando nao ha foto —
+  /// combo que ela criar, por exemplo.
+  TextColumn get fotoPath => text().nullable()();
+
   TextColumn get origem => text().withDefault(const Constant('seed'))();
   BoolColumn get ativo => boolean().withDefault(const Constant(true))();
 }
@@ -180,10 +187,16 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _abrir());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
+        onUpgrade: (m, de, para) async {
+          // v2 — foto do prato montado no combo. Coluna nulavel, então banco
+          // que já existe no aparelho dela sobrevive: as fotos entram na
+          // próxima carga da semente.
+          if (de < 2) await m.addColumn(combos, combos.fotoPath);
+        },
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');
         },

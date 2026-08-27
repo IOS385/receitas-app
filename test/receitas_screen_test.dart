@@ -25,7 +25,18 @@ void main() {
       await abrirCatalogo(tester);
 
       expect(find.text('CATÁLOGO'), findsOneWidget);
-      expect(find.text('24 receitas'), findsOneWidget);
+      expect(find.text('${quantosNaSemente('receitas.json')} receitas'),
+          findsOneWidget);
+
+      // Com 139 receitas em ordem alfabetica, "Arroz branco" nasce depois de
+      // uma duzia de abobrinhas e aladas: fora do `cacheExtent`, e
+      // `findsOneWidget` reprova por nao estar CONSTRUIDA, nao por faltar.
+      // Rolar ate ela e o que prova que a lista tem a receita.
+      // `scrollable:` explicito: a tela tem duas areas rolaveis (os chips de
+      // categoria na horizontal e a lista na vertical) e sem dizer qual o
+      // scrollUntilVisible estoura com "Too many elements".
+      await tester.scrollUntilVisible(find.text('Arroz branco'), 200,
+          scrollable: find.byType(Scrollable).last);
       expect(find.text('Arroz branco'), findsOneWidget);
     });
 
@@ -35,7 +46,16 @@ void main() {
       await tester.tap(find.text('Proteína'));
       await tester.pumpAndSettle();
 
+      await tester.scrollUntilVisible(
+          find.text('Frango grelhado simples'), 200,
+          scrollable: find.byType(Scrollable).last);
       expect(find.text('Frango grelhado simples'), findsOneWidget);
+
+      // O filtro exclui: "Arroz branco" e base, e rolar a lista inteira nao
+      // pode achar. `findsNothing` sem rolar seria vacuo — ele passaria mesmo
+      // com a receita na lista, so fora da tela.
+      await tester.drag(find.byType(Scrollable).last, const Offset(0, -20000));
+      await tester.pumpAndSettle();
       expect(find.text('Arroz branco'), findsNothing);
     });
 

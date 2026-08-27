@@ -10,7 +10,23 @@ import 'semente.dart';
 
 /// Versão da semente empacotada. Subir isto reimporta o conteúdo `seed`
 /// e deixa intacto o que a usuária editou.
-const int versaoSemente = 1;
+///
+/// **Mudou qualquer JSON de `assets/semente/`? Suba este número.** Sem isso o
+/// app já instalado nunca recarrega — a guarda em [semeaduraProvider] compara
+/// com `seed_version` e volta calada. Foi o que aconteceu com as fotos dos
+/// pratos: a coluna entrou pela migração, ficou nula, e nenhuma foto apareceu
+/// no aparelho dela. `test/semente_versao_test.dart` guarda isto por impressão
+/// do conteúdo.
+///
+/// - 1 — os 4 primeiros dias
+/// - 2 — foto do prato em cada um dos 8 combos
+/// - 3 — os 33 dias inteiros: 66 combos, 139 receitas, 110 alimentos
+/// - 4 — conteúdo idêntico ao 3. Sobe só para a semente **rodar de novo** e
+///   consertar `tamanho_ciclo`, que ficou em '4' no aparelho dele: a versão 3
+///   gravava esse valor derivado só quando ausente, como se fosse escolha da
+///   usuária. Bump sem conteúdo novo é válido — o que a versão controla é
+///   "precisa recarregar", não "o conteúdo mudou".
+const int versaoSemente = 4;
 
 final bancoProvider = Provider<AppDatabase>((ref) {
   final db = AppDatabase();

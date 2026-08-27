@@ -8,6 +8,8 @@ import 'package:refeicoes_app/data/repo_receitas.dart';
 import 'package:refeicoes_app/data/semente.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
 
+import 'util_teste.dart';
+
 String lerDoDisco(String nome) =>
     File('assets/semente/$nome').readAsStringSync();
 
@@ -26,7 +28,7 @@ void main() {
   tearDown(() async => db.close());
 
   test('listar traz as receitas ativas da semente', () async {
-    expect(await repo.listar(), hasLength(24));
+    expect(await repo.listar(), hasLength(quantosNaSemente('receitas.json')));
   });
 
   test('listar filtra por categoria', () async {
@@ -34,18 +36,21 @@ void main() {
     expect(proteinas, isNotEmpty);
     expect(proteinas.every((r) => r.categoria == CategoriaReceita.proteina),
         isTrue);
-    expect(proteinas.length, lessThan(24));
+    expect(proteinas.length,
+        lessThan(quantosNaSemente('receitas.json')));
   });
 
   test('listar filtra por busca, sem diferenciar maiuscula', () async {
     final r = await repo.listar(busca: 'TAPIOCA');
-    expect(r, hasLength(1));
-    expect(r.single.nome.toLowerCase(), contains('tapioca'));
+    // Tres receitas de tapioca depois dos 33 dias. O que o teste prova e a
+    // insensibilidade a caixa, nao a quantidade.
+    expect(r, isNotEmpty);
+    expect(r.every((x) => x.nome.toLowerCase().contains('tapioca')), isTrue);
   });
 
   test('salvar nova receita marca origem usuario', () async {
     final id = await repo.salvar(
-      nome: 'Omelete simples',
+      nome: 'Sopa de teste',
       categoria: CategoriaReceita.proteina,
       rendimentoPorcoes: 1,
       tempoPreparoMin: 10,
@@ -115,8 +120,8 @@ void main() {
     final cafes = await repo.combosDoTipo(TipoCombo.cafe);
     final refeicoes = await repo.combosDoTipo(TipoCombo.refeicao);
 
-    expect(cafes, hasLength(4));
-    expect(refeicoes, hasLength(4));
+    expect(cafes, hasLength(tamanhoDoCiclo()));
+    expect(refeicoes, hasLength(tamanhoDoCiclo()));
     expect(cafes.every((c) => c.tipo == TipoCombo.cafe), isTrue);
   });
 }

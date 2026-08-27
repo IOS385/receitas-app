@@ -230,7 +230,7 @@ void main() {
     // nome + campo + dropdown + remover. Overflow de RenderFlex reprova aqui.
     telaDeCelular(tester);
     final ids = (await db.select(db.receitas).get()).map((r) => r.id).toList();
-    expect(ids, hasLength(24));
+    expect(ids, hasLength(quantosNaSemente('receitas.json')));
 
     for (final id in ids) {
       // a Key troca o elemento, senao o State (e o initState) e reaproveitado
@@ -310,7 +310,7 @@ void main() {
     await tester.tap(find.byTooltip('Nova receita'));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField).first, 'Omelete simples');
+    await tester.enterText(find.byType(TextField).first, 'Sopa de teste');
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Adicionar ingrediente'));
     await tester.pumpAndSettle();
@@ -333,13 +333,13 @@ void main() {
     await tester.tap(find.text('Salvar receita'));
     await tester.pumpAndSettle();
 
-    // De volta no catalogo (25 receitas, ordem alfabetica): "Omelete simples"
+    // De volta no catalogo, em ordem alfabetica: "Sopa de teste"
     // fica no indice 17, fora do cacheExtent inicial da ListView.builder.
     // (Nao usar a busca aqui: digitar no campo mexe em filtroProvider, que o
     // catalogoProvider observa — isso forcaria um refetch por conta propria e
     // mascararia justamente a falta do invalidate que este teste prova.)
     await tester.scrollUntilVisible(
-      find.text('Omelete simples'),
+      find.text('Sopa de teste'),
       300,
       scrollable: find.descendant(
         of: find.byWidgetPredicate(
@@ -348,7 +348,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Omelete simples'), findsOneWidget,
+    expect(find.text('Sopa de teste'), findsOneWidget,
         reason: 'sem invalidate do catalogoProvider ela salva e nao aparece');
   });
 
@@ -361,13 +361,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Dê um nome à receita.'), findsOneWidget);
-    expect(await db.select(db.receitas).get(), hasLength(24));
+    expect(await db.select(db.receitas).get(),
+        hasLength(quantosNaSemente('receitas.json')));
   });
 
   testWidgets('salvar sem ingrediente avisa', (tester) async {
     await abrir(tester);
 
-    await tester.enterText(find.byType(TextField).first, 'Omelete simples');
+    await tester.enterText(find.byType(TextField).first, 'Sopa de teste');
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Salvar receita'));
     await tester.pumpAndSettle();
@@ -380,7 +381,7 @@ void main() {
   testWidgets('criar receita nova grava com origem usuario', (tester) async {
     await abrir(tester);
 
-    await tester.enterText(find.byType(TextField).first, 'Omelete simples');
+    await tester.enterText(find.byType(TextField).first, 'Sopa de teste');
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Adicionar ingrediente'));
     await tester.pumpAndSettle();
@@ -407,9 +408,10 @@ void main() {
     await tester.pumpAndSettle();
 
     final nova = (await db.select(db.receitas).get())
-        .firstWhere((r) => r.nome == 'Omelete simples');
+        .firstWhere((r) => r.nome == 'Sopa de teste');
     expect(nova.origem, 'usuario');
-    expect(await db.select(db.receitas).get(), hasLength(25));
+    expect(await db.select(db.receitas).get(),
+        hasLength(quantosNaSemente('receitas.json') + 1));
   });
 
   testWidgets('editar receita de semente transfere a posse', (tester) async {

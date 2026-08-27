@@ -238,9 +238,133 @@ Isso derrubava o motivo do formulário existir: o conteúdo é chute meu, e a de
 
 ---
 
+## Checkpoint 6 — as fotos dos pratos
+
+Entrou depois do MVP, a partir das 66 fotos que você pôs em `imagens/`.
+Tratamento **"Prato"**, escolhido no mock `mocks/04-esmalte-com-fotos.html`: a foto
+fica encaixada dentro do cartão com uma margem de louça em volta — o cartão é o
+prato e a comida fica na aba dele.
+
+**A foto é do combo, não da receita.** Cada foto é o prato inteiro (arroz + feijão
++ bife + cenoura + salada). Então:
+
+| Onde | Foto? |
+|---|---|
+| Aba **Hoje**, os quatro cartões | sim |
+| Folha **Substituir**, cada refeição alternativa | sim |
+| **Receita aberta** ("Bife acebolado") | **não** — a foto mostraria o prato todo |
+| **Catálogo** (lista de receitas) | **não**, pelo mesmo motivo |
+
+### O que conferir
+
+1. Abra a aba **Hoje**. Os quatro cartões têm foto. **Nenhum quadrado cinza com
+   ícone de garfo** — esse ícone só aparece quando o arquivo da foto falta.
+2. Café da tarde e jantar (os espelhados) mostram a **mesma foto do slot base,
+   desbotada**. Se você preferir espelhado **sem foto nenhuma**, é uma linha de
+   código — me diga.
+3. Toque em **Substituir** no almoço. Cada opção de refeição inteira aparece com
+   a foto do prato. Antes ali dizia "combo 5" — string de dev que saiu.
+4. Abra uma receita solta pelo Catálogo. **Não deve** ter foto.
+5. Role a Hoje até o fim. Com foto, os quatro cartões passam de ~915 dp: rolar é
+   esperado agora, não é bug.
+
+### Se você já tinha o APK anterior instalado
+
+Não desinstale — o teste é justamente esse. O banco v1 migra para v2 (a coluna
+`foto_path` entra nos combos) **e a semente recarrega** para preencher as fotos.
+**O que você já tinha editado tem de continuar lá**: receita que ela mudou,
+refeição substituída, marca no mercado. Se algo desapareceu, isso é grave e eu
+quero saber.
+
+Confira que instalou o build certo: **versão 1.1.0 (versionCode 2)**. O build
+anterior, `1.0.0+1`, tinha um bug — a coluna da foto entrava vazia e nenhuma foto
+aparecia em app atualizado por cima. Se as fotos não aparecerem no 1.1.0, o
+problema é outro e eu quero saber.
+
+---
+
+## Checkpoint 7 — os 33 dias
+
+O ciclo saiu de **4 para 33 dias**. Antes o app repetia o dia 1 na quinta
+refeição; agora vai até o dia 33 e só então volta.
+
+| | Antes | Agora |
+|---|---|---|
+| Posições do ciclo | 4 | **33** |
+| Combos (café + refeição) | 8 | **66** |
+| Receitas | 24 | **139** |
+| Alimentos | 40 | **110** |
+| Conversões de unidade | 74 | **208** |
+| Fotos de prato | 8 | **66** |
+
+O conteúdo veio do **seu texto original do WhatsApp**, recuperado da transcrição
+desta sessão. Os 66 nomes de arquivo de foto serviram de segunda fonte: cada
+combo casou 1:1 com a sua foto, todos com mais de 55% de sobreposição de palavras.
+
+### O que conferir
+
+1. **Aba Mês:** o cabeçalho agora diz "dia N de 33". Ande 33 dias para frente e
+   confira que o dia 34 volta a ser igual ao dia 1.
+2. **Aba Hoje:** cada dia traz comida diferente. Nenhum cartão com quadrado
+   cinza de garfo — foto faltando.
+3. **Aba Mercado, "este mês":** agora agrega 33 dias de compras. Confira se as
+   quantidades fazem sentido e se as seções (hortifruti, açougue…) estão certas.
+4. **Catálogo:** 139 receitas. Use a busca — a lista ficou longa.
+5. **Substituir:** **a ordem inverteu.** Abre em "Trocar só um componente", e
+   "Ou trocar a refeição inteira" vem abaixo. Motivo: com 32 refeições
+   alternativas, cada uma com foto, o nível de componente ficava a ~5300 dp — ela
+   nunca chegaria lá. Componente primeiro custa uma rolagem curta e a primeira
+   foto de alternativa ainda aparece sem rolar.
+6. **Modo de preparo:** abra 5 ou 6 receitas ao acaso e leia. Ali é onde meu
+   chute pode estar mais errado.
+
+### O que é chute meu, e importa
+
+- **33 dos 110 alimentos não têm código TACO** — a nutrição deles é estimativa
+  informada, não tabela oficial.
+- **Todas as quantidades** de todas as 139 receitas são estimativa: 120 g de
+  carne por pessoa, 100 g de macarrão, 80 g de salada. Se ela come mais ou menos
+  que isso, o número está errado — e ela pode corrigir no app, receita por
+  receita.
+- **"suco" e "fruta"** ela escreveu sem especificar. Virei `Suco natural` (laranja)
+  e `Fruta picada` (maçã e banana). Se ela quis outra coisa, é edição de receita.
+- **Refeição do dia 28 tem feijão E feijão preto** no mesmo prato. Está assim no
+  seu texto e no nome da foto, então mantive fiel em vez de "corrigir". Se foi
+  engano, ela tira o componente no app.
+
+### Se você já tinha a versão anterior instalada
+
+Instale por cima e confira que é a **1.2.1 (versionCode 4)**.
+
+A 1.2.0 tinha um bug: os 66 combos entravam (a folha Substituir listava todos),
+mas o ciclo **continuava voltando ao dia 1 no quinto dia**. `tamanho_ciclo` é
+valor derivado do conteúdo, e a semente o gravava só quando ausente — como se
+fosse uma escolha sua. O `'4'` do build antigo sobrevivia. Na 1.2.1 ele grava
+sempre; `tema` e a data de início do ciclo continuam protegidos, porque esses
+são escolha de verdade.
+
+**Confira no aparelho:** aba Mês tem de dizer "dia N de **33**". Se disser
+"de 4", o build é o antigo. **O que ela já editou continua
+dela** — receita com `origem = usuario` a semente não sobrescreve, e existe teste
+provando isso no caminho de atualização.
+
+---
+
 ## O que ficou pendente, e é seu
 
 1. **O roteiro de 12 verificações no aparelho**, incluindo **modo avião** — precisa do celular na mão. Nada foi simulado.
 2. **A revisão de conteúdo com ela** (Checkpoint 5). É o portão para o Plano 2.
 3. **Duas decisões de conteúdo** que eu deliberadamente não tomei: o azeite com 8 g por colher de sopa (real ~13,5) e os 22 alimentos com sufixo de estado na lista de mercado ("Cebola crua").
 4. **A pergunta do Checkpoint 2:** ela vai querer trocar só o jantar algum dia? Hoje só café da manhã e almoço têm botão de substituir.
+5. **Conferir as 66 fotos antes do Plano 2.** Duas têm artefato de IA visível — a
+   da tapioca traz um cartão "MENU CAFÉ DA MANHÃ" com texto embaralhado. Foto com
+   texto quebrado na tela dela é pior que foto nenhuma.
+6. **Uma divergência que as fotos revelaram:** o combo 1 da semente tem banana
+   (`Pão francês + manteiga + banana + leite`), mas a foto dele é `Pão frances +
+   manteiga + leite com toddy` — sem banana. Os nomes dos 66 arquivos são uma
+   segunda cópia do plano dela, então vale conferir qual está certo.
+7. **A folha Substituir** foi resolvida invertendo a ordem (componente primeiro).
+   Se navegar 32 fotos em lista te parecer ruim na mão, ela ainda pode virar
+   grade de 2 colunas — me diga depois de usar.
+8. **Revisar as quantidades com ela** é agora o item mais importante da lista.
+   São 139 receitas de chute informado; antes eram 24.

@@ -101,6 +101,7 @@ Future<void> carregarSemente(
             id: Value(id),
             nome: Value(c['nome'] as String),
             tipo: Value(TipoCombo.values.byName(c['tipo'] as String)),
+            fotoPath: Value(c['foto'] as String?),
             origem: const Value('seed'),
           ));
 
@@ -140,8 +141,18 @@ Future<void> carregarSemente(
               porcoes: Value(entrada.value)));
     }
 
-    // --- config: só grava o que ainda não existe, para não pisar na escolha dela
-    Future<void> configPadrao(String chave, String valor) async {
+    // --- config: há dois tipos de chave aqui, e confundi-los foi bug.
+    //
+    // **Escolha dela** (tema, data de início do ciclo): só grava se ainda não
+    // existir, senão a recarga da semente pisa no que ela ajustou.
+    //
+    // **Dado derivado** (`tamanho_ciclo`, que sai da maior posição do
+    // ciclo.json): grava SEMPRE. Protegê-lo como se fosse escolha faz o
+    // aparelho dela guardar um tamanho velho para sempre — foi exatamente o
+    // que aconteceu ao subir de 4 para 33 dias: os 66 combos entraram, a folha
+    // Substituir passou a listá-los, e o ciclo continuou voltando no quinto
+    // dia porque o `'4'` de antes sobreviveu.
+    Future<void> configEscolhaDela(String chave, String valor) async {
       final atual = await (db.select(db.config)
             ..where((t) => t.chave.equals(chave)))
           .getSingleOrNull();
@@ -155,10 +166,15 @@ Future<void> carregarSemente(
     // Fixar 33 com 4 posicoes cadastradas transforma conteudo parcial em
     // travamento duro: `resolverRefeicao` estoura StateError na primeira
     // posicao sem combo, e o Mercado (sete dias seguidos) sempre pega uma.
-    await configPadrao('tamanho_ciclo', '$maiorPosicao');
-    await configPadrao(
+    //
+    // E grava sempre, nao só quando ausente: é derivado do ciclo.json, não
+    // escolha dela. Ver o comentário em `configEscolhaDela`.
+    await db.into(db.config).insertOnConflictUpdate(
+        ConfigCompanion.insert(chave: 'tamanho_ciclo', valor: '$maiorPosicao'));
+
+    await configEscolhaDela(
         'data_inicio_ciclo', DataPura.de(DateTime.now()).iso);
-    await configPadrao('tema', 'sistema');
+    await configEscolhaDela('tema', 'sistema');
 
     await db.into(db.config).insertOnConflictUpdate(
         ConfigCompanion.insert(chave: 'seed_version', valor: '$versao'));

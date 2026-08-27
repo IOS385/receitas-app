@@ -1,0 +1,199 @@
+{
+ "1": {
+  "cafe da manha": "Pão francês + manteiga + leite com toddy + banana",
+  "almoco": "arroz + feijão + bife acebolado + Cenoura cozida com manteiga + Alface, tomate e cebola roxa – molho de azeite, limão e sal",
+  "cafe da tarde": "Pão francês + manteiga + leite com toddy + banana",
+  "jantar": "arroz + feijão + bife acebolado + Cenoura cozida com manteiga + Alface, tomate e cebola roxa – molho de azeite, limão e sal"
+ },
+ "2": {
+  "cafe da manha": "Pão de forma + ovo mexido + suco de laranja",
+  "almoco": "arroz + Carne moída refogada tradicional + feijão preto + Abobrinha refogada com alho + Alface, cenoura ralada e milho – molho de iogurte e limão",
+  "cafe da tarde": "Pão de forma + ovo mexido + suco de laranja",
+  "jantar": "arroz + Carne moída refogada tradicional + feijão preto + Abobrinha refogada com alho + Alface, cenoura ralada e milho – molho de iogurte e limão"
+ },
+ "3": {
+  "cafe da manha": "Cuscuz + ovo cozido + leite com toddy",
+  "almoco": "arroz + feijão + Frango grelhado simples + Chuchu refogado com cebola + Rúcula, tomate-cereja e parmesão – molho balsâmico",
+  "cafe da tarde": "Cuscuz + ovo cozido + leite com toddy",
+  "jantar": "arroz + feijão + Frango grelhado simples + Chuchu refogado com cebola + Rúcula, tomate-cereja e parmesão – molho balsâmico"
+ },
+ "4": {
+  "cafe da manha": "Tapioca com queijo + mamão + suco de uva",
+  "almoco": "arroz + feijão + Picadinho de carne com legumes + Batata-doce cozida e amassada + Alface americana, pepino – molho de mostarda e mel",
+  "cafe da tarde": "Tapioca com queijo + mamão + suco de uva",
+  "jantar": "arroz + feijão + Picadinho de carne com legumes + Batata-doce cozida e amassada + Alface americana, pepino – molho de mostarda e mel"
+ },
+ "5": {
+  "cafe da manha": "Pão de queijo + iogurte natural + maçã",
+  "almoco": "macarrao a bolonhesa + Abóbora cabotiá cozida com sal + Repolho roxo, cenoura e maçã – molho de iogurte com mel",
+  "cafe da tarde": "Pão de queijo + iogurte natural + maçã",
+  "jantar": "macarrao a bolonhesa + Abóbora cabotiá cozida com sal + Repolho roxo, cenoura e maçã – molho de iogurte com mel"
+ },
+ "6": {
+  "cafe da manha": "Panqueca de banana + suco",
+  "almoco": "Arroz + feijão + frango desfiado temperado + Brócolis cozido com azeite + Mix de folhas e manga – molho de laranja",
+  "cafe da tarde": "Panqueca de banana + suco",
+  "jantar": "Arroz + feijão + frango desfiado temperado + Brócolis cozido com azeite + Mix de folhas e manga – molho de laranja"
+ },
+ "7": {
+  "cafe da manha": "Pão caseiro + omelete simples + suco",
+  "almoco": "arroz + feijão+ Carne com molho de alho + Couve-flor cozida e temperada com limão + Alface, beterraba ralada e nozes – molho de limão e azeite",
+  "cafe da tarde": "Pão caseiro + omelete simples + suco",
+  "jantar": "arroz + feijão+ Carne com molho de alho + Couve-flor cozida e temperada com limão + Alface, beterraba ralada e nozes – molho de limão e azeite"
+ },
+ "8": {
+  "cafe da manha": "Torrada + abacate + ovo",
+  "almoco": "arroz + feijão + almondegas no molho + Beterraba cozida em cubos + Rúcula, pera e gorgonzola – molho balsâmico com mel",
+  "cafe da tarde": "Torrada + abacate + ovo",
+  "jantar": "arroz + feijão + almondegas no molho + Beterraba cozida em cubos + Rúcula, pera e gorgonzola – molho balsâmico com mel"
+ },
+ "9": {
+  "cafe da manha": "Bolo de milho + fruta + suco",
+  "almoco": "arroz + feijão+ Frango refogado com legumes (batata e cenoura) + Grão-de-bico, tomate e cebola – molho de limão, azeite e alho",
+  "cafe da tarde": "Bolo de milho + fruta + suco",
+  "jantar": "arroz + feijão+ Frango refogado com legumes (batata e cenoura) + Grão-de-bico, tomate e cebola – molho de limão, azeite e alho"
+ },
+ "10": {
+  "cafe da manha": "Crepioca + queijo + suco",
+  "almoco": "Carne de panela com batata + macarrão com molho branco + Milho refogado com cebola + Lentilha, cenoura e cheiro-verde – molho de vinagrete",
+  "cafe da tarde": "Crepioca + queijo + suco",
+  "jantar": "Carne de panela com batata + macarrão com molho branco + Milho refogado com cebola + Lentilha, cenoura e cheiro-verde – molho de vinagrete"
+ },
+ "11": {
+  "cafe da manha": "Vitamina de banana com aveia + torrada com requeijão",
+  "almoco": "arroz + Quibe assado + feijão preto + Legumes assados no forno (batata, cenoura, cebola) + Quinoa, pepino e tomate – molho de limão siciliano",
+  "cafe da tarde": "Vitamina de banana com aveia + torrada com requeijão",
+  "jantar": "arroz + Quibe assado + feijão preto + Legumes assados no forno (batata, cenoura, cebola) + Quinoa, pepino e tomate – molho de limão siciliano"
+ },
+ "12": {
+  "cafe da manha": "Tapioca com frango desfiado + suco",
+  "almoco": "arroz + feijão+ Frango acebolado + Abóbora assada com alho + Alface e milho – molho caesar light",
+  "cafe da tarde": "Tapioca com frango desfiado + suco",
+  "jantar": "arroz + feijão+ Frango acebolado + Abóbora assada com alho + Alface e milho – molho caesar light"
+ },
+ "13": {
+  "cafe da manha": "Pão sírio + queijo + iogurte",
+  "almoco": "arroz + feijão + Strogonoff de carne + Batata-doce assada em palitos + Alface, atum e cebola – molho de limão e azeite",
+  "cafe da tarde": "Pão sírio + queijo + iogurte",
+  "jantar": "arroz + feijão + Strogonoff de carne + Batata-doce assada em palitos + Alface, atum e cebola – molho de limão e azeite"
+ },
+ "14": {
+  "cafe da manha": "Ovos mexidos + batata doce + leite com toddy",
+  "almoco": "arroz + feijão + Panqueca de carne + Abobrinha assada com queijo + Espinafre, ovo cozido e tomate – molho de mostarda",
+  "cafe da tarde": "Ovos mexidos + batata doce + leite com toddy",
+  "jantar": "arroz + feijão + Panqueca de carne + Abobrinha assada com queijo + Espinafre, ovo cozido e tomate – molho de mostarda"
+ },
+ "15": {
+  "cafe da manha": "Waffle + mel + frutas",
+  "almoco": "Frango cozido com batata + macarrão alho e óleo  + Couve-flor assada com páprica + Couve crua, laranja e castanha – molho cítrico",
+  "cafe da tarde": "Waffle + mel + frutas",
+  "jantar": "Frango cozido com batata + macarrão alho e óleo  + Couve-flor assada com páprica + Couve crua, laranja e castanha – molho cítrico"
+ },
+ "16": {
+  "cafe da manha": "Pão francês + requeijão + achocolatado",
+  "almoco": "arroz + feijão + Bife à parmegiana + Tomate cereja assado com orégano + Repolho branco, pepino e gergelim – molho oriental (shoyu)",
+  "cafe da tarde": "Pão francês + requeijão + achocolatado",
+  "jantar": "arroz + feijão + Bife à parmegiana + Tomate cereja assado com orégano + Repolho branco, pepino e gergelim – molho oriental (shoyu)"
+ },
+ "17": {
+  "cafe da manha": "Cuscuz + queijo coalho + suco",
+  "almoco": "arroz + feijão Torta salgada de carne + Pimentão assado com cebola + Alface, manga  – molho de mostarda e mel",
+  "cafe da tarde": "Cuscuz + queijo coalho + suco",
+  "jantar": "arroz + feijão Torta salgada de carne + Pimentão assado com cebola + Alface, manga  – molho de mostarda e mel"
+ },
+ "18": {
+  "cafe da manha": "Panqueca americana + frutas",
+  "almoco": "arroz + feijão + Fricassê de frango + Purê de batata com cenoura + Rúcula, tomate cereja e muçarela – molho pesto",
+  "cafe da tarde": "Panqueca americana + frutas",
+  "jantar": "arroz + feijão + Fricassê de frango + Purê de batata com cenoura + Rúcula, tomate cereja e muçarela – molho pesto"
+ },
+ "19": {
+  "cafe da manha": "Torrada + geleia + iogurte",
+  "almoco": "arroz + Carne desfiada na pressão + feijão preto + Creme de abóbora + Tomate, cebola e pepino – vinagrete tradicional",
+  "cafe da tarde": "Torrada + geleia + iogurte",
+  "jantar": "arroz + Carne desfiada na pressão + feijão preto + Creme de abóbora + Tomate, cebola e pepino – vinagrete tradicional"
+ },
+ "20": {
+  "cafe da manha": "Tapioca com ovo + fruta",
+  "almoco": "Rocambole de carne moída + macarrão com molho pesto + Cenoura cozida com manteiga + Caprese (tomate, muçarela e manjericão) – azeite e balsâmico",
+  "cafe da tarde": "Tapioca com ovo + fruta",
+  "jantar": "Rocambole de carne moída + macarrão com molho pesto + Cenoura cozida com manteiga + Caprese (tomate, muçarela e manjericão) – azeite e balsâmico"
+ },
+ "21": {
+  "cafe da manha": "Pão de forma com queijo + leite com toddy",
+  "almoco": "arroz + feijão + Lasanha de frango + Abobrinha refogada com alho + Alface, abacate e tomate – molho de limão",
+  "cafe da tarde": "Pão de forma com queijo + leite com toddy",
+  "jantar": "arroz + feijão + Lasanha de frango + Abobrinha refogada com alho + Alface, abacate e tomate – molho de limão"
+ },
+ "22": {
+  "cafe da manha": "Sanduíche natural + suco",
+  "almoco": "arroz + feijão+ Iscas de carne com alho e manteiga + Chuchu refogado com cebola + Espinafre, morango e amêndoas – molho balsâmico",
+  "cafe da tarde": "Sanduíche natural + suco",
+  "jantar": "arroz + feijão+ Iscas de carne com alho e manteiga + Chuchu refogado com cebola + Espinafre, morango e amêndoas – molho balsâmico"
+ },
+ "23": {
+  "cafe da manha": "Crepioca de frango + suco",
+  "almoco": "arroz + feijão + Pastel de carne + Batata-doce cozida e amassada + Beterraba cozida e cebola roxa – molho de vinagre de maçã",
+  "cafe da tarde": "Crepioca de frango + suco",
+  "jantar": "arroz + feijão + Pastel de carne + Batata-doce cozida e amassada + Beterraba cozida e cebola roxa – molho de vinagre de maçã"
+ },
+ "24": {
+  "cafe da manha": "Pão caseiro + polenguinho + frutas",
+  "almoco": "arroz + feijão + Frango assado com batata + Abóbora cabotiá cozida com sal + Cenoura ralada e passas – molho de limão e mel",
+  "cafe da tarde": "Pão caseiro + polenguinho + frutas",
+  "jantar": "arroz + feijão + Frango assado com batata + Abóbora cabotiá cozida com sal + Cenoura ralada e passas – molho de limão e mel"
+ },
+ "25": {
+  "cafe da manha": "Pão de queijo + leite com chocolate",
+  "almoco": "Carne empanada + macarrão com molho de alho + Brócolis cozido com azeite + Pepino agridoce – molho de vinagre e açúcar",
+  "cafe da tarde": "Pão de queijo + leite com chocolate",
+  "jantar": "Carne empanada + macarrão com molho de alho + Brócolis cozido com azeite + Pepino agridoce – molho de vinagre e açúcar"
+ },
+ "26": {
+  "cafe da manha": "Pão frances + omelete de queijo",
+  "almoco": "Hambúrguer caseiro + Alface, tomate e pepino – molho de azeite, limão e ervas",
+  "cafe da tarde": "Pão frances + omelete de queijo",
+  "jantar": "Hambúrguer caseiro + Alface, tomate e pepino – molho de azeite, limão e ervas"
+ },
+ "27": {
+  "cafe da manha": "Torrada + creamchese + leite com chocolate",
+  "almoco": "arroz + feijão + Frango com creme de milho  + Couve-flor cozida e temperada com limão + Alface, cenoura e beterraba – molho rosé light",
+  "cafe da tarde": "Torrada + creamchese + leite com chocolate",
+  "jantar": "arroz + feijão+ Frango com creme de milho  + Couve-flor cozida e temperada com limão + Alface, cenoura e beterraba – molho rosé light"
+ },
+ "28": {
+  "cafe da manha": "Pão de forma+ ovo frito + leite com toddy",
+  "almoco": "arroz + feijão + Carne com creme de cebola + feijão preto + Beterraba cozida em cubos + Rúcula, abacate e tomate – molho de limão siciliano",
+  "cafe da tarde": "Pão de forma+ ovo frito + leite com toddy",
+  "jantar": "arroz + feijão+ Carne com creme de cebola + feijão preto + Beterraba cozida em cubos + Rúcula, abacate e tomate – molho de limão siciliano"
+ },
+ "29": {
+  "cafe da manha": "Sanduíche de patê de atum + suco",
+  "almoco": "arroz + feijão + Panqueca de frango + Milho refogado com cebola + Repolho roxo e abacaxi – molho agridoce",
+  "cafe da tarde": "Sanduíche de patê de atum + suco"
+ },
+ "30": {
+  "cafe da manha": "Ovos mexidos + pão sírio",
+  "almoco": "Carne com molho de mostarda + macarrão vermelho + Tomate cereja assado com orégano + Alface, manga e abacate – molho cítrico",
+  "cafe da tarde": "Ovos mexidos + pão sírio",
+  "jantar": "Carne com molho de mostarda + macarrão vermelho + Tomate cereja assado com orégano + Alface, manga e abacate – molho cítrico"
+ },
+ "31": {
+  "cafe da manha": "Cuscuz com manteiga + suco",
+  "almoco": "arroz + feijão + Empadão de frango + Legumes assados no forno (batata, cenoura, cebola) + Tomate assado e ricota – molho de ervas",
+  "cafe da tarde": "Cuscuz com manteiga + suco",
+  "jantar": "arroz + feijao + Empadão de frango + Legumes assados no forno (batata, cenoura, cebola) + Tomate assado e ricota – molho de ervas"
+ },
+ "32": {
+  "cafe da manha": "Torrada + queijo + fruta",
+  "almoco": "arroz + feijao + Carne oriental (estilo yakisoba) + Abóbora assada com alho + Cenoura, pepino e gergelim – molho oriental",
+  "cafe da tarde": "Torrada + queijo + fruta",
+  "jantar": "arroz + feijão +Carne oriental (estilo yakisoba) + Abóbora assada com alho + Cenoura, pepino e gergelim – molho oriental"
+ },
+ "33": {
+  "cafe da manha": "Pão francês na chapa + fruta + leite com toddy",
+  "almoco": "arroz + feijão + Frango com mostarda e mel + Batata-doce assada em palitos + Alface, e croutons – molho caesar",
+  "cafe da tarde": "Pão francês na chapa + fruta + leite com toddy",
+  "jantar": "arroz + feijão Frango com mostarda e mel + Batata-doce assada em palitos + Alface, e croutons – molho caesar"
+ }
+}

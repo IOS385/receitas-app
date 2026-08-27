@@ -13,6 +13,8 @@ import 'package:refeicoes_app/data/semente.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
 import 'package:refeicoes_app/presentation/mercado/mercado_provider.dart';
 
+import 'util_teste.dart';
+
 String lerDoDisco(String nome) =>
     File('assets/semente/$nome').readAsStringSync();
 
@@ -30,18 +32,21 @@ void main() {
   test('carrega a semente inteira', () async {
     await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
 
-    expect(await db.select(db.alimentos).get(), hasLength(40));
-    expect(await db.select(db.receitas).get(), hasLength(24));
-    expect(await db.select(db.combos).get(), hasLength(8));
-    expect(await db.select(db.cicloItens).get(), hasLength(8));
+    expect(await db.select(db.alimentos).get(), hasLength(quantosNaSemente('alimentos.json')));
+    expect(await db.select(db.receitas).get(), hasLength(quantosNaSemente('receitas.json')));
+    expect(await db.select(db.combos).get(),
+        hasLength(quantosNaSemente('combos.json')));
+    expect(await db.select(db.cicloItens).get(),
+        hasLength(quantosNaSemente('ciclo.json')));
   });
 
   test('carregar duas vezes nao duplica', () async {
     await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
     await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
 
-    expect(await db.select(db.alimentos).get(), hasLength(40));
-    expect(await db.select(db.combos).get(), hasLength(8));
+    expect(await db.select(db.alimentos).get(), hasLength(quantosNaSemente('alimentos.json')));
+    expect(await db.select(db.combos).get(),
+        hasLength(quantosNaSemente('combos.json')));
   });
 
   test('grava as regras de porcao padrao', () async {
@@ -71,7 +76,7 @@ void main() {
         .map((e) => (e as Map<String, dynamic>)['posicao'] as int)
         .reduce((a, b) => a > b ? a : b);
     expect(mapa['tamanho_ciclo'], '$maiorPosicao');
-    expect(mapa['tamanho_ciclo'], '4',
+    expect(mapa['tamanho_ciclo'], '${tamanhoDoCiclo()}',
         reason: 'a semente desta fase cadastra 4 dias de ciclo');
   });
 
@@ -86,6 +91,94 @@ void main() {
     for (var i = 0; i <= tamanho; i++) {
       final d = DataPura.de(DateTime.utc(2026, 9, 1).add(Duration(days: i)));
       await repo.dia(d); // nao pode estourar em nenhum dia do ciclo + 1
+    }
+  });
+
+  test('todo dia do ciclo resolve com nutricao real, nao zero calado',
+      () async {
+    // O teste que os 33 dias de conteudo novo pediam. Percorre o ciclo inteiro
+    // nos dois slots e cobra tres coisas de cada refeicao:
+    //
+    // 1. resolve sem estourar (buraco no ciclo ou combo sem receita)
+    // 2. tem componente (combo vazio passaria calado)
+    // 3. tem caloria acima de zero — conversao de unidade faltando devolve
+    //    zero em SILENCIO, e ja houve um bug exatamente assim no painel de
+    //    macros. Zero e o valor mais perigoso deste app: parece dado.
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+    final config = RepoConfig(db);
+    await config.definir('data_inicio_ciclo', '2026-09-01');
+    final repo = RepoPlano(db, config);
+    final tamanho = await config.tamanhoCiclo();
+
+    final magras = <String>[];
+    for (var i = 0; i < tamanho; i++) {
+      final data =
+          DataPura.de(DateTime.utc(2026, 9, 1).add(Duration(days: i)));
+      final dia = await repo.dia(data);
+
+      expect(dia.refeicoes, hasLength(4),
+          reason: 'dia ${data.iso} (posicao ${dia.posicao}) sem os 4 horarios');
+
+      for (final r in dia.refeicoes) {
+        expect(r.componentes, isNotEmpty,
+            reason: 'posicao ${dia.posicao} ${r.slot.name} sem componente');
+        if (r.nutrientes.kcal <= 0) {
+          magras.add('posicao ${dia.posicao} ${r.slot.name} '
+              '("${r.comboNome}") deu ${r.nutrientes.kcal} kcal');
+        }
+        for (final c in r.componentes) {
+          if (c.nutrientes.kcal <= 0) {
+            magras.add('posicao ${dia.posicao} ${r.slot.name}: componente '
+                '"${c.nome}" deu 0 kcal');
+          }
+        }
+      }
+    }
+    expect(magras, isEmpty,
+        reason: 'kcal zero quase sempre e conversao de unidade faltando, e '
+            'nao comida sem caloria. ${magras.join(" | ")}');
+  });
+
+  test('nenhum alimento entra com nutricao zerada', () async {
+    // Complementa o teste de kcal por refeicao, que tem um buraco: um
+    // ingrediente zerado dentro de um prato calorico passa calado. Mutar o
+    // macarrao para 0 kcal NAO reprovava o outro teste — a carne do mesmo
+    // prato escondia. Aqui a checagem e por alimento, sem onde se esconder.
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+
+    // Sal e tempero: zero caloria e o valor certo dele, nao dado faltando.
+    const zeroLegitimo = {'Sal'};
+
+    final zerados = (await db.select(db.alimentos).get())
+        .where((a) => a.kcal100g <= 0 && !zeroLegitimo.contains(a.nome))
+        .map((a) => a.nome)
+        .toList();
+
+    expect(zerados, isEmpty,
+        reason: 'kcal 100g igual a zero quase sempre e valor TACO nao '
+            'preenchido, e o app mostra o zero como se fosse dado: '
+            '${zerados.join(", ")}');
+  });
+
+  test('todo combo aponta receitas que existem e estao ativas', () async {
+    await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
+
+    final receitas = {for (final r in await db.select(db.receitas).get()) r.id: r};
+    final ligacoes = await db.select(db.comboReceitas).get();
+    final combos = await db.select(db.combos).get();
+
+    final porCombo = <int, int>{};
+    for (final l in ligacoes) {
+      porCombo[l.comboId] = (porCombo[l.comboId] ?? 0) + 1;
+      expect(receitas.containsKey(l.receitaId), isTrue,
+          reason: 'combo ${l.comboId} aponta receita ${l.receitaId} inexistente');
+      expect(receitas[l.receitaId]!.ativa, isTrue,
+          reason: 'combo ${l.comboId} aponta receita desativada');
+    }
+    for (final c in combos) {
+      expect(porCombo[c.id] ?? 0, greaterThan(1),
+          reason: 'combo "${c.nome}" tem ${porCombo[c.id] ?? 0} componente(s) — '
+              'refeicao dela nunca e uma coisa so');
     }
   });
 
@@ -115,7 +208,8 @@ void main() {
     expect(await config.ler('tamanho_ciclo'), isNull, reason: 'sanidade');
 
     final tamanho = await config.tamanhoCiclo();
-    expect(tamanho, 4, reason: 'derivado da maior posicao em ciclo_itens');
+    expect(tamanho, tamanhoDoCiclo(),
+        reason: 'derivado da maior posicao em ciclo_itens');
 
     final repo = RepoPlano(db, config);
     for (var i = 0; i <= tamanho; i++) {

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:drift/drift.dart';
@@ -18,8 +19,32 @@ import 'package:riverpod/misc.dart' show Override;
 String lerSementeDoDisco(String nome) =>
     File('assets/semente/$nome').readAsStringSync();
 
-/// Banco em memória já semeado, com o ciclo começando em 2026-09-01 e tamanho 4
-/// (a semente desta fase só tem 4 dias).
+List<dynamic> _semente(String nome) =>
+    jsonDecode(lerSementeDoDisco(nome)) as List<dynamic>;
+
+/// Quantas linhas o JSON da semente tem.
+///
+/// Teste que crava o numero ("40 alimentos", "24 receitas") apodrece na
+/// primeira mudanca de conteudo e obriga uma varredura de testes a cada
+/// mudanca de dado. O invariante que interessa e outro: **o banco espelha a
+/// semente**. Ao subir de 4 para 33 dias, 36 testes reprovaram so por isso.
+int quantosNaSemente(String arquivo) => _semente(arquivo).length;
+
+/// Tamanho do ciclo derivado do `ciclo.json` — a mesma derivacao que a
+/// producao faz. Nunca escreva o tamanho a mao num teste: foi exatamente isso
+/// que escondeu a aba Mercado nao abrindo.
+int tamanhoDoCiclo() => _semente('ciclo.json')
+    .map((e) => (e as Map<String, dynamic>)['posicao'] as int)
+    .reduce((a, b) => a > b ? a : b);
+
+/// Combo que a semente poe numa posicao e tipo do ciclo.
+int comboDaSemente(int posicao, String tipo) => _semente('ciclo.json')
+    .cast<Map<String, dynamic>>()
+    .firstWhere((e) => e['posicao'] == posicao && e['tipo'] == tipo)['combo']
+        as int;
+
+/// Banco em memória já semeado, com o ciclo começando em 2026-09-01. O tamanho
+/// vem da própria semente (4 nesta fase), nunca escrito à mão aqui.
 Future<AppDatabase> bancoDeTeste() async {
   final db = AppDatabase(DatabaseConnection(
     NativeDatabase.memory(),
@@ -28,7 +53,10 @@ Future<AppDatabase> bancoDeTeste() async {
   await carregarSemente(db, lerAsset: lerSementeDoDisco, versao: 1);
   final config = RepoConfig(db);
   await config.definir('data_inicio_ciclo', '2026-09-01');
-  await config.definir('tamanho_ciclo', '4');
+  // O tamanho NAO e definido aqui de proposito: quem o define e a semente,
+  // derivando da maior posicao do ciclo.json. Foi um harness que definia esse
+  // valor a mao que escondeu a aba Mercado nao abrindo — 244 testes verdes com
+  // 4 enquanto a producao rodava com 33.
   return db;
 }
 

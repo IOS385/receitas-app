@@ -10,6 +10,7 @@ import '../substituir/substituir_sheet.dart';
 import '../tema/cores.dart';
 import '../tema/respingo.dart';
 import '../widgets/cartao_esmalte.dart';
+import '../widgets/foto_prato.dart';
 import 'hoje_provider.dart';
 
 class HojeScreen extends ConsumerWidget {
@@ -173,6 +174,8 @@ class BlocoRefeicao extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          FotoPrato(caminho: refeicao.comboFoto, apagado: espelhado),
+          if (refeicao.comboFoto != null) const SizedBox(height: 11),
           Row(
             children: [
               Expanded(

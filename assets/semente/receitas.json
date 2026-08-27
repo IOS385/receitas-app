@@ -1,183 +1,4539 @@
 [
-  {"id": 1, "nome": "Arroz branco", "categoria": "base", "rende": 1, "tempo": 20,
-   "preparo": "Refogue o alho no azeite ate dourar.\nJunte o arroz e mexa por um minuto.\nAcrescente agua fervente, tempere com sal e cozinhe tampado ate secar.",
-   "ingredientes": [
-     {"alimento": 1, "quantidade": 120, "unidade": "g"},
-     {"alimento": 8, "quantidade": 1, "unidade": "dente"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 2, "nome": "Feijao carioca", "categoria": "leguminosa", "rende": 1, "tempo": 40,
-   "preparo": "Cozinhe o feijao na pressao por 25 minutos.\nRefogue alho e cebola no azeite.\nJunte o feijao cozido e apure por 10 minutos.",
-   "ingredientes": [
-     {"alimento": 2, "quantidade": 90, "unidade": "g"},
-     {"alimento": 8, "quantidade": 1, "unidade": "dente"},
-     {"alimento": 7, "quantidade": 30, "unidade": "g"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 3, "nome": "Picadinho de carne com legumes", "categoria": "proteina", "rende": 1, "tempo": 35,
-   "preparo": "Tempere a carne com sal e alho e deixe descansar 10 minutos.\nAqueca o azeite e sele a carne em fogo alto ate dourar por fora.\nJunte a cebola, refogue ate ficar transparente e acrescente o extrato.\nAdicione cenoura, batata e agua ate cobrir. Tampe.\nCozinhe 20 minutos em fogo baixo, ate os legumes ficarem macios.",
-   "ingredientes": [
-     {"alimento": 3, "quantidade": 150, "unidade": "g"},
-     {"alimento": 4, "quantidade": 60, "unidade": "g"},
-     {"alimento": 5, "quantidade": 70, "unidade": "g"},
-     {"alimento": 7, "quantidade": 40, "unidade": "g", "observacao": "picada"},
-     {"alimento": 8, "quantidade": 1, "unidade": "dente"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 10, "quantidade": 15, "unidade": "g"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 4, "nome": "Batata-doce cozida e amassada", "categoria": "vegetal", "rende": 1, "tempo": 25,
-   "preparo": "Cozinhe a batata-doce em agua e sal ate ficar macia.\nEscorra e amasse ainda quente com a manteiga.",
-   "ingredientes": [
-     {"alimento": 6, "quantidade": 110, "unidade": "g"},
-     {"alimento": 21, "quantidade": 1, "unidade": "colherCha"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 5, "nome": "Alface americana e pepino com molho de mostarda e mel", "categoria": "salada", "rende": 1, "tempo": 8,
-   "preparo": "Lave e rasgue a alface, fatie o pepino.\nMisture mostarda, mel, azeite e limao ate emulsionar.\nRegue na hora de servir.",
-   "ingredientes": [
-     {"alimento": 12, "quantidade": 5, "unidade": "folha"},
-     {"alimento": 13, "quantidade": 40, "unidade": "g"},
-     {"alimento": 18, "quantidade": 1, "unidade": "colherCha"},
-     {"alimento": 19, "quantidade": 1, "unidade": "colherCha"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 33, "quantidade": 10, "unidade": "g"}
-   ]},
-  {"id": 6, "nome": "Tapioca com queijo coalho", "categoria": "base", "rende": 1, "tempo": 10,
-   "preparo": "Peneire a goma na frigideira quente ate formar o disco.\nDistribua o queijo, dobre e doure dos dois lados.",
-   "ingredientes": [
-     {"alimento": 14, "quantidade": 3, "unidade": "colherSopa"},
-     {"alimento": 15, "quantidade": 1, "unidade": "fatia"}
-   ]},
-  {"id": 7, "nome": "Mamao", "categoria": "fruta", "rende": 1, "tempo": 3,
-   "preparo": "Corte em fatias e sirva gelado.",
-   "ingredientes": [{"alimento": 16, "quantidade": 150, "unidade": "g"}]},
-  {"id": 8, "nome": "Suco de uva", "categoria": "bebida", "rende": 1, "tempo": 2,
-   "preparo": "Sirva gelado.",
-   "ingredientes": [{"alimento": 17, "quantidade": 200, "unidade": "ml"}]},
-  {"id": 9, "nome": "Pao frances com manteiga", "categoria": "pao", "rende": 1, "tempo": 5,
-   "preparo": "Corte o pao ao meio e passe a manteiga.\nLeve a chapa quente ate dourar.",
-   "ingredientes": [
-     {"alimento": 20, "quantidade": 1, "unidade": "unidade"},
-     {"alimento": 21, "quantidade": 1, "unidade": "colherCha"}
-   ]},
-  {"id": 10, "nome": "Leite com achocolatado", "categoria": "bebida", "rende": 1, "tempo": 3,
-   "preparo": "Aqueca o leite e dissolva o achocolatado.",
-   "ingredientes": [
-     {"alimento": 22, "quantidade": 200, "unidade": "ml"},
-     {"alimento": 23, "quantidade": 2, "unidade": "colherSopa"}
-   ]},
-  {"id": 11, "nome": "Banana", "categoria": "fruta", "rende": 1, "tempo": 1,
-   "preparo": "Descasque e sirva.",
-   "ingredientes": [{"alimento": 24, "quantidade": 1, "unidade": "unidade"}]},
-  {"id": 12, "nome": "Bife acebolado", "categoria": "proteina", "rende": 1, "tempo": 20,
-   "preparo": "Tempere o bife com sal e alho.\nSele em frigideira bem quente, dois minutos de cada lado.\nRetire a carne, doure a cebola na mesma frigideira e devolva o bife.",
-   "ingredientes": [
-     {"alimento": 3, "quantidade": 150, "unidade": "g"},
-     {"alimento": 7, "quantidade": 60, "unidade": "g"},
-     {"alimento": 8, "quantidade": 1, "unidade": "dente"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 13, "nome": "Cenoura cozida com manteiga", "categoria": "vegetal", "rende": 1, "tempo": 15,
-   "preparo": "Cozinhe a cenoura em rodelas ate ficar macia.\nEscorra e salteie na manteiga com sal.",
-   "ingredientes": [
-     {"alimento": 4, "quantidade": 100, "unidade": "g"},
-     {"alimento": 21, "quantidade": 1, "unidade": "colherCha"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 14, "nome": "Alface, tomate e cebola roxa com molho de azeite e limao", "categoria": "salada", "rende": 1, "tempo": 8,
-   "preparo": "Rasgue a alface e fatie tomate e cebola.\nTempere com azeite, limao e sal na hora de servir.",
-   "ingredientes": [
-     {"alimento": 12, "quantidade": 5, "unidade": "folha"},
-     {"alimento": 38, "quantidade": 60, "unidade": "g"},
-     {"alimento": 7, "quantidade": 30, "unidade": "g"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 33, "quantidade": 10, "unidade": "g"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 15, "nome": "Pao de forma com ovo mexido", "categoria": "pao", "rende": 1, "tempo": 10,
-   "preparo": "Bata os ovos com sal.\nMexa em fogo baixo com um fio de azeite ate firmar.\nSirva sobre o pao torrado.",
-   "ingredientes": [
-     {"alimento": 26, "quantidade": 2, "unidade": "fatia"},
-     {"alimento": 25, "quantidade": 2, "unidade": "unidade"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherCha"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 16, "nome": "Suco de laranja", "categoria": "bebida", "rende": 1, "tempo": 5,
-   "preparo": "Esprema as laranjas e sirva na hora.",
-   "ingredientes": [{"alimento": 27, "quantidade": 2, "unidade": "unidade"}]},
-  {"id": 17, "nome": "Carne moida refogada tradicional", "categoria": "proteina", "rende": 1, "tempo": 25,
-   "preparo": "Refogue alho e cebola no azeite.\nJunte a carne moida e mexa ate perder a cor rosada.\nAcrescente o extrato, tempere e apure por 10 minutos.",
-   "ingredientes": [
-     {"alimento": 28, "quantidade": 150, "unidade": "g"},
-     {"alimento": 7, "quantidade": 40, "unidade": "g"},
-     {"alimento": 8, "quantidade": 1, "unidade": "dente"},
-     {"alimento": 10, "quantidade": 15, "unidade": "g"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 18, "nome": "Feijao preto", "categoria": "leguminosa", "rende": 1, "tempo": 45,
-   "preparo": "Cozinhe o feijao preto na pressao por 30 minutos.\nRefogue alho e cebola e junte o feijao.\nApure ate engrossar o caldo.",
-   "ingredientes": [
-     {"alimento": 29, "quantidade": 90, "unidade": "g"},
-     {"alimento": 8, "quantidade": 1, "unidade": "dente"},
-     {"alimento": 7, "quantidade": 30, "unidade": "g"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 19, "nome": "Abobrinha refogada com alho", "categoria": "vegetal", "rende": 1, "tempo": 15,
-   "preparo": "Doure o alho no azeite.\nJunte a abobrinha em meia-lua e refogue ate ficar macia sem desmanchar.",
-   "ingredientes": [
-     {"alimento": 30, "quantidade": 120, "unidade": "g"},
-     {"alimento": 8, "quantidade": 1, "unidade": "dente"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 20, "nome": "Alface, cenoura ralada e milho com molho de iogurte", "categoria": "salada", "rende": 1, "tempo": 8,
-   "preparo": "Misture alface, cenoura ralada e milho escorrido.\nBata o iogurte com limao e sal e regue na hora.",
-   "ingredientes": [
-     {"alimento": 12, "quantidade": 5, "unidade": "folha"},
-     {"alimento": 4, "quantidade": 40, "unidade": "g", "observacao": "ralada"},
-     {"alimento": 31, "quantidade": 40, "unidade": "g"},
-     {"alimento": 32, "quantidade": 40, "unidade": "g"},
-     {"alimento": 33, "quantidade": 10, "unidade": "g"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 21, "nome": "Cuscuz com ovo cozido", "categoria": "base", "rende": 1, "tempo": 15,
-   "preparo": "Hidrate o cuscuz com agua e sal e deixe descansar 10 minutos.\nCozinhe no vapor por 8 minutos.\nSirva com o ovo cozido em rodelas e um fio de azeite.",
-   "ingredientes": [
-     {"alimento": 34, "quantidade": 80, "unidade": "g"},
-     {"alimento": 25, "quantidade": 1, "unidade": "unidade"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherCha"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 22, "nome": "Frango grelhado simples", "categoria": "proteina", "rende": 1, "tempo": 22,
-   "preparo": "Tempere o file com sal, alho e limao e deixe 15 minutos.\nGrelhe em fogo medio, cinco minutos de cada lado.",
-   "ingredientes": [
-     {"alimento": 35, "quantidade": 150, "unidade": "g"},
-     {"alimento": 8, "quantidade": 1, "unidade": "dente"},
-     {"alimento": 33, "quantidade": 10, "unidade": "g"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 23, "nome": "Chuchu refogado com cebola", "categoria": "vegetal", "rende": 1, "tempo": 18,
-   "preparo": "Refogue a cebola no azeite.\nJunte o chuchu em cubos, tampe e cozinhe no proprio vapor ate ficar macio.",
-   "ingredientes": [
-     {"alimento": 36, "quantidade": 130, "unidade": "g"},
-     {"alimento": 7, "quantidade": 40, "unidade": "g"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 11, "quantidade": 1, "unidade": "aGosto"}
-   ]},
-  {"id": 24, "nome": "Rucula, tomate-cereja e parmesao com molho balsamico", "categoria": "salada", "rende": 1, "tempo": 7,
-   "preparo": "Disponha a rucula e os tomates cortados ao meio.\nLasque o parmesao por cima e regue com azeite e balsamico.",
-   "ingredientes": [
-     {"alimento": 37, "quantidade": 50, "unidade": "g"},
-     {"alimento": 38, "quantidade": 60, "unidade": "g"},
-     {"alimento": 39, "quantidade": 2, "unidade": "colherSopa"},
-     {"alimento": 9, "quantidade": 1, "unidade": "colherSopa"},
-     {"alimento": 40, "quantidade": 1, "unidade": "colherSopa"}
-   ]}
+  {
+    "id": 1,
+    "nome": "Arroz branco",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 20,
+    "preparo": "Refogue o alho no azeite ate dourar.\nJunte o arroz e mexa por um minuto.\nAcrescente agua fervente, tempere com sal e cozinhe tampado ate secar.",
+    "ingredientes": [
+      {
+        "alimento": 1,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nome": "Feijao carioca",
+    "categoria": "leguminosa",
+    "rende": 1,
+    "tempo": 40,
+    "preparo": "Cozinhe o feijao na pressao por 25 minutos.\nRefogue alho e cebola no azeite.\nJunte o feijao cozido e apure por 10 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 2,
+        "quantidade": 90,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nome": "Picadinho de carne com legumes",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 35,
+    "preparo": "Tempere a carne com sal e alho e deixe descansar 10 minutos.\nAqueca o azeite e sele a carne em fogo alto ate dourar por fora.\nJunte a cebola, refogue ate ficar transparente e acrescente o extrato.\nAdicione cenoura, batata e agua ate cobrir. Tampe.\nCozinhe 20 minutos em fogo baixo, ate os legumes ficarem macios.",
+    "ingredientes": [
+      {
+        "alimento": 3,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 5,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g",
+        "observacao": "picada"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 10,
+        "quantidade": 15,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "nome": "Batata-doce cozida e amassada",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Cozinhe a batata-doce em agua e sal ate ficar macia.\nEscorra e amasse ainda quente com a manteiga.",
+    "ingredientes": [
+      {
+        "alimento": 6,
+        "quantidade": 110,
+        "unidade": "g"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "nome": "Alface americana e pepino com molho de mostarda e mel",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 8,
+    "preparo": "Lave e rasgue a alface, fatie o pepino.\nMisture mostarda, mel, azeite e limao ate emulsionar.\nRegue na hora de servir.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 5,
+        "unidade": "folha"
+      },
+      {
+        "alimento": 13,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 18,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 19,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 10,
+        "unidade": "g"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "nome": "Tapioca com queijo coalho",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Peneire a goma na frigideira quente ate formar o disco.\nDistribua o queijo, dobre e doure dos dois lados.",
+    "ingredientes": [
+      {
+        "alimento": 14,
+        "quantidade": 3,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 15,
+        "quantidade": 1,
+        "unidade": "fatia"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "nome": "Mamao",
+    "categoria": "fruta",
+    "rende": 1,
+    "tempo": 3,
+    "preparo": "Corte em fatias e sirva gelado.",
+    "ingredientes": [
+      {
+        "alimento": 16,
+        "quantidade": 150,
+        "unidade": "g"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "nome": "Suco de uva",
+    "categoria": "bebida",
+    "rende": 1,
+    "tempo": 2,
+    "preparo": "Sirva gelado.",
+    "ingredientes": [
+      {
+        "alimento": 17,
+        "quantidade": 200,
+        "unidade": "ml"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "nome": "Pao frances com manteiga",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Corte o pao ao meio e passe a manteiga.\nLeve a chapa quente ate dourar.",
+    "ingredientes": [
+      {
+        "alimento": 20,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "nome": "Leite com achocolatado",
+    "categoria": "bebida",
+    "rende": 1,
+    "tempo": 3,
+    "preparo": "Aqueca o leite e dissolva o achocolatado.",
+    "ingredientes": [
+      {
+        "alimento": 22,
+        "quantidade": 200,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 23,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "nome": "Banana",
+    "categoria": "fruta",
+    "rende": 1,
+    "tempo": 1,
+    "preparo": "Descasque e sirva.",
+    "ingredientes": [
+      {
+        "alimento": 24,
+        "quantidade": 1,
+        "unidade": "unidade"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "nome": "Bife acebolado",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 20,
+    "preparo": "Tempere o bife com sal e alho.\nSele em frigideira bem quente, dois minutos de cada lado.\nRetire a carne, doure a cebola na mesma frigideira e devolva o bife.",
+    "ingredientes": [
+      {
+        "alimento": 3,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "nome": "Cenoura cozida com manteiga",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Cozinhe a cenoura em rodelas ate ficar macia.\nEscorra e salteie na manteiga com sal.",
+    "ingredientes": [
+      {
+        "alimento": 4,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "nome": "Alface, tomate e cebola roxa com molho de azeite e limao",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 8,
+    "preparo": "Rasgue a alface e fatie tomate e cebola.\nTempere com azeite, limao e sal na hora de servir.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 5,
+        "unidade": "folha"
+      },
+      {
+        "alimento": 38,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 10,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "nome": "Pao de forma com ovo mexido",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Bata os ovos com sal.\nMexa em fogo baixo com um fio de azeite ate firmar.\nSirva sobre o pao torrado.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 2,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "nome": "Suco de laranja",
+    "categoria": "bebida",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Esprema as laranjas e sirva na hora.",
+    "ingredientes": [
+      {
+        "alimento": 27,
+        "quantidade": 2,
+        "unidade": "unidade"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "nome": "Carne moida refogada tradicional",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Refogue alho e cebola no azeite.\nJunte a carne moida e mexa ate perder a cor rosada.\nAcrescente o extrato, tempere e apure por 10 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 28,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 10,
+        "quantidade": 15,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "nome": "Feijao preto",
+    "categoria": "leguminosa",
+    "rende": 1,
+    "tempo": 45,
+    "preparo": "Cozinhe o feijao preto na pressao por 30 minutos.\nRefogue alho e cebola e junte o feijao.\nApure ate engrossar o caldo.",
+    "ingredientes": [
+      {
+        "alimento": 29,
+        "quantidade": 90,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "nome": "Abobrinha refogada com alho",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Doure o alho no azeite.\nJunte a abobrinha em meia-lua e refogue ate ficar macia sem desmanchar.",
+    "ingredientes": [
+      {
+        "alimento": 30,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "nome": "Alface, cenoura ralada e milho com molho de iogurte",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 8,
+    "preparo": "Misture alface, cenoura ralada e milho escorrido.\nBata o iogurte com limao e sal e regue na hora.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 5,
+        "unidade": "folha"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 40,
+        "unidade": "g",
+        "observacao": "ralada"
+      },
+      {
+        "alimento": 31,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 32,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 10,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "nome": "Cuscuz com ovo cozido",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Hidrate o cuscuz com agua e sal e deixe descansar 10 minutos.\nCozinhe no vapor por 8 minutos.\nSirva com o ovo cozido em rodelas e um fio de azeite.",
+    "ingredientes": [
+      {
+        "alimento": 34,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "nome": "Frango grelhado simples",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 22,
+    "preparo": "Tempere o file com sal, alho e limao e deixe 15 minutos.\nGrelhe em fogo medio, cinco minutos de cada lado.",
+    "ingredientes": [
+      {
+        "alimento": 35,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 10,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "nome": "Chuchu refogado com cebola",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 18,
+    "preparo": "Refogue a cebola no azeite.\nJunte o chuchu em cubos, tampe e cozinhe no proprio vapor ate ficar macio.",
+    "ingredientes": [
+      {
+        "alimento": 36,
+        "quantidade": 130,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "nome": "Rucula, tomate-cereja e parmesao com molho balsamico",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 7,
+    "preparo": "Disponha a rucula e os tomates cortados ao meio.\nLasque o parmesao por cima e regue com azeite e balsamico.",
+    "ingredientes": [
+      {
+        "alimento": 37,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 38,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 39,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 40,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "nome": "Pao frances",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 2,
+    "preparo": "Corte o pao ao meio.\nSirva ainda morno.",
+    "ingredientes": [
+      {
+        "alimento": 20,
+        "quantidade": 1,
+        "unidade": "unidade"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "nome": "Pao frances na chapa",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 6,
+    "preparo": "Corte o pao ao meio e passe manteiga nas duas faces.\nAqueca a frigideira e prense o pao com a face da manteiga para baixo.\nTire quando estiver dourado e crocante.",
+    "ingredientes": [
+      {
+        "alimento": 20,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "nome": "Pao frances com requeijao",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 3,
+    "preparo": "Corte o pao ao meio.\nEspalhe o requeijao ainda com o pao morno.",
+    "ingredientes": [
+      {
+        "alimento": 20,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 70,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "nome": "Pao de forma",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 1,
+    "preparo": "Sirva as fatias como estao, ou passe rapidamente na chapa.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "nome": "Pao de forma com queijo",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Monte o sanduiche com o queijo entre as fatias.\nAqueca na frigideira ou na sanduicheira ate o queijo derreter.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 30,
+        "unidade": "g"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "nome": "Pao caseiro",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 2,
+    "preparo": "Corte duas fatias generosas.\nSirva com o miolo ainda macio.",
+    "ingredientes": [
+      {
+        "alimento": 79,
+        "quantidade": 2,
+        "unidade": "fatia"
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "nome": "Pao caseiro com polenguinho",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 3,
+    "preparo": "Corte as fatias e espalhe o queijo cremoso enquanto o pao esta morno.",
+    "ingredientes": [
+      {
+        "alimento": 79,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 72,
+        "quantidade": 1,
+        "unidade": "unidade"
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "nome": "Pao sirio",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 3,
+    "preparo": "Aqueca o pao sirio rapidamente na frigideira seca, so para amaciar.\nCorte em triangulos.",
+    "ingredientes": [
+      {
+        "alimento": 77,
+        "quantidade": 1,
+        "unidade": "unidade"
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "nome": "Pao sirio com queijo",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 6,
+    "preparo": "Abra o pao sirio, ponha o queijo dentro.\nAqueca na frigideira dos dois lados ate derreter.",
+    "ingredientes": [
+      {
+        "alimento": 77,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 40,
+        "unidade": "g"
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "nome": "Pao de queijo",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Ponha os pes de queijo congelados em assadeira, sem untar.\nAsse em forno a 200 C por cerca de 25 minutos, ate crescerem e dourarem.\nSirva quentes — frio ele endurece.",
+    "ingredientes": [
+      {
+        "alimento": 78,
+        "quantidade": 100,
+        "unidade": "g"
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "nome": "Torrada",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 4,
+    "preparo": "Torre as fatias na frigideira seca ou na torradeira, ate ficarem firmes.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "nome": "Torrada com requeijao",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Torre as fatias.\nEspalhe o requeijao com a torrada ainda quente.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 70,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "nome": "Torrada com cream cheese",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Torre as fatias e deixe amornar um pouco.\nEspalhe o cream cheese — em torrada muito quente ele escorre.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 71,
+        "quantidade": 30,
+        "unidade": "g"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "nome": "Torrada com geleia",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Torre as fatias.\nEspalhe a geleia por cima.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 102,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "nome": "Torrada com queijo",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 6,
+    "preparo": "Torre as fatias.\nPonha o queijo por cima e volte ao fogo baixo, tampado, so ate derreter.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 30,
+        "unidade": "g"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "nome": "Torrada com abacate",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 6,
+    "preparo": "Torre as fatias.\nAmasse o abacate com o garfo, tempere com sal e limao, e espalhe.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 42,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "nome": "Cuscuz com manteiga",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Umedeca o flocao com agua e sal e deixe descansar 10 minutos.\nCozinhe na cuscuzeira por 8 minutos.\nSolte com o garfo e ponha a manteiga ainda quente.",
+    "ingredientes": [
+      {
+        "alimento": 34,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "nome": "Cuscuz com queijo coalho",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Umedeca o flocao com agua e sal e deixe descansar 10 minutos.\nCozinhe na cuscuzeira por 8 minutos.\nGrelhe o queijo coalho na frigideira e sirva sobre o cuscuz.",
+    "ingredientes": [
+      {
+        "alimento": 34,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 15,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "nome": "Tapioca com ovo",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 8,
+    "preparo": "Espalhe a goma na frigideira quente e deixe firmar.\nFrite o ovo mexido a parte, tempere com sal.\nPonha o ovo na tapioca e dobre.",
+    "ingredientes": [
+      {
+        "alimento": 14,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "nome": "Tapioca com frango desfiado",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Espalhe a goma na frigideira quente e deixe firmar.\nAqueca o frango ja cozido e desfiado com um fio de azeite.\nRecheie a tapioca e dobre.",
+    "ingredientes": [
+      {
+        "alimento": 14,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 65,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "nome": "Crepioca com queijo",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 8,
+    "preparo": "Bata o ovo com a goma e uma pitada de sal.\nDespeje na frigideira antiaderente quente e deixe firmar.\nPonha o queijo, dobre e espere derreter.",
+    "ingredientes": [
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 14,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "nome": "Crepioca de frango",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Bata o ovo com a goma e sal e faca a crepioca na frigideira.\nRecheie com o frango cozido e desfiado, temperado.\nDobre e sirva quente.",
+    "ingredientes": [
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 14,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 65,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "nome": "Panqueca de banana",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Amasse a banana e misture com o ovo e a aveia ate ficar homogeneo.\nFaca discos na frigideira antiaderente em fogo baixo.\nVire quando soltar sozinho da frigideira.",
+    "ingredientes": [
+      {
+        "alimento": 24,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 85,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "nome": "Panqueca americana",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Misture a farinha, o fermento, o acucar, o ovo e o leite ate ficar liso.\nFaca discos na frigideira untada, em fogo baixo.\nVire quando aparecerem bolhas na superficie.",
+    "ingredientes": [
+      {
+        "alimento": 83,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 80,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 95,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 104,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "nome": "Waffle com mel",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Misture farinha, fermento, ovo, leite e manteiga derretida.\nAsse na maquina de waffle ate dourar.\nRegue com mel na hora de servir.",
+    "ingredientes": [
+      {
+        "alimento": 83,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 80,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 104,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 19,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "nome": "Bolo de milho",
+    "categoria": "base",
+    "rende": 6,
+    "tempo": 45,
+    "preparo": "Bata no liquidificador o fuba, o leite, os ovos, o acucar e o oleo.\nJunte o fermento por ultimo, misturando devagar.\nAsse em forma untada a 180 C por cerca de 40 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 84,
+        "quantidade": 200,
+        "unidade": "g"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 200,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 3,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 95,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 80,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 104,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "nome": "Ovos mexidos",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 6,
+    "preparo": "Bata os ovos com sal.\nLeve a frigideira com um fio de azeite em fogo baixo.\nMexa devagar e desligue antes de secar — ovo mexido termina de cozinhar fora do fogo.",
+    "ingredientes": [
+      {
+        "alimento": 25,
+        "quantidade": 2,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "nome": "Ovo cozido",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Ponha o ovo em agua fria e leve ao fogo.\nConte 8 minutos depois que a agua ferver.\nPasse em agua fria antes de descascar.",
+    "ingredientes": [
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "nome": "Ovo frito",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Aqueca a frigideira com um fio de azeite.\nQuebre o ovo e tempere com sal.\nDeixe a clara firmar mantendo a gema mole.",
+    "ingredientes": [
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "nome": "Omelete simples",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 8,
+    "preparo": "Bata os ovos com sal e cheiro-verde picado.\nDespeje na frigideira quente e untada.\nQuando firmar embaixo, dobre ao meio e desligue.",
+    "ingredientes": [
+      {
+        "alimento": 25,
+        "quantidade": 2,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 56,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "nome": "Omelete de queijo",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 9,
+    "preparo": "Bata os ovos com sal.\nNa frigideira untada, deixe firmar embaixo e espalhe o queijo.\nDobre e espere o queijo derreter com o fogo desligado.",
+    "ingredientes": [
+      {
+        "alimento": 25,
+        "quantidade": 2,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "nome": "Sanduiche natural",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Misture o frango desfiado com requeijao, cenoura ralada e milho.\nTempere com sal e recheie as fatias de pao.\nEmbale apertado se for levar — o recheio assenta e corta melhor.",
+    "ingredientes": [
+      {
+        "alimento": 80,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 65,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 70,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 31,
+        "quantidade": 20,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "nome": "Sanduiche de pate de atum",
+    "categoria": "pao",
+    "rende": 1,
+    "tempo": 8,
+    "preparo": "Escorra bem o atum e amasse com o garfo.\nMisture com maionese, cebola picada miuda e limao.\nRecheie as fatias de pao.",
+    "ingredientes": [
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 68,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 109,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 20,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "pitada"
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "nome": "Vitamina de banana com aveia",
+    "categoria": "bebida",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Bata no liquidificador a banana, o leite e a aveia.\nSirva na hora — a aveia engrossa se esperar.",
+    "ingredientes": [
+      {
+        "alimento": 24,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 200,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 85,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "nome": "Suco natural",
+    "categoria": "bebida",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Bata a fruta com agua gelada e coe se preferir.\nAdoce so se precisar.",
+    "ingredientes": [
+      {
+        "alimento": 110,
+        "quantidade": 200,
+        "unidade": "ml"
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "nome": "Maca",
+    "categoria": "fruta",
+    "rende": 1,
+    "tempo": 1,
+    "preparo": "Lave bem e sirva inteira, ou em fatias com casca.",
+    "ingredientes": [
+      {
+        "alimento": 52,
+        "quantidade": 130,
+        "unidade": "g"
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "nome": "Fruta picada",
+    "categoria": "fruta",
+    "rende": 1,
+    "tempo": 5,
+    "preparo": "Corte as frutas em cubos e sirva geladas.\nUm fio de limao segura a cor da banana.",
+    "ingredientes": [
+      {
+        "alimento": 52,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 24,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "nome": "Iogurte natural",
+    "categoria": "bebida",
+    "rende": 1,
+    "tempo": 1,
+    "preparo": "Sirva gelado. Se quiser, um fio de mel por cima.",
+    "ingredientes": [
+      {
+        "alimento": 32,
+        "quantidade": 170,
+        "unidade": "g"
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "nome": "Carne com molho de alho",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 20,
+    "preparo": "Corte a carne em tiras e tempere com sal.\nSele em fogo alto, sem mexer, para dourar.\nBaixe o fogo, junte o alho fatiado e deixe perfumar sem queimar.",
+    "ingredientes": [
+      {
+        "alimento": 62,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 3,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "nome": "Almondegas no molho",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 35,
+    "preparo": "Misture a carne moida com ovo, farinha de rosca, cebola e sal.\nEnrole bolinhas e doure na frigideira.\nJunte o molho de tomate e cozinhe tampado por 15 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 28,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 103,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 90,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "nome": "Carne de panela com batata",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 70,
+    "preparo": "Sele a carne em cubos na panela de pressao, em fogo alto.\nJunte cebola, alho, sal e agua ate cobrir; cozinhe 25 minutos na pressao.\nAbra, ponha a batata em cubos e cozinhe mais 10 minutos sem pressao.",
+    "ingredientes": [
+      {
+        "alimento": 64,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 5,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "nome": "Quibe assado",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 50,
+    "preparo": "Hidrate o trigo em agua por 30 minutos e esprema bem.\nMisture com a carne moida, cebola, hortela e sal.\nEspalhe na assadeira, risque em losangos, regue com azeite e asse a 200 C por 35 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 89,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 28,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "nome": "Strogonoff de carne",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Sele a carne em tiras em fogo alto e reserve.\nRefogue cebola, junte o extrato de tomate e a mostarda.\nVolte a carne, desligue o fogo e so entao misture o creme de leite — fervendo, ele talha.",
+    "ingredientes": [
+      {
+        "alimento": 3,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 75,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 10,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 18,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "nome": "Panqueca de carne",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Bata a massa com farinha, leite, ovo e sal e faca os discos finos.\nRefogue a carne moida com cebola e extrato de tomate.\nRecheie, enrole e cubra com molho de tomate.",
+    "ingredientes": [
+      {
+        "alimento": 83,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 100,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 28,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 90,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "nome": "Bife a parmegiana",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Tempere o bife, passe na farinha, no ovo e na farinha de rosca.\nFrite em oleo quente ate dourar dos dois lados.\nCubra com molho de tomate e queijo e leve ao forno so ate gratinar.",
+    "ingredientes": [
+      {
+        "alimento": 3,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 103,
+        "quantidade": 3,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 83,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 90,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "nome": "Torta salgada de carne",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 55,
+    "preparo": "Refogue a carne moida com cebola, alho e extrato de tomate e deixe esfriar.\nBata no liquidificador leite, oleo, ovos, farinha e fermento.\nPonha metade da massa, o recheio, o resto da massa, e asse a 180 C por 40 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 28,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 83,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 100,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 104,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "nome": "Carne desfiada na pressao",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 50,
+    "preparo": "Sele a carne inteira na pressao com um fio de oleo.\nJunte cebola, alho, sal e agua pela metade; 30 minutos na pressao.\nDesfie com dois garfos ainda quente e volte ao caldo para pegar gosto.",
+    "ingredientes": [
+      {
+        "alimento": 63,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "nome": "Rocambole de carne moida",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 55,
+    "preparo": "Misture a carne moida com ovo, farinha de rosca e sal e abra num retangulo.\nDistribua o queijo, enrole com ajuda do papel e sele as pontas.\nAsse a 200 C por 40 minutos, regando com o proprio caldo.",
+    "ingredientes": [
+      {
+        "alimento": 28,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 103,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "nome": "Iscas de carne com alho e manteiga",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 18,
+    "preparo": "Corte a carne em iscas finas e seque com papel — carne umida cozinha em vez de dourar.\nSele em fogo alto na manteiga, em duas etapas para nao esfriar a panela.\nJunte o alho no fim e desligue.",
+    "ingredientes": [
+      {
+        "alimento": 62,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 3,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "nome": "Pastel de carne",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 35,
+    "preparo": "Refogue a carne moida com cebola, alho e sal, e deixe esfriar.\nRecheie os discos de massa e feche apertando com o garfo.\nFrite em oleo quente ate dourar, ou asse a 200 C por 20 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 28,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 83,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 3,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "nome": "Carne empanada",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Tempere a carne em bifes finos com sal e limao.\nPasse na farinha, no ovo batido e na farinha de rosca, apertando bem.\nFrite em oleo quente — oleo morno encharca o empanado.",
+    "ingredientes": [
+      {
+        "alimento": 3,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 103,
+        "quantidade": 3,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 83,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 3,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "nome": "Hamburguer caseiro",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 20,
+    "preparo": "Tempere a carne moida so com sal e modele o disco sem apertar demais.\nGrelhe em fogo alto 3 minutos de cada lado, prensando so na primeira virada.\nMonte no pao com o queijo por cima da carne quente.",
+    "ingredientes": [
+      {
+        "alimento": 67,
+        "quantidade": 130,
+        "unidade": "g"
+      },
+      {
+        "alimento": 26,
+        "quantidade": 2,
+        "unidade": "fatia"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "nome": "Carne com creme de cebola",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Sele a carne em cubos e reserve.\nDissolva o creme de cebola em agua morna e leve a panela com a carne.\nCozinhe tampado em fogo baixo ate engrossar.",
+    "ingredientes": [
+      {
+        "alimento": 3,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 105,
+        "quantidade": 20,
+        "unidade": "g"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "nome": "Carne com molho de mostarda",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Sele a carne em medalhoes e reserve.\nNa mesma panela, junte mostarda, creme de leite e um pouco de agua.\nVolte a carne e cozinhe em fogo baixo por 10 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 62,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 18,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 75,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "nome": "Carne oriental estilo yakisoba",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Corte a carne em tiras finas e marine no shoyu com alho por 15 minutos.\nSele em fogo bem alto, em pouca quantidade por vez.\nJunte cenoura e repolho em tiras e mexa so 2 minutos — o legume fica crocante.",
+    "ingredientes": [
+      {
+        "alimento": 62,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 92,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 48,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "nome": "Frango desfiado temperado",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 35,
+    "preparo": "Cozinhe o peito com sal, alho e cebola por 25 minutos.\nDesfie ainda quente.\nVolte a frigideira com um pouco do caldo e extrato de tomate.",
+    "ingredientes": [
+      {
+        "alimento": 65,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 10,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "nome": "Frango refogado com legumes",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Corte o frango em cubos e sele com alho.\nJunte batata e cenoura em cubos e agua ate a metade.\nCozinhe tampado ate o legume ficar macio e o caldo encorpar.",
+    "ingredientes": [
+      {
+        "alimento": 65,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 5,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "nome": "Frango acebolado",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 22,
+    "preparo": "Tempere o file com sal e limao e grelhe dos dois lados.\nRetire o frango e refogue a cebola em rodelas na mesma frigideira.\nDevolva o frango e cubra com a cebola.",
+    "ingredientes": [
+      {
+        "alimento": 35,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "nome": "Frango cozido com batata",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 40,
+    "preparo": "Doure as coxas com sal e alho.\nJunte agua e cozinhe tampado por 20 minutos.\nPonha a batata em cubos e cozinhe mais 15 minutos, destampado no fim para reduzir o caldo.",
+    "ingredientes": [
+      {
+        "alimento": 66,
+        "quantidade": 130,
+        "unidade": "g"
+      },
+      {
+        "alimento": 5,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 96,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "nome": "Fricasse de frango",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 35,
+    "preparo": "Refogue o frango desfiado com cebola e alho.\nMisture creme de leite, milho e requeijao e leve ao refratario.\nCubra com queijo e batata palha e gratine a 200 C por 15 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 65,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 75,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 31,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 70,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "nome": "Lasanha de frango",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 55,
+    "preparo": "Refogue o frango desfiado com molho de tomate.\nMonte camadas de massa, frango, requeijao e queijo.\nCubra com papel e asse a 180 C por 35 minutos; tire o papel nos ultimos 10 para dourar.",
+    "ingredientes": [
+      {
+        "alimento": 65,
+        "quantidade": 110,
+        "unidade": "g"
+      },
+      {
+        "alimento": 81,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 90,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 70,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "nome": "Frango assado com batata",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 55,
+    "preparo": "Tempere as coxas com sal, alho e limao e deixe 20 minutos.\nPonha na assadeira com a batata em cubos e regue com azeite.\nAsse a 200 C por 40 minutos, virando na metade.",
+    "ingredientes": [
+      {
+        "alimento": 66,
+        "quantidade": 130,
+        "unidade": "g"
+      },
+      {
+        "alimento": 5,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 3,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "nome": "Frango com creme de milho",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Sele o frango em cubos com alho e sal.\nBata metade do milho com o leite e junte a panela.\nPonha o resto do milho inteiro e cozinhe ate engrossar.",
+    "ingredientes": [
+      {
+        "alimento": 65,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 31,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 80,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "nome": "Panqueca de frango",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Faca os discos de massa com farinha, leite, ovo e sal.\nRecheie com frango desfiado refogado com requeijao.\nEnrole e cubra com molho de tomate.",
+    "ingredientes": [
+      {
+        "alimento": 83,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 100,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 65,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 70,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 90,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "nome": "Empadao de frango",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 60,
+    "preparo": "Faca a massa com farinha, manteiga, ovo e sal e leve a geladeira.\nRefogue o frango desfiado com cebola, milho e requeijao.\nForre a forma, recheie, cubra com massa e asse a 190 C por 40 minutos.",
+    "ingredientes": [
+      {
+        "alimento": 83,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 65,
+        "quantidade": 110,
+        "unidade": "g"
+      },
+      {
+        "alimento": 31,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 70,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "nome": "Frango com mostarda e mel",
+    "categoria": "proteina",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Tempere o file com sal e grelhe dos dois lados.\nMisture mostarda, mel e um pouco de agua e ponha na frigideira.\nDeixe reduzir virando o frango, ate o molho brilhar e agarrar na carne.",
+    "ingredientes": [
+      {
+        "alimento": 35,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 18,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 19,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "nome": "Macarrao a bolonhesa",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Refogue a carne moida com cebola e alho ate secar a agua.\nJunte o molho de tomate e cozinhe 15 minutos em fogo baixo.\nCozinhe a massa al dente e misture com o molho na propria panela.",
+    "ingredientes": [
+      {
+        "alimento": 82,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 28,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 90,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "nome": "Macarrao com molho branco",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Derreta a manteiga, junte a farinha e mexa 1 minuto.\nAcrescente o leite frio de uma vez, mexendo sem parar ate engrossar.\nTempere com sal e misture a massa cozida.",
+    "ingredientes": [
+      {
+        "alimento": 81,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 200,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 83,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 76,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "nome": "Macarrao alho e oleo",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 20,
+    "preparo": "Doure o alho fatiado no azeite em fogo baixo — alho queimado amarga o prato todo.\nReserve um pouco da agua do cozimento.\nMisture a massa com o azeite e um pouco dessa agua, que liga o molho.",
+    "ingredientes": [
+      {
+        "alimento": 82,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 4,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 56,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "nome": "Macarrao com molho pesto",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 18,
+    "preparo": "Cozinhe a massa al dente e reserve um pouco da agua.\nMisture o pesto fora do fogo, com a massa ainda quente.\nAjuste com a agua do cozimento ate ficar cremoso.",
+    "ingredientes": [
+      {
+        "alimento": 81,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 91,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 76,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "nome": "Macarrao com molho de alho",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 20,
+    "preparo": "Doure bastante alho no azeite com a manteiga, em fogo baixo.\nJunte a massa cozida e a agua do cozimento.\nFinalize com parmesao fora do fogo.",
+    "ingredientes": [
+      {
+        "alimento": 81,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 5,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 76,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "nome": "Macarrao vermelho",
+    "categoria": "base",
+    "rende": 1,
+    "tempo": 22,
+    "preparo": "Refogue alho e cebola no azeite.\nJunte o molho de tomate e deixe apurar 10 minutos.\nMisture a massa cozida e finalize com manjericao.",
+    "ingredientes": [
+      {
+        "alimento": 81,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 90,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 57,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "nome": "Abobora cabotia cozida com sal",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 20,
+    "preparo": "Corte a abobora em cubos grandes, com casca.\nCozinhe em agua com sal por 15 minutos, ate o garfo entrar sem esforco.\nEscorra bem — abobora guarda agua e aguada o prato.",
+    "ingredientes": [
+      {
+        "alimento": 54,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "nome": "Brocolis cozido com azeite",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Separe os buques e cozinhe em agua com sal por 5 minutos.\nPasse em agua fria na hora — e o que mantem o verde.\nTempere com azeite e alho fatiado.",
+    "ingredientes": [
+      {
+        "alimento": 44,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "nome": "Couve-flor cozida e temperada com limao",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Cozinhe os buques em agua com sal por 8 minutos.\nEscorra e tempere ainda quente com azeite, limao e sal.",
+    "ingredientes": [
+      {
+        "alimento": 45,
+        "quantidade": 130,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "nome": "Couve-flor assada com paprica",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 35,
+    "preparo": "Corte a couve-flor em fatias grossas e seque bem.\nTempere com azeite, paprica e sal e espalhe na assadeira sem empilhar.\nAsse a 210 C por 25 minutos, virando na metade.",
+    "ingredientes": [
+      {
+        "alimento": 45,
+        "quantidade": 130,
+        "unidade": "g"
+      },
+      {
+        "alimento": 106,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "nome": "Beterraba cozida em cubos",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 40,
+    "preparo": "Cozinhe a beterraba inteira com casca por 30 minutos.\nDescasque morna — a casca sai com a mao.\nCorte em cubos e tempere com azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 43,
+        "quantidade": 130,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "nome": "Milho refogado com cebola",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Escorra o milho.\nRefogue a cebola picada na manteiga ate ficar transparente.\nJunte o milho e deixe pegar cor, mexendo pouco.",
+    "ingredientes": [
+      {
+        "alimento": 31,
+        "quantidade": 130,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "nome": "Legumes assados no forno",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 45,
+    "preparo": "Corte batata, cenoura e cebola em pedacos parecidos — tamanho desigual assa desigual.\nTempere com azeite, sal e alho e espalhe em camada unica.\nAsse a 200 C por 35 minutos, mexendo uma vez.",
+    "ingredientes": [
+      {
+        "alimento": 5,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "nome": "Abobora assada com alho",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 40,
+    "preparo": "Corte a abobora em fatias e disponha na assadeira.\nRegue com azeite e espalhe o alho picado e o sal.\nAsse a 200 C por 30 minutos, ate as bordas caramelizarem.",
+    "ingredientes": [
+      {
+        "alimento": 54,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 2,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "nome": "Batata-doce assada em palitos",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 40,
+    "preparo": "Corte em palitos de espessura parecida e seque com papel.\nMisture com azeite e sal e espalhe sem encostar um no outro.\nAsse a 210 C por 30 minutos, virando na metade.",
+    "ingredientes": [
+      {
+        "alimento": 6,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "nome": "Abobrinha assada com queijo",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Corte a abobrinha em rodelas grossas e tempere com azeite e sal.\nAsse a 200 C por 20 minutos.\nPonha o queijo por cima e volte ao forno so ate gratinar.",
+    "ingredientes": [
+      {
+        "alimento": 30,
+        "quantidade": 140,
+        "unidade": "g"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 107,
+    "nome": "Tomate cereja assado com oregano",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Espalhe os tomates inteiros na assadeira.\nRegue com azeite e polvilhe oregano e sal.\nAsse a 200 C por 18 minutos, ate a pele estourar.",
+    "ingredientes": [
+      {
+        "alimento": 38,
+        "quantidade": 130,
+        "unidade": "g"
+      },
+      {
+        "alimento": 107,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "nome": "Pimentao assado com cebola",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 35,
+    "preparo": "Corte pimentao e cebola em tiras largas.\nTempere com azeite e sal e espalhe na assadeira.\nAsse a 210 C por 25 minutos, ate as pontas escurecerem.",
+    "ingredientes": [
+      {
+        "alimento": 55,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "nome": "Creme de abobora",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Cozinhe a abobora com cebola e alho em agua que cubra pela metade.\nBata com o proprio caldo ate ficar liso.\nVolte ao fogo, ajuste o sal e termine com um fio de azeite.",
+    "ingredientes": [
+      {
+        "alimento": 54,
+        "quantidade": 180,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "nome": "Pure de batata com cenoura",
+    "categoria": "vegetal",
+    "rende": 1,
+    "tempo": 30,
+    "preparo": "Cozinhe batata e cenoura em agua com sal ate ficarem bem macias.\nAmasse ainda quentes, sem processador — batido demais vira cola.\nJunte leite e manteiga aos poucos, ate o ponto.",
+    "ingredientes": [
+      {
+        "alimento": 5,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 22,
+        "quantidade": 60,
+        "unidade": "ml"
+      },
+      {
+        "alimento": 21,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 111,
+    "nome": "Repolho roxo, cenoura e maca com molho de iogurte e mel",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Fatie o repolho bem fino e rale a cenoura.\nCorte a maca em cubos e misture com limao para nao escurecer.\nMisture o iogurte com mel e sal e tempere na hora de servir.",
+    "ingredientes": [
+      {
+        "alimento": 49,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 52,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 32,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 19,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "nome": "Mix de folhas e manga com molho de laranja",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Lave e seque bem as folhas — folha molhada nao pega molho.\nCorte a manga em cubos.\nBata o suco de laranja com azeite e sal e regue no prato.",
+    "ingredientes": [
+      {
+        "alimento": 60,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 41,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 110,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 113,
+    "nome": "Alface, beterraba ralada e nozes com molho de limao e azeite",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Rale a beterraba crua na parte grossa do ralador.\nMonte sobre a alface rasgada e espalhe as nozes picadas.\nTempere com limao, azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 61,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 43,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 99,
+        "quantidade": 15,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 114,
+    "nome": "Rucula, pera e gorgonzola com molho balsamico e mel",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Corte a pera em fatias finas, com casca.\nMonte a rucula, a pera e o gorgonzola esfarelado.\nMisture balsamico com mel e azeite e regue por cima.",
+    "ingredientes": [
+      {
+        "alimento": 37,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 51,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 73,
+        "quantidade": 25,
+        "unidade": "g"
+      },
+      {
+        "alimento": 40,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 19,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "nome": "Grao-de-bico, tomate e cebola com molho de limao, azeite e alho",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Use o grao-de-bico ja cozido e bem escorrido.\nMisture com tomate e cebola picados miudos.\nTempere com alho amassado, limao, azeite e sal e deixe 10 minutos pegando gosto.",
+    "ingredientes": [
+      {
+        "alimento": 88,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 59,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 8,
+        "quantidade": 1,
+        "unidade": "dente"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 116,
+    "nome": "Lentilha, cenoura e cheiro-verde com vinagrete",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Use a lentilha cozida al dente e fria.\nJunte cenoura em cubinhos e bastante cheiro-verde picado.\nTempere com vinagre, azeite, cebola picada e sal.",
+    "ingredientes": [
+      {
+        "alimento": 87,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 56,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 25,
+        "unidade": "g"
+      },
+      {
+        "alimento": 94,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 117,
+    "nome": "Quinoa, pepino e tomate com molho de limao siciliano",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Use a quinoa cozida e fria, bem soltinha.\nMisture pepino e tomate em cubinhos.\nTempere com limao, azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 86,
+        "quantidade": 45,
+        "unidade": "g"
+      },
+      {
+        "alimento": 13,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 59,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 118,
+    "nome": "Alface e milho com molho caesar light",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Rasgue a alface com a mao e escorra o milho.\nMisture iogurte, mostarda, parmesao e limao para o molho.\nTempere so na hora de servir.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 31,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 32,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 18,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 76,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 119,
+    "nome": "Alface, atum e cebola com molho de limao e azeite",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Escorra bem o atum e solte com o garfo.\nMonte sobre a alface com cebola em rodelas finas.\nTempere com limao, azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 68,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 58,
+        "quantidade": 30,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 120,
+    "nome": "Espinafre, ovo cozido e tomate com molho de mostarda",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Use as folhas de espinafre cruas e bem secas.\nCorte o ovo cozido em rodelas e o tomate em cubos.\nBata mostarda, azeite, limao e sal e regue por cima.",
+    "ingredientes": [
+      {
+        "alimento": 47,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 25,
+        "quantidade": 1,
+        "unidade": "unidade"
+      },
+      {
+        "alimento": 59,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 18,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 121,
+    "nome": "Couve crua, laranja e castanha com molho citrico",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Corte a couve em tiras muito finas e amasse de leve com sal — ela amacia.\nJunte gomos de laranja sem pele e castanha picada.\nTempere com suco de laranja, azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 46,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 27,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 98,
+        "quantidade": 15,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 122,
+    "nome": "Repolho branco, pepino e gergelim com molho shoyu",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Fatie o repolho fino e o pepino em meia-lua.\nToste o gergelim rapidamente na frigideira seca.\nTempere com shoyu, azeite e um fio de vinagre.",
+    "ingredientes": [
+      {
+        "alimento": 48,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 13,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 97,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 92,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 94,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      }
+    ]
+  },
+  {
+    "id": 123,
+    "nome": "Alface e manga com molho de mostarda e mel",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Rasgue a alface e corte a manga em tiras.\nMisture mostarda, mel, azeite e limao.\nRegue na hora de servir.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 41,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 18,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 19,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      }
+    ]
+  },
+  {
+    "id": 124,
+    "nome": "Rucula, tomate cereja e mucarela com molho pesto",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Corte os tomates ao meio e a mucarela em cubos.\nMonte sobre a rucula.\nDilua o pesto com azeite e regue.",
+    "ingredientes": [
+      {
+        "alimento": 37,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 38,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 91,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      }
+    ]
+  },
+  {
+    "id": 125,
+    "nome": "Tomate, cebola e pepino com vinagrete tradicional",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Corte tudo em cubos do mesmo tamanho.\nTempere com vinagre, azeite, sal e cheiro-verde.\nDeixe 10 minutos na geladeira antes de servir.",
+    "ingredientes": [
+      {
+        "alimento": 59,
+        "quantidade": 90,
+        "unidade": "g"
+      },
+      {
+        "alimento": 7,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 13,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 94,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 56,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 126,
+    "nome": "Caprese com azeite e balsamico",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 8,
+    "preparo": "Corte tomate e mucarela em rodelas da mesma espessura.\nIntercale no prato com as folhas de manjericao.\nRegue com azeite e balsamico e ponha sal so na hora.",
+    "ingredientes": [
+      {
+        "alimento": 59,
+        "quantidade": 100,
+        "unidade": "g"
+      },
+      {
+        "alimento": 69,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 57,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 40,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 127,
+    "nome": "Alface, abacate e tomate com molho de limao",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Corte o abacate em cubos e regue com limao na hora.\nMonte com a alface rasgada e o tomate.\nTempere com azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 42,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 59,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 128,
+    "nome": "Espinafre, morango e amendoas com molho balsamico",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Lave e seque o espinafre.\nCorte os morangos em fatias e lamine as amendoas.\nTempere com balsamico, azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 47,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 53,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 100,
+        "quantidade": 15,
+        "unidade": "g"
+      },
+      {
+        "alimento": 40,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 129,
+    "nome": "Beterraba cozida e cebola roxa com molho de vinagre de maca",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 40,
+    "preparo": "Cozinhe a beterraba com casca e corte em cubos depois de morna.\nJunte a cebola roxa em fatias finas.\nTempere com vinagre de maca, azeite e sal e deixe descansar.",
+    "ingredientes": [
+      {
+        "alimento": 43,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 58,
+        "quantidade": 40,
+        "unidade": "g"
+      },
+      {
+        "alimento": 93,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 130,
+    "nome": "Cenoura ralada e passas com molho de limao e mel",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Rale a cenoura na parte grossa.\nMisture as passas e deixe hidratar no molho.\nTempere com limao, mel, azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 4,
+        "quantidade": 110,
+        "unidade": "g"
+      },
+      {
+        "alimento": 101,
+        "quantidade": 20,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 19,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 131,
+    "nome": "Pepino agridoce com molho de vinagre e acucar",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 15,
+    "preparo": "Corte o pepino em rodelas finas e salgue por 10 minutos; esprema a agua.\nDissolva o acucar no vinagre.\nMisture e sirva bem gelado.",
+    "ingredientes": [
+      {
+        "alimento": 13,
+        "quantidade": 150,
+        "unidade": "g"
+      },
+      {
+        "alimento": 94,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 95,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 132,
+    "nome": "Alface, tomate e pepino com molho de azeite, limao e ervas",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Rasgue a alface e corte tomate e pepino em cubos.\nMisture azeite, limao, oregano e sal.\nTempere na hora de servir.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 59,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 13,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 107,
+        "quantidade": 1,
+        "unidade": "pitada"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 133,
+    "nome": "Alface, cenoura e beterraba com molho rose light",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Rale cenoura e beterraba cruas.\nMonte sobre a alface, em faixas separadas — beterraba tinge tudo se misturar.\nMisture iogurte com extrato de tomate e sal para o molho.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 4,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 43,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 32,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 10,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 134,
+    "nome": "Rucula, abacate e tomate com molho de limao siciliano",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Corte o abacate em cubos e regue com limao logo.\nMonte com a rucula e o tomate.\nTempere com azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 37,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 42,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 38,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 135,
+    "nome": "Repolho roxo e abacaxi com molho agridoce",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Fatie o repolho bem fino.\nCorte o abacaxi em cubos pequenos.\nTempere com vinagre, acucar, azeite e sal e deixe gelar.",
+    "ingredientes": [
+      {
+        "alimento": 49,
+        "quantidade": 90,
+        "unidade": "g"
+      },
+      {
+        "alimento": 50,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 93,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 95,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 136,
+    "nome": "Alface, manga e abacate com molho citrico",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Corte manga e abacate em cubos e regue o abacate com limao.\nMonte sobre a alface rasgada.\nTempere com suco de laranja, azeite e sal.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 41,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 42,
+        "quantidade": 60,
+        "unidade": "g"
+      },
+      {
+        "alimento": 110,
+        "quantidade": 2,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 137,
+    "nome": "Tomate assado e ricota com molho de ervas",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 25,
+    "preparo": "Asse os tomates em metades com azeite e sal a 200 C por 18 minutos.\nDeixe amornar e esfarele a ricota por cima.\nRegue com azeite batido com oregano e manjericao.",
+    "ingredientes": [
+      {
+        "alimento": 59,
+        "quantidade": 120,
+        "unidade": "g"
+      },
+      {
+        "alimento": 74,
+        "quantidade": 50,
+        "unidade": "g"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 107,
+        "quantidade": 1,
+        "unidade": "pitada"
+      },
+      {
+        "alimento": 57,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  },
+  {
+    "id": 138,
+    "nome": "Cenoura, pepino e gergelim com molho oriental",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 12,
+    "preparo": "Corte cenoura e pepino em tiras finas.\nToste o gergelim na frigideira seca.\nTempere com shoyu, vinagre e um fio de azeite.",
+    "ingredientes": [
+      {
+        "alimento": 4,
+        "quantidade": 70,
+        "unidade": "g"
+      },
+      {
+        "alimento": 13,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 97,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 92,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 94,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 9,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      }
+    ]
+  },
+  {
+    "id": 139,
+    "nome": "Alface e croutons com molho caesar",
+    "categoria": "salada",
+    "rende": 1,
+    "tempo": 10,
+    "preparo": "Rasgue a alface e mantenha bem gelada.\nMisture maionese, parmesao, mostarda e limao para o molho.\nPonha os croutons por ultimo, senao amolecem.",
+    "ingredientes": [
+      {
+        "alimento": 12,
+        "quantidade": 80,
+        "unidade": "g"
+      },
+      {
+        "alimento": 108,
+        "quantidade": 25,
+        "unidade": "g"
+      },
+      {
+        "alimento": 109,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 76,
+        "quantidade": 1,
+        "unidade": "colherSopa"
+      },
+      {
+        "alimento": 18,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 33,
+        "quantidade": 1,
+        "unidade": "colherCha"
+      },
+      {
+        "alimento": 11,
+        "quantidade": 1,
+        "unidade": "aGosto"
+      }
+    ]
+  }
 ]

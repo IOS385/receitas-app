@@ -60,7 +60,8 @@ void main() {
     await abrir(tester);
 
     expect(find.text('Sexta, 4 de setembro'), findsOneWidget);
-    expect(find.textContaining('dia 4 de 4'), findsOneWidget);
+    expect(find.textContaining('dia 4 de ${tamanhoDoCiclo()}'),
+        findsOneWidget);
     expect(find.textContaining('1 porção no café e no almoço'),
         findsOneWidget);
     expect(find.text('TOTAL DO DIA'), findsOneWidget);
@@ -146,7 +147,12 @@ void main() {
     final folha =
         abrirSubstituir(context: contexto, data: sexta, refeicao: almoco);
     await tester.pumpAndSettle();
-    await tester.tap(find.textContaining('combo ').first);
+    // Antes tocava em 'combo N' — string de dev que saiu da tela quando a
+    // foto do prato entrou. Agora toca no nome do combo, que e o que ela le.
+    final alvo = find.textContaining('Frango grelhado').first;
+    await tester.ensureVisible(alvo);
+    await tester.pumpAndSettle();
+    await tester.tap(alvo);
     await tester.pumpAndSettle();
     await folha;
 

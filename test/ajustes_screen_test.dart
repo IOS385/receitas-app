@@ -56,11 +56,15 @@ void main() {
   testWidgets('mostra o resumo do que esta no aparelho', (tester) async {
     await abrir(tester);
 
-    await tester.ensureVisible(find.textContaining('24 receitas'));
+    final quantas = quantosNaSemente('receitas.json');
+    await tester.ensureVisible(find.textContaining('$quantas receitas'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('24 receitas'), findsOneWidget);
-    expect(find.textContaining('8 refeições'), findsOneWidget);
-    expect(find.textContaining('40 alimentos'), findsOneWidget);
+    expect(find.textContaining('$quantas receitas'), findsOneWidget);
+    expect(find.textContaining('${quantosNaSemente('combos.json')} refeições'),
+        findsOneWidget);
+    expect(
+        find.textContaining('${quantosNaSemente('alimentos.json')} alimentos'),
+        findsOneWidget);
   });
 
   testWidgets('diz que funciona sem internet', (tester) async {
@@ -76,7 +80,7 @@ void main() {
 
     expect(find.text('Começou em'), findsOneWidget);
     expect(find.text('01/09'), findsOneWidget);
-    expect(find.text('4 dias'), findsOneWidget);
+    expect(find.text('${tamanhoDoCiclo()} dias'), findsOneWidget);
   });
 
   testWidgets('trocar aparencia persiste em config', (tester) async {
@@ -113,7 +117,8 @@ void main() {
 
     await tester.tap(find.text('Cancelar'));
     await tester.pumpAndSettle();
-    expect(await db.select(db.alimentos).get(), hasLength(40));
+    expect(await db.select(db.alimentos).get(),
+        hasLength(quantosNaSemente('alimentos.json')));
   });
 
   test('importar backup nao deixa provider nenhum com dado velho', () async {
@@ -170,7 +175,8 @@ void main() {
     expect(listaNova.itens, isNotEmpty,
         reason: 'o Mercado apontava para um listaId que o import apagou');
     expect(listaNova.listaId, isNot(listaVelha.listaId));
-    expect((await c.read(resumoProvider.future)).receitas, 24);
+    expect((await c.read(resumoProvider.future)).receitas,
+        quantosNaSemente('receitas.json'));
   });
 
   testWidgets('renderiza no escuro sem estourar', (tester) async {

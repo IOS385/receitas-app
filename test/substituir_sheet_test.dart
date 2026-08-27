@@ -30,6 +30,10 @@ void main() {
       ],
     ));
     await tester.pumpAndSettle();
+    // Com a foto do prato no cartao, o SUBSTITUIR do segundo cartao nasce
+    // abaixo de 915 dp. Sem rolar, o tap erra e apenas AVISA — nao reprova.
+    await tester.ensureVisible(find.text('SUBSTITUIR').last);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('SUBSTITUIR').last);
     await tester.pumpAndSettle();
   }
@@ -40,8 +44,14 @@ void main() {
   testWidgets('folha traz os dois niveis', (tester) async {
     await abrirFolha(tester);
 
-    expect(find.text('Trocar a refeição inteira'), findsOneWidget);
-    expect(find.text('Ou trocar só um componente'), findsOneWidget);
+    // Componente primeiro, refeicao inteira depois — a lista de 32 combos com
+    // foto enterrava o segundo nivel. Ver substituir_sheet.dart.
+    expect(find.text('Trocar só um componente'), findsOneWidget);
+    await tester.scrollUntilVisible(
+        find.text('Ou trocar a refeição inteira'), 300,
+        scrollable: find.descendant(
+            of: find.byType(BottomSheet), matching: find.byType(Scrollable)));
+    expect(find.text('Ou trocar a refeição inteira'), findsOneWidget);
     expect(find.text('Substituir almoço'), findsOneWidget);
   });
 
@@ -77,7 +87,7 @@ void main() {
     final outro = combos.firstWhere(
         (c) => c.tipo == TipoCombo.refeicao && c.id != atual);
 
-    await tester.tap(find.text(outro.nome));
+    await _tocarNaFolha(tester, find.text(outro.nome));
     await tester.pumpAndSettle();
 
     final depois = await plano.dia(sexta);
@@ -100,21 +110,31 @@ void main() {
 
     // "Picadinho de carne com legumes" tambem aparece nos cartoes de tras
     // (almoco e o jantar espelhado) — escopa a folha aberta para desambiguar.
-    await tester.tap(find.descendant(
-      of: find.byType(BottomSheet),
-      matching: find.text('Picadinho de carne com legumes'),
-    ));
+    await _tocarNaFolha(tester, find.text('Picadinho de carne com legumes'));
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Trocar Picadinho'), findsOneWidget);
     // a folha do componente e a ultima (mais recente) BottomSheet na pilha —
     // a de cima (a de refeicao inteira) continua por baixo, ainda montada.
     final folhaComponente = find.byType(BottomSheet).last;
+    await tester.scrollUntilVisible(
+        find.descendant(
+            of: folhaComponente, matching: find.text('Frango grelhado simples')),
+        300,
+        scrollable: find.descendant(
+            of: folhaComponente, matching: find.byType(Scrollable)));
     expect(
       find.descendant(
           of: folhaComponente, matching: find.text('Frango grelhado simples')),
       findsOneWidget,
     );
+    // "Tirar do prato hoje" fica DEPOIS das 40 proteinas da lista.
+    await tester.scrollUntilVisible(
+        find.descendant(
+            of: folhaComponente, matching: find.text('Tirar do prato hoje')),
+        300,
+        scrollable: find.descendant(
+            of: folhaComponente, matching: find.byType(Scrollable)));
     expect(
       find.descendant(
           of: folhaComponente, matching: find.text('Tirar do prato hoje')),
@@ -132,12 +152,10 @@ void main() {
 
   testWidgets('trocar componente grava e reflete no jantar', (tester) async {
     await abrirFolha(tester);
-    await tester.tap(find.descendant(
-      of: find.byType(BottomSheet),
-      matching: find.text('Picadinho de carne com legumes'),
-    ));
+    await _tocarNaFolha(tester, find.text('Picadinho de carne com legumes'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Frango grelhado simples'));
+    // 40 proteinas na lista de componentes: rolar antes de tocar.
+    await _tocarNaFolha(tester, find.text('Frango grelhado simples'));
     await tester.pumpAndSettle();
 
     final d = await plano.dia(sexta);
@@ -161,12 +179,9 @@ void main() {
     const nomeRemovido = 'Picadinho de carne com legumes';
 
     await abrirFolha(tester);
-    await tester.tap(find.descendant(
-      of: find.byType(BottomSheet),
-      matching: find.text(nomeRemovido),
-    ));
+    await _tocarNaFolha(tester, find.text(nomeRemovido));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Tirar do prato hoje'));
+    await _tocarNaFolha(tester, find.text('Tirar do prato hoje'));
     await tester.pumpAndSettle();
 
     final depois =
@@ -210,4 +225,19 @@ class _DataFixa extends DataSelecionada {
 
   @override
   DataPura build() => inicial;
+}
+
+/// Toca num alvo dentro da folha aberta, rolando ate ele primeiro.
+///
+/// Duas razoes para o `descendant`: o nome do componente tambem aparece nos
+/// cartoes de tras (almoco e o jantar espelhado), e a folha rola — com as
+/// fotos dos combos acima, o nivel-componente nasce a ~1300 dp, fora dos
+/// 915 dp da tela. Sem rolar, `tap` erra e apenas AVISA, nao reprova.
+Future<void> _tocarNaFolha(WidgetTester tester, Finder alvo) async {
+  final folha = find.byType(BottomSheet).last;
+  final naFolha = find.descendant(of: folha, matching: alvo);
+  await tester.scrollUntilVisible(naFolha, 300,
+      scrollable: find.descendant(of: folha, matching: find.byType(Scrollable)));
+  await tester.pumpAndSettle();
+  await tester.tap(naFolha);
 }

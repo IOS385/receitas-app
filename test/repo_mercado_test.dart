@@ -25,7 +25,8 @@ void main() {
     await carregarSemente(db, lerAsset: lerDoDisco, versao: 1);
     final config = RepoConfig(db);
     await config.definir('data_inicio_ciclo', '2026-09-01');
-    await config.definir('tamanho_ciclo', '4');
+    // Sem definir o tamanho: quem o define e a semente, derivando do
+    // ciclo.json. Ver divergencia-de-harness-esconde-bug.
     mercado = RepoMercado(db, RepoPlano(db, config));
   });
   tearDown(() async => db.close());

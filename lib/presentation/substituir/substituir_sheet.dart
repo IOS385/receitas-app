@@ -10,6 +10,7 @@ import '../format.dart';
 import '../hoje/hoje_provider.dart';
 import '../mes/mes_provider.dart';
 import '../tema/cores.dart';
+import '../widgets/foto_prato.dart';
 
 /// Abre a folha de substituição de uma refeição.
 Future<void> abrirSubstituir({
@@ -76,7 +77,23 @@ class SubstituirSheet extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
 
-            _Rotulo('Trocar a refeição inteira'),
+            // Ordem: componente ANTES do combo, e a inversao e deliberada.
+            //
+            // Com os 33 dias, a lista de refeicoes inteiras tem 32 opcoes, cada
+            // uma com foto: cerca de 5300 dp. Combo primeiro deixava o segundo
+            // nivel inalcancavel na pratica. Componente primeiro custa ~250 dp
+            // ao caso comum (cinco linhas curtas) e a primeira foto ainda
+            // aparece sem rolar, nos 769 dp da folha.
+            _Rotulo('Trocar só um componente'),
+            for (final comp in refeicao.componentes)
+              _Opcao(
+                titulo: comp.nome,
+                subtitulo: rotuloCategoria(comp.categoria),
+                onTap: () => _trocarComponente(context, ref, comp),
+              ),
+
+            const SizedBox(height: 6),
+            _Rotulo('Ou trocar a refeição inteira'),
             combos.when(
               loading: () => const Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
@@ -88,7 +105,9 @@ class SubstituirSheet extends ConsumerWidget {
                   for (final c in lista.where((c) => c.id != refeicao.comboId))
                     _Opcao(
                       titulo: c.nome,
-                      subtitulo: 'combo ${c.id}',
+                      // Sem subtítulo: a foto do prato diz o que "combo 5"
+                      // nunca disse a ela.
+                      foto: c.fotoPath,
                       onTap: () async {
                         await ref.read(repoPlanoProvider).substituirCombo(
                             data: data, slot: refeicao.slot, comboId: c.id);
@@ -100,15 +119,6 @@ class SubstituirSheet extends ConsumerWidget {
                 ],
               ),
             ),
-
-            const SizedBox(height: 6),
-            _Rotulo('Ou trocar só um componente'),
-            for (final comp in refeicao.componentes)
-              _Opcao(
-                titulo: comp.nome,
-                subtitulo: rotuloCategoria(comp.categoria),
-                onTap: () => _trocarComponente(context, ref, comp),
-              ),
 
             const SizedBox(height: 14),
             OutlinedButton(
@@ -208,12 +218,20 @@ class _Rotulo extends StatelessWidget {
 
 class _Opcao extends StatelessWidget {
   final String titulo;
-  final String subtitulo;
+
+  /// Nulo quando a foto já diz o que o subtítulo diria.
+  final String? subtitulo;
+
+  /// Foto do prato, quando a opção é um combo inteiro. Componente solto
+  /// (uma receita) não tem foto.
+  final String? foto;
+
   final VoidCallback onTap;
 
   const _Opcao({
     required this.titulo,
-    required this.subtitulo,
+    this.subtitulo,
+    this.foto,
     required this.onTap,
   });
 
@@ -241,14 +259,18 @@ class _Opcao extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                FotoPrato(caminho: foto),
+                if (foto != null) const SizedBox(height: 9),
                 Text(titulo,
                     style: t.bodyMedium
                         ?.copyWith(fontVariations: const [
                       FontVariation('wght', 700)
                     ])),
-                const SizedBox(height: 1),
-                Text(subtitulo,
-                    style: t.labelMedium?.copyWith(color: cores.ink3)),
+                if (subtitulo != null) ...[
+                  const SizedBox(height: 1),
+                  Text(subtitulo!,
+                      style: t.labelMedium?.copyWith(color: cores.ink3)),
+                ],
               ],
             ),
           ),

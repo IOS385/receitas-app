@@ -46,6 +46,10 @@ class RefeicaoDoDia {
   final int porcoes;
   final int comboId;
   final String comboNome;
+
+  /// Asset da foto do prato, ou nulo. Vem do combo, nao da receita.
+  final String? comboFoto;
+
   final bool espelhoIntacto;
   final List<ComponenteDoDia> componentes;
   final Nutrientes nutrientes;
@@ -55,6 +59,7 @@ class RefeicaoDoDia {
     required this.porcoes,
     required this.comboId,
     required this.comboNome,
+    required this.comboFoto,
     required this.espelhoIntacto,
     required this.componentes,
     required this.nutrientes,
@@ -224,6 +229,7 @@ class RepoPlano {
         porcoes: porcoes,
         comboId: res.comboId,
         comboNome: combos[res.comboId]?.nome ?? '',
+        comboFoto: combos[res.comboId]?.fotoPath,
         espelhoIntacto: res.espelhoIntacto,
         componentes: componentes,
         nutrientes: nutrRefeicao,

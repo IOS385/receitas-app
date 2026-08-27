@@ -1,3 +1,5 @@
+import 'dart:io';
+
 // `hide`: drift exporta `isNull`/`isNotNull` top-level deprecados que
 // colidem com os matchers homonimos do package:matcher.
 import 'package:drift/drift.dart' hide isNull, isNotNull;
@@ -18,8 +20,45 @@ void main() {
 
   tearDown(() async => db.close());
 
-  test('abre no schema 1', () {
-    expect(db.schemaVersion, 1);
+  test('abre no schema 2', () {
+    expect(db.schemaVersion, 2);
+  });
+
+  test('migracao v1 -> v2 poe foto_path sem perder o que ela tinha', () async {
+    // Ela pode ja ter o APK v1 instalado com dados. Se a migracao falhar, o
+    // app nao abre — e o dado dela e o unico que nao da para regerar.
+    // A drift avisa "created the database class multiple times" aqui. E o que
+    // o teste faz de proposito: fecha a v1 e reabre para a migracao rodar. As
+    // duas instancias nunca coexistem — o aviso e falso positivo.
+    final pasta = await Directory.systemTemp.createTemp('refeicoes_mig');
+    addTearDown(() => pasta.delete(recursive: true));
+    final arquivo = File('${pasta.path}/refeicoes.sqlite');
+
+    // Rebaixa um banco novo para o formato v1: tira a coluna e volta o
+    // user_version que a drift le para decidir se migra.
+    final antigo = AppDatabase(NativeDatabase(arquivo));
+    await antigo.into(antigo.combos).insert(CombosCompanion.insert(
+          nome: 'Combo que ela criou',
+          tipo: TipoCombo.refeicao,
+          origem: const Value('usuario'),
+        ));
+    await antigo.customStatement('ALTER TABLE combos DROP COLUMN foto_path');
+    await antigo.customStatement('PRAGMA user_version = 1');
+    await antigo.close();
+
+    // Reabre: a drift ve 1 < 2 e roda o onUpgrade.
+    final novo = AppDatabase(NativeDatabase(arquivo));
+    addTearDown(novo.close);
+    final combos = await novo.select(novo.combos).get();
+
+    expect(combos, hasLength(1), reason: 'a migracao nao pode apagar linha');
+    expect(combos.single.nome, 'Combo que ela criou');
+    expect(combos.single.origem, 'usuario');
+    expect(combos.single.fotoPath, isNull,
+        reason: 'coluna nova entra nula; a foto chega na proxima semente');
+
+    final versao = await novo.customSelect('PRAGMA user_version').getSingle();
+    expect(versao.data.values.single, 2);
   });
 
   test('grava e le um alimento com enums', () async {

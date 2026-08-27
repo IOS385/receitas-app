@@ -2010,6 +2010,17 @@ class $CombosTable extends Combos with TableInfo<$CombosTable, Combo> {
         type: DriftSqlType.string,
         requiredDuringInsert: true,
       ).withConverter<TipoCombo>($CombosTable.$convertertipo);
+  static const VerificationMeta _fotoPathMeta = const VerificationMeta(
+    'fotoPath',
+  );
+  @override
+  late final GeneratedColumn<String> fotoPath = GeneratedColumn<String>(
+    'foto_path',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _origemMeta = const VerificationMeta('origem');
   @override
   late final GeneratedColumn<String> origem = GeneratedColumn<String>(
@@ -2034,7 +2045,14 @@ class $CombosTable extends Combos with TableInfo<$CombosTable, Combo> {
     defaultValue: const Constant(true),
   );
   @override
-  List<GeneratedColumn> get $columns => [id, nome, tipo, origem, ativo];
+  List<GeneratedColumn> get $columns => [
+    id,
+    nome,
+    tipo,
+    fotoPath,
+    origem,
+    ativo,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2057,6 +2075,12 @@ class $CombosTable extends Combos with TableInfo<$CombosTable, Combo> {
       );
     } else if (isInserting) {
       context.missing(_nomeMeta);
+    }
+    if (data.containsKey('foto_path')) {
+      context.handle(
+        _fotoPathMeta,
+        fotoPath.isAcceptableOrUnknown(data['foto_path']!, _fotoPathMeta),
+      );
     }
     if (data.containsKey('origem')) {
       context.handle(
@@ -2093,6 +2117,10 @@ class $CombosTable extends Combos with TableInfo<$CombosTable, Combo> {
           data['${effectivePrefix}tipo'],
         )!,
       ),
+      fotoPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}foto_path'],
+      ),
       origem: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}origem'],
@@ -2117,12 +2145,19 @@ class Combo extends DataClass implements Insertable<Combo> {
   final int id;
   final String nome;
   final TipoCombo tipo;
+
+  /// Asset com a foto do prato montado. A foto e do combo inteiro (o prato
+  /// como ela ve na mesa), nao de uma receita solta: uma receita como "Arroz
+  /// branco" nao tem foto propria e nunca tera. Nulo quando nao ha foto —
+  /// combo que ela criar, por exemplo.
+  final String? fotoPath;
   final String origem;
   final bool ativo;
   const Combo({
     required this.id,
     required this.nome,
     required this.tipo,
+    this.fotoPath,
     required this.origem,
     required this.ativo,
   });
@@ -2134,6 +2169,9 @@ class Combo extends DataClass implements Insertable<Combo> {
     {
       map['tipo'] = Variable<String>($CombosTable.$convertertipo.toSql(tipo));
     }
+    if (!nullToAbsent || fotoPath != null) {
+      map['foto_path'] = Variable<String>(fotoPath);
+    }
     map['origem'] = Variable<String>(origem);
     map['ativo'] = Variable<bool>(ativo);
     return map;
@@ -2144,6 +2182,9 @@ class Combo extends DataClass implements Insertable<Combo> {
       id: Value(id),
       nome: Value(nome),
       tipo: Value(tipo),
+      fotoPath: fotoPath == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fotoPath),
       origem: Value(origem),
       ativo: Value(ativo),
     );
@@ -2160,6 +2201,7 @@ class Combo extends DataClass implements Insertable<Combo> {
       tipo: $CombosTable.$convertertipo.fromJson(
         serializer.fromJson<String>(json['tipo']),
       ),
+      fotoPath: serializer.fromJson<String?>(json['fotoPath']),
       origem: serializer.fromJson<String>(json['origem']),
       ativo: serializer.fromJson<bool>(json['ativo']),
     );
@@ -2173,6 +2215,7 @@ class Combo extends DataClass implements Insertable<Combo> {
       'tipo': serializer.toJson<String>(
         $CombosTable.$convertertipo.toJson(tipo),
       ),
+      'fotoPath': serializer.toJson<String?>(fotoPath),
       'origem': serializer.toJson<String>(origem),
       'ativo': serializer.toJson<bool>(ativo),
     };
@@ -2182,12 +2225,14 @@ class Combo extends DataClass implements Insertable<Combo> {
     int? id,
     String? nome,
     TipoCombo? tipo,
+    Value<String?> fotoPath = const Value.absent(),
     String? origem,
     bool? ativo,
   }) => Combo(
     id: id ?? this.id,
     nome: nome ?? this.nome,
     tipo: tipo ?? this.tipo,
+    fotoPath: fotoPath.present ? fotoPath.value : this.fotoPath,
     origem: origem ?? this.origem,
     ativo: ativo ?? this.ativo,
   );
@@ -2196,6 +2241,7 @@ class Combo extends DataClass implements Insertable<Combo> {
       id: data.id.present ? data.id.value : this.id,
       nome: data.nome.present ? data.nome.value : this.nome,
       tipo: data.tipo.present ? data.tipo.value : this.tipo,
+      fotoPath: data.fotoPath.present ? data.fotoPath.value : this.fotoPath,
       origem: data.origem.present ? data.origem.value : this.origem,
       ativo: data.ativo.present ? data.ativo.value : this.ativo,
     );
@@ -2207,6 +2253,7 @@ class Combo extends DataClass implements Insertable<Combo> {
           ..write('id: $id, ')
           ..write('nome: $nome, ')
           ..write('tipo: $tipo, ')
+          ..write('fotoPath: $fotoPath, ')
           ..write('origem: $origem, ')
           ..write('ativo: $ativo')
           ..write(')'))
@@ -2214,7 +2261,7 @@ class Combo extends DataClass implements Insertable<Combo> {
   }
 
   @override
-  int get hashCode => Object.hash(id, nome, tipo, origem, ativo);
+  int get hashCode => Object.hash(id, nome, tipo, fotoPath, origem, ativo);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2222,6 +2269,7 @@ class Combo extends DataClass implements Insertable<Combo> {
           other.id == this.id &&
           other.nome == this.nome &&
           other.tipo == this.tipo &&
+          other.fotoPath == this.fotoPath &&
           other.origem == this.origem &&
           other.ativo == this.ativo);
 }
@@ -2230,12 +2278,14 @@ class CombosCompanion extends UpdateCompanion<Combo> {
   final Value<int> id;
   final Value<String> nome;
   final Value<TipoCombo> tipo;
+  final Value<String?> fotoPath;
   final Value<String> origem;
   final Value<bool> ativo;
   const CombosCompanion({
     this.id = const Value.absent(),
     this.nome = const Value.absent(),
     this.tipo = const Value.absent(),
+    this.fotoPath = const Value.absent(),
     this.origem = const Value.absent(),
     this.ativo = const Value.absent(),
   });
@@ -2243,6 +2293,7 @@ class CombosCompanion extends UpdateCompanion<Combo> {
     this.id = const Value.absent(),
     required String nome,
     required TipoCombo tipo,
+    this.fotoPath = const Value.absent(),
     this.origem = const Value.absent(),
     this.ativo = const Value.absent(),
   }) : nome = Value(nome),
@@ -2251,6 +2302,7 @@ class CombosCompanion extends UpdateCompanion<Combo> {
     Expression<int>? id,
     Expression<String>? nome,
     Expression<String>? tipo,
+    Expression<String>? fotoPath,
     Expression<String>? origem,
     Expression<bool>? ativo,
   }) {
@@ -2258,6 +2310,7 @@ class CombosCompanion extends UpdateCompanion<Combo> {
       if (id != null) 'id': id,
       if (nome != null) 'nome': nome,
       if (tipo != null) 'tipo': tipo,
+      if (fotoPath != null) 'foto_path': fotoPath,
       if (origem != null) 'origem': origem,
       if (ativo != null) 'ativo': ativo,
     });
@@ -2267,6 +2320,7 @@ class CombosCompanion extends UpdateCompanion<Combo> {
     Value<int>? id,
     Value<String>? nome,
     Value<TipoCombo>? tipo,
+    Value<String?>? fotoPath,
     Value<String>? origem,
     Value<bool>? ativo,
   }) {
@@ -2274,6 +2328,7 @@ class CombosCompanion extends UpdateCompanion<Combo> {
       id: id ?? this.id,
       nome: nome ?? this.nome,
       tipo: tipo ?? this.tipo,
+      fotoPath: fotoPath ?? this.fotoPath,
       origem: origem ?? this.origem,
       ativo: ativo ?? this.ativo,
     );
@@ -2293,6 +2348,9 @@ class CombosCompanion extends UpdateCompanion<Combo> {
         $CombosTable.$convertertipo.toSql(tipo.value),
       );
     }
+    if (fotoPath.present) {
+      map['foto_path'] = Variable<String>(fotoPath.value);
+    }
     if (origem.present) {
       map['origem'] = Variable<String>(origem.value);
     }
@@ -2308,6 +2366,7 @@ class CombosCompanion extends UpdateCompanion<Combo> {
           ..write('id: $id, ')
           ..write('nome: $nome, ')
           ..write('tipo: $tipo, ')
+          ..write('fotoPath: $fotoPath, ')
           ..write('origem: $origem, ')
           ..write('ativo: $ativo')
           ..write(')'))
@@ -6498,6 +6557,7 @@ typedef $$CombosTableCreateCompanionBuilder =
       Value<int> id,
       required String nome,
       required TipoCombo tipo,
+      Value<String?> fotoPath,
       Value<String> origem,
       Value<bool> ativo,
     });
@@ -6506,6 +6566,7 @@ typedef $$CombosTableUpdateCompanionBuilder =
       Value<int> id,
       Value<String> nome,
       Value<TipoCombo> tipo,
+      Value<String?> fotoPath,
       Value<String> origem,
       Value<bool> ativo,
     });
@@ -6593,6 +6654,11 @@ class $$CombosTableFilterComposer
         column: $table.tipo,
         builder: (column) => ColumnWithTypeConverterFilters(column),
       );
+
+  ColumnFilters<String> get fotoPath => $composableBuilder(
+    column: $table.fotoPath,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get origem => $composableBuilder(
     column: $table.origem,
@@ -6704,6 +6770,11 @@ class $$CombosTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get fotoPath => $composableBuilder(
+    column: $table.fotoPath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get origem => $composableBuilder(
     column: $table.origem,
     builder: (column) => ColumnOrderings(column),
@@ -6732,6 +6803,9 @@ class $$CombosTableAnnotationComposer
 
   GeneratedColumnWithTypeConverter<TipoCombo, String> get tipo =>
       $composableBuilder(column: $table.tipo, builder: (column) => column);
+
+  GeneratedColumn<String> get fotoPath =>
+      $composableBuilder(column: $table.fotoPath, builder: (column) => column);
 
   GeneratedColumn<String> get origem =>
       $composableBuilder(column: $table.origem, builder: (column) => column);
@@ -6850,12 +6924,14 @@ class $$CombosTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> nome = const Value.absent(),
                 Value<TipoCombo> tipo = const Value.absent(),
+                Value<String?> fotoPath = const Value.absent(),
                 Value<String> origem = const Value.absent(),
                 Value<bool> ativo = const Value.absent(),
               }) => CombosCompanion(
                 id: id,
                 nome: nome,
                 tipo: tipo,
+                fotoPath: fotoPath,
                 origem: origem,
                 ativo: ativo,
               ),
@@ -6864,12 +6940,14 @@ class $$CombosTableTableManager
                 Value<int> id = const Value.absent(),
                 required String nome,
                 required TipoCombo tipo,
+                Value<String?> fotoPath = const Value.absent(),
                 Value<String> origem = const Value.absent(),
                 Value<bool> ativo = const Value.absent(),
               }) => CombosCompanion.insert(
                 id: id,
                 nome: nome,
                 tipo: tipo,
+                fotoPath: fotoPath,
                 origem: origem,
                 ativo: ativo,
               ),

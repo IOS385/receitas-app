@@ -1,19 +1,759 @@
 [
-  {"id": 1, "nome": "Pao frances, banana e leite com achocolatado", "tipo": "cafe",
-   "receitas": [9, 10, 11]},
-  {"id": 2, "nome": "Pao de forma com ovo mexido e suco de laranja", "tipo": "cafe",
-   "receitas": [15, 16]},
-  {"id": 3, "nome": "Cuscuz com ovo cozido e leite com achocolatado", "tipo": "cafe",
-   "receitas": [21, 10]},
-  {"id": 4, "nome": "Tapioca com queijo, mamao e suco de uva", "tipo": "cafe",
-   "receitas": [6, 7, 8]},
-
-  {"id": 5, "nome": "Bife acebolado com arroz, feijao, cenoura e salada", "tipo": "refeicao",
-   "receitas": [1, 2, 12, 13, 14]},
-  {"id": 6, "nome": "Carne moida com arroz, feijao preto, abobrinha e salada", "tipo": "refeicao",
-   "receitas": [1, 18, 17, 19, 20]},
-  {"id": 7, "nome": "Frango grelhado com arroz, feijao, chuchu e rucula", "tipo": "refeicao",
-   "receitas": [1, 2, 22, 23, 24]},
-  {"id": 8, "nome": "Picadinho de carne com arroz, feijao, batata-doce e salada", "tipo": "refeicao",
-   "receitas": [1, 2, 3, 4, 5]}
+  {
+    "id": 1,
+    "nome": "Pao frances, manteiga, leite com achocolatado e banana",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-01.jpg",
+    "receitas": [
+      9,
+      10,
+      11
+    ]
+  },
+  {
+    "id": 2,
+    "nome": "Pao de forma com ovo mexido e suco de laranja",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-02.jpg",
+    "receitas": [
+      15,
+      16
+    ]
+  },
+  {
+    "id": 3,
+    "nome": "Cuscuz com ovo cozido e leite com achocolatado",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-03.jpg",
+    "receitas": [
+      21,
+      10
+    ]
+  },
+  {
+    "id": 4,
+    "nome": "Tapioca com queijo, mamao e suco de uva",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-04.jpg",
+    "receitas": [
+      6,
+      7,
+      8
+    ]
+  },
+  {
+    "id": 5,
+    "nome": "Pao de queijo, iogurte natural e maca",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-05.jpg",
+    "receitas": [
+      34,
+      62,
+      60
+    ]
+  },
+  {
+    "id": 6,
+    "nome": "Panqueca de banana com suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-06.jpg",
+    "receitas": [
+      47,
+      59
+    ]
+  },
+  {
+    "id": 7,
+    "nome": "Pao caseiro, omelete simples e suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-07.jpg",
+    "receitas": [
+      30,
+      54,
+      59
+    ]
+  },
+  {
+    "id": 8,
+    "nome": "Torrada com abacate e ovo cozido",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-08.jpg",
+    "receitas": [
+      40,
+      52
+    ]
+  },
+  {
+    "id": 9,
+    "nome": "Bolo de milho, fruta e suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-09.jpg",
+    "receitas": [
+      50,
+      61,
+      59
+    ]
+  },
+  {
+    "id": 10,
+    "nome": "Crepioca com queijo e suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-10.jpg",
+    "receitas": [
+      45,
+      59
+    ]
+  },
+  {
+    "id": 11,
+    "nome": "Vitamina de banana com aveia e torrada com requeijao",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-11.jpg",
+    "receitas": [
+      58,
+      36
+    ]
+  },
+  {
+    "id": 12,
+    "nome": "Tapioca com frango desfiado e suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-12.jpg",
+    "receitas": [
+      44,
+      59
+    ]
+  },
+  {
+    "id": 13,
+    "nome": "Pao sirio com queijo e iogurte",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-13.jpg",
+    "receitas": [
+      33,
+      62
+    ]
+  },
+  {
+    "id": 14,
+    "nome": "Ovos mexidos, batata-doce e leite com achocolatado",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-14.jpg",
+    "receitas": [
+      51,
+      4,
+      10
+    ]
+  },
+  {
+    "id": 15,
+    "nome": "Waffle com mel e frutas",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-15.jpg",
+    "receitas": [
+      49,
+      61
+    ]
+  },
+  {
+    "id": 16,
+    "nome": "Pao frances com requeijao e achocolatado",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-16.jpg",
+    "receitas": [
+      27,
+      10
+    ]
+  },
+  {
+    "id": 17,
+    "nome": "Cuscuz com queijo coalho e suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-17.jpg",
+    "receitas": [
+      42,
+      59
+    ]
+  },
+  {
+    "id": 18,
+    "nome": "Panqueca americana com frutas",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-18.jpg",
+    "receitas": [
+      48,
+      61
+    ]
+  },
+  {
+    "id": 19,
+    "nome": "Torrada com geleia e iogurte",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-19.jpg",
+    "receitas": [
+      38,
+      62
+    ]
+  },
+  {
+    "id": 20,
+    "nome": "Tapioca com ovo e fruta",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-20.jpg",
+    "receitas": [
+      43,
+      61
+    ]
+  },
+  {
+    "id": 21,
+    "nome": "Pao de forma com queijo e leite com achocolatado",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-21.jpg",
+    "receitas": [
+      29,
+      10
+    ]
+  },
+  {
+    "id": 22,
+    "nome": "Sanduiche natural com suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-22.jpg",
+    "receitas": [
+      56,
+      59
+    ]
+  },
+  {
+    "id": 23,
+    "nome": "Crepioca de frango com suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-23.jpg",
+    "receitas": [
+      46,
+      59
+    ]
+  },
+  {
+    "id": 24,
+    "nome": "Pao caseiro com polenguinho e frutas",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-24.jpg",
+    "receitas": [
+      31,
+      61
+    ]
+  },
+  {
+    "id": 25,
+    "nome": "Pao de queijo com leite com achocolatado",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-25.jpg",
+    "receitas": [
+      34,
+      10
+    ]
+  },
+  {
+    "id": 26,
+    "nome": "Pao frances com omelete de queijo",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-26.jpg",
+    "receitas": [
+      25,
+      55
+    ]
+  },
+  {
+    "id": 27,
+    "nome": "Torrada com cream cheese e leite com achocolatado",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-27.jpg",
+    "receitas": [
+      37,
+      10
+    ]
+  },
+  {
+    "id": 28,
+    "nome": "Pao de forma, ovo frito e leite com achocolatado",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-28.jpg",
+    "receitas": [
+      28,
+      53,
+      10
+    ]
+  },
+  {
+    "id": 29,
+    "nome": "Sanduiche de pate de atum com suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-29.jpg",
+    "receitas": [
+      57,
+      59
+    ]
+  },
+  {
+    "id": 30,
+    "nome": "Ovos mexidos com pao sirio",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-30.jpg",
+    "receitas": [
+      51,
+      32
+    ]
+  },
+  {
+    "id": 31,
+    "nome": "Cuscuz com manteiga e suco",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-31.jpg",
+    "receitas": [
+      41,
+      59
+    ]
+  },
+  {
+    "id": 32,
+    "nome": "Torrada com queijo e fruta",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-32.jpg",
+    "receitas": [
+      39,
+      61
+    ]
+  },
+  {
+    "id": 33,
+    "nome": "Pao frances na chapa, fruta e leite com achocolatado",
+    "tipo": "cafe",
+    "foto": "assets/pratos/combo-33.jpg",
+    "receitas": [
+      26,
+      61,
+      10
+    ]
+  },
+  {
+    "id": 34,
+    "nome": "Bife acebolado com arroz, feijao, cenoura e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-34.jpg",
+    "receitas": [
+      1,
+      2,
+      12,
+      13,
+      14
+    ]
+  },
+  {
+    "id": 35,
+    "nome": "Carne moida com arroz, feijao preto, abobrinha e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-35.jpg",
+    "receitas": [
+      1,
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  {
+    "id": 36,
+    "nome": "Frango grelhado com arroz, feijao, chuchu e rucula",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-36.jpg",
+    "receitas": [
+      1,
+      2,
+      22,
+      23,
+      24
+    ]
+  },
+  {
+    "id": 37,
+    "nome": "Picadinho de carne com arroz, feijao, batata-doce e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-37.jpg",
+    "receitas": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "id": 38,
+    "nome": "Macarrao a bolonhesa com abobora e salada de repolho",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-38.jpg",
+    "receitas": [
+      91,
+      97,
+      111
+    ]
+  },
+  {
+    "id": 39,
+    "nome": "Frango desfiado com arroz, feijao, brocolis e salada de manga",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-39.jpg",
+    "receitas": [
+      1,
+      2,
+      80,
+      98,
+      112
+    ]
+  },
+  {
+    "id": 40,
+    "nome": "Carne ao alho com arroz, feijao, couve-flor e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-40.jpg",
+    "receitas": [
+      1,
+      2,
+      63,
+      99,
+      113
+    ]
+  },
+  {
+    "id": 41,
+    "nome": "Almondegas com arroz, feijao, beterraba e salada de pera",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-41.jpg",
+    "receitas": [
+      1,
+      2,
+      64,
+      101,
+      114
+    ]
+  },
+  {
+    "id": 42,
+    "nome": "Frango com legumes, arroz, feijao e salada de grao-de-bico",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-42.jpg",
+    "receitas": [
+      1,
+      2,
+      81,
+      115
+    ]
+  },
+  {
+    "id": 43,
+    "nome": "Carne de panela com macarrao branco, milho e salada de lentilha",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-43.jpg",
+    "receitas": [
+      65,
+      92,
+      102,
+      116
+    ]
+  },
+  {
+    "id": 44,
+    "nome": "Quibe assado com arroz, feijao preto, legumes e salada de quinoa",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-44.jpg",
+    "receitas": [
+      1,
+      66,
+      18,
+      103,
+      117
+    ]
+  },
+  {
+    "id": 45,
+    "nome": "Frango acebolado com arroz, feijao, abobora e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-45.jpg",
+    "receitas": [
+      1,
+      2,
+      82,
+      104,
+      118
+    ]
+  },
+  {
+    "id": 46,
+    "nome": "Strogonoff com arroz, feijao, batata-doce e salada de atum",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-46.jpg",
+    "receitas": [
+      1,
+      2,
+      67,
+      105,
+      119
+    ]
+  },
+  {
+    "id": 47,
+    "nome": "Panqueca de carne com arroz, feijao, abobrinha e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-47.jpg",
+    "receitas": [
+      1,
+      2,
+      68,
+      106,
+      120
+    ]
+  },
+  {
+    "id": 48,
+    "nome": "Frango com batata, macarrao alho e oleo, couve-flor e salada de couve",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-48.jpg",
+    "receitas": [
+      83,
+      93,
+      100,
+      121
+    ]
+  },
+  {
+    "id": 49,
+    "nome": "Bife a parmegiana com arroz, feijao, tomate assado e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-49.jpg",
+    "receitas": [
+      1,
+      2,
+      69,
+      107,
+      122
+    ]
+  },
+  {
+    "id": 50,
+    "nome": "Torta de carne com arroz, feijao, pimentao e salada de manga",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-50.jpg",
+    "receitas": [
+      1,
+      2,
+      70,
+      108,
+      123
+    ]
+  },
+  {
+    "id": 51,
+    "nome": "Fricasse de frango com arroz, feijao, pure e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-51.jpg",
+    "receitas": [
+      1,
+      2,
+      84,
+      110,
+      124
+    ]
+  },
+  {
+    "id": 52,
+    "nome": "Carne desfiada com arroz, feijao preto, creme de abobora e vinagrete",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-52.jpg",
+    "receitas": [
+      1,
+      71,
+      18,
+      109,
+      125
+    ]
+  },
+  {
+    "id": 53,
+    "nome": "Rocambole com macarrao ao pesto, cenoura e caprese",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-53.jpg",
+    "receitas": [
+      72,
+      94,
+      13,
+      126
+    ]
+  },
+  {
+    "id": 54,
+    "nome": "Lasanha de frango com arroz, feijao, abobrinha e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-54.jpg",
+    "receitas": [
+      1,
+      2,
+      85,
+      19,
+      127
+    ]
+  },
+  {
+    "id": 55,
+    "nome": "Iscas de carne com arroz, feijao, chuchu e salada de morango",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-55.jpg",
+    "receitas": [
+      1,
+      2,
+      73,
+      23,
+      128
+    ]
+  },
+  {
+    "id": 56,
+    "nome": "Pastel de carne com arroz, feijao, batata-doce e beterraba",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-56.jpg",
+    "receitas": [
+      1,
+      2,
+      74,
+      4,
+      129
+    ]
+  },
+  {
+    "id": 57,
+    "nome": "Frango assado com arroz, feijao, abobora e salada de cenoura",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-57.jpg",
+    "receitas": [
+      1,
+      2,
+      86,
+      97,
+      130
+    ]
+  },
+  {
+    "id": 58,
+    "nome": "Carne empanada com macarrao ao alho, brocolis e pepino agridoce",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-58.jpg",
+    "receitas": [
+      75,
+      95,
+      98,
+      131
+    ]
+  },
+  {
+    "id": 59,
+    "nome": "Hamburguer caseiro com salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-59.jpg",
+    "receitas": [
+      76,
+      132
+    ]
+  },
+  {
+    "id": 60,
+    "nome": "Frango com creme de milho, arroz, feijao, couve-flor e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-60.jpg",
+    "receitas": [
+      1,
+      2,
+      87,
+      99,
+      133
+    ]
+  },
+  {
+    "id": 61,
+    "nome": "Carne ao creme de cebola com arroz, feijoes, beterraba e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-61.jpg",
+    "receitas": [
+      1,
+      2,
+      77,
+      18,
+      101,
+      134
+    ]
+  },
+  {
+    "id": 62,
+    "nome": "Panqueca de frango com arroz, feijao, milho e salada de abacaxi",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-62.jpg",
+    "receitas": [
+      1,
+      2,
+      88,
+      102,
+      135
+    ]
+  },
+  {
+    "id": 63,
+    "nome": "Carne a mostarda com macarrao vermelho, tomate assado e salada",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-63.jpg",
+    "receitas": [
+      78,
+      96,
+      107,
+      136
+    ]
+  },
+  {
+    "id": 64,
+    "nome": "Empadao de frango com arroz, feijao, legumes e tomate com ricota",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-64.jpg",
+    "receitas": [
+      1,
+      2,
+      89,
+      103,
+      137
+    ]
+  },
+  {
+    "id": 65,
+    "nome": "Carne oriental com arroz, feijao, abobora e salada de gergelim",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-65.jpg",
+    "receitas": [
+      1,
+      2,
+      79,
+      104,
+      138
+    ]
+  },
+  {
+    "id": 66,
+    "nome": "Frango com mostarda e mel, arroz, feijao, batata-doce e caesar",
+    "tipo": "refeicao",
+    "foto": "assets/pratos/combo-66.jpg",
+    "receitas": [
+      1,
+      2,
+      90,
+      105,
+      139
+    ]
+  }
 ]

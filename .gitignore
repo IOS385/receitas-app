@@ -48,3 +48,16 @@ app.*.map.json
 android/key.properties
 *.jks
 *.keystore
+
+# Fotos originais dos pratos (66 arquivos, 66 MB). São a FONTE das imagens do
+# app, mas não entram no git: blob desse tamanho fica no histórico para sempre
+# e não sai sem reescrever a história. O que o app usa é o derivado,
+# `assets/pratos/` (7,6 MB), que É versionado — e `tools/gerar_fotos.py`
+# reproduz o derivado a partir daqui.
+#
+# Guarde `imagens/` fora do git (backup, drive). Se preferir versionar, use Git
+# LFS e apague estas três linhas.
+imagens/
+
+# Fotos reduzidas só para o mock HTML — descartáveis, geradas a partir de imagens/
+mocks/fotos/

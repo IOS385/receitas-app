@@ -11,6 +11,8 @@ import 'package:refeicoes_app/data/repo_config.dart';
 import 'package:refeicoes_app/data/semente.dart';
 import 'package:refeicoes_app/domain/modelos.dart';
 
+import 'util_teste.dart';
+
 String lerDoDisco(String nome) =>
     File('assets/semente/$nome').readAsStringSync();
 
@@ -30,7 +32,7 @@ void main() {
     expect(mapa['seed_version'], isNotNull);
     expect(mapa['exportado_em'], isNotNull);
     expect(mapa['tabelas'], isA<Map<String, dynamic>>());
-    expect((mapa['tabelas'] as Map)['alimentos'], hasLength(40));
+    expect((mapa['tabelas'] as Map)['alimentos'], hasLength(quantosNaSemente('alimentos.json')));
 
     await db.close();
   });
@@ -48,8 +50,10 @@ void main() {
     final destino = novoBanco();
     await importarJson(destino, texto);
 
-    expect(await destino.select(destino.alimentos).get(), hasLength(40));
-    expect(await destino.select(destino.receitas).get(), hasLength(24));
+    expect(await destino.select(destino.alimentos).get(),
+        hasLength(quantosNaSemente('alimentos.json')));
+    expect(await destino.select(destino.receitas).get(),
+        hasLength(quantosNaSemente('receitas.json')));
 
     final ov = await destino.select(destino.overridesCombo).getSingle();
     expect(ov.comboId, 5);
@@ -71,10 +75,10 @@ void main() {
           secaoMercado: SecaoMercado.mercearia,
           unidadeCompra: UnidadeCompra.kg,
         ));
-    expect(await db.select(db.alimentos).get(), hasLength(41));
+    expect(await db.select(db.alimentos).get(), hasLength(quantosNaSemente('alimentos.json') + 1));
 
     await importarJson(db, texto);
-    expect(await db.select(db.alimentos).get(), hasLength(40));
+    expect(await db.select(db.alimentos).get(), hasLength(quantosNaSemente('alimentos.json')));
 
     await db.close();
   });
@@ -85,7 +89,7 @@ void main() {
 
     await expectLater(
         importarJson(db, '{ nao e json valido'), throwsA(isA<Exception>()));
-    expect(await db.select(db.alimentos).get(), hasLength(40));
+    expect(await db.select(db.alimentos).get(), hasLength(quantosNaSemente('alimentos.json')));
 
     await db.close();
   });
@@ -103,9 +107,9 @@ void main() {
     await expectLater(
         importarJson(db, jsonEncode(mapa)), throwsA(isA<Exception>()));
 
-    expect(await db.select(db.alimentos).get(), hasLength(40),
+    expect(await db.select(db.alimentos).get(), hasLength(quantosNaSemente('alimentos.json')),
         reason: 'a transacao tem de reverter o delete que ja rodou');
-    expect(await db.select(db.receitas).get(), hasLength(24));
+    expect(await db.select(db.receitas).get(), hasLength(quantosNaSemente('receitas.json')));
 
     await db.close();
   });
@@ -120,7 +124,7 @@ void main() {
 
     await expectLater(
         importarJson(db, jsonEncode(mapa)), throwsA(isA<Exception>()));
-    expect(await db.select(db.alimentos).get(), hasLength(40));
+    expect(await db.select(db.alimentos).get(), hasLength(quantosNaSemente('alimentos.json')));
 
     await db.close();
   });
