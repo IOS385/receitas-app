@@ -51,3 +51,22 @@ interface ainda, mas é o que faz as telas funcionarem:
 ## Checkpoints
 
 *(As seções abaixo vão sendo preenchidas conforme cada tarefa visual fecha.)*
+
+---
+
+## Checkpoint 1 — Task 15 · a casca do app
+
+**Commit:** `91b9b25` · **APK:** 51,6 MB
+
+Primeiro APK que vale abrir. As 14 tarefas anteriores não tinham tela.
+
+**O que olhar:**
+
+1. O app abre e mostra **quatro abas** embaixo: Hoje, Mês, Mercado, Receitas. Toque em cada uma — elas trocam.
+2. O **tema Esmalte** está aplicado: fundo louça (cinza-azulado bem claro), cartões brancos.
+3. As **fontes de verdade**. Isto é o que nenhum teste consegue verificar — o revisor do tema foi honesto sobre isso. Olhe se os títulos aparecem numa condensada alta e escura (Darker Grotesque) e o corpo numa humanista (Manrope). Se algum título parecer fino ou genérico, o eixo de peso da fonte variável não pegou, e eu quero saber.
+4. Modo escuro: mude o tema do sistema Android. O app deve acompanhar.
+
+**O que ainda NÃO funciona:** as quatro telas são placeholders com o nome escrito. A aba Hoje ganha conteúdo na Task 16.
+
+**Se algo parecer errado na fonte ou na cor, me diz** — é a única coisa desta fase que teste automatizado não alcança.

@@ -185,6 +185,10 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   drift_dev: ^2.34.0
   build_runner: ^2.15.1
+  # `Override` (usado em test/util_teste.dart) nao esta no barrel publico do
+  # flutter_riverpod — so em package:riverpod/misc.dart. Dependencia explicita
+  # para o lint `depend_on_referenced_packages` nao reclamar.
+  riverpod: ^3.4.2
 ```
 
 **Por que as duas ferramentas de codegen recuam** (corrigido em 2026-08-26, durante a
@@ -4828,6 +4832,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:refeicoes_app/presentation/tema/cores.dart';
 import 'package:refeicoes_app/presentation/tema/respingo.dart';
 import 'package:refeicoes_app/presentation/tema/tema.dart';
+// `Override` nao esta no barrel publico do flutter_riverpod 3.4.2 — so em
+// package:riverpod/misc.dart. Por isso `riverpod` tambem e dev_dependency.
+import 'package:riverpod/misc.dart' show Override;
 
 void main() {
   test('tema claro e escuro trazem a extensao Esmalte', () {
@@ -5148,10 +5155,17 @@ class CartaoEsmalte extends StatelessWidget {
     final tema = Theme.of(context);
     final raio = BorderRadius.circular(12);
 
-    final corpo = Container(
+    // ATENCAO: o Flutter LANCA em tempo de pintura se `BoxDecoration` combina
+    // `borderRadius` nao-zero com um `Border` de cores nao-uniformes —
+    // "A borderRadius can only be given on borders with uniform colors."
+    // O aro de cima e de cor diferente dos outros tres lados de proposito, entao
+    // o arredondamento vai num ClipRRect POR FORA, e o BoxDecoration fica sem
+    // `borderRadius`.
+    final corpo = ClipRRect(
+      borderRadius: raio,
+      child: Container(
       decoration: BoxDecoration(
         color: apagado ? cores.superficie2 : tema.colorScheme.surface,
-        borderRadius: raio,
         border: Border(
           top: BorderSide(
             color: apagado ? cores.linha : cores.marinho,
@@ -5164,6 +5178,7 @@ class CartaoEsmalte extends StatelessWidget {
       ),
       padding: padding,
       child: child,
+      ),
     );
 
     if (onTap == null) return corpo;
